@@ -153,9 +153,43 @@ class BSTable {
 
   _rowEdit(button) {             
          
-  // Indicate user is editing the row
+    // Indicate user is editing the row
     let $currentRow = $(button).parents('tr');       // access the row
-    // console.log($currentRow);
+    if ($currentRow.hasClass('time-calc-class')) {
+      $('.form-control').val('');
+      $(".selectpicker").selectpicker("refresh");
+      
+      $(".product_index").html($currentRow.find(".product-profile-nid-td").html());
+      $("#input-note").val($currentRow.find(".note-cls").html());
+      if ($currentRow.find(".product_profile_use_a").val() == 'true') {
+        $('#new-yes').prop('checked', true);
+        $('.hidden-label').css('display', 'block');
+        $('.hidden-div').css('display', 'block');
+
+        let element1_arr = $currentRow.find('.ele-label-yes-content-id').html().split('+');
+        $('#input-new-elements').selectpicker('val', element1_arr);
+
+      } else {
+        $('#new-no').prop('checked', true);
+        $('.hidden-label').css('display', 'none');
+        $('.hidden-div').css('display', 'none');
+      }
+      let element2_arr = $currentRow.find('.ele-label-no-content-id').html().split('+');
+      $('#input-exist-elements').selectpicker('val', element2_arr);
+
+      let package_arr = $currentRow.find('.package-plain').html().split(', ');
+      package_arr.pop();
+      $('#input-package').selectpicker('val', package_arr);
+
+      let company_type_arr = $currentRow.find('.company-plain').html().split(', ');
+      company_type_arr.pop();
+      $('#input-company').selectpicker('val', company_type_arr);
+      
+      $(".selectpicker").selectpicker("refresh");
+      
+      $('#basicModal').modal();
+      return;
+    }
     let $cols = $currentRow.find('td');              // read rows
 
     if (this.currentlyEditingRow($currentRow)) return;    // not currently editing, return
@@ -163,7 +197,6 @@ class BSTable {
     var n = 1;
     this._modifyEachColumn(this.options.editableColumns, $cols, function($td) {  // modify each column
       let content = $td.html();             // read content
-      // console.log(content);
       let div = '<div style="display: none;">' + content + '</div>';  // hide content (save for later use)
       // let my_table_id = $(button).parents('table').attr('id');
 
@@ -238,7 +271,7 @@ class BSTable {
           $('#new_note').val(cont);
         }
       } else if (my_table_id == "element-table") {
-        console.log("ok");
+
         if (is_txt_class) { // element-name
           cont = $td.find('input').val();
           $('#new_ename').val(cont);
@@ -297,7 +330,6 @@ class BSTable {
     this._modifyEachColumn(this.options.editableColumns, $cols, function($td) {  // modify each column
         
         if ($td.hasClass('slc-cls')) {        // bootstrap-select
-          // console.log($td.find('.plain-div'));
           $td.find('.plain-div').show();
           $td.find('.slc-cls-div').hide();
         } else {

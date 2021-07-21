@@ -24,7 +24,7 @@
         <!-- <button id="table2-new-row-button" class="btn btn-dark">New Row</button> -->
         <table class="table table-striped table-bordered" id="bookkeeper-table">
           <thead class="thead-dark">
-            <tr>
+            <tr style="background-color: #b4d2b4;">
               <th scope="col" style="width: 20%; text-align: center;">Bookkeeper</th>
               <th scope="col" style="width: 20%; text-align: center;">Hourly Rates</th>
               <th scope="col" style="width: 50%; text-align: center;">Note</th>
@@ -33,10 +33,10 @@
           <tbody>
             <% for(var i=0; i<data.length; i++) {%>
               <tr>
-                <td><%= data[i].first_name %></td>
-                <td class="num-cls"><%= data[i].hourly %></td>
-                <td class="note-cls"><%= data[i].note %></td>
-                <input class="hidden_id" type="hidden" value="<%= data[i].actor_id %>">
+                <td><%= data[i].worker_initials %></td>
+                <td class="num-cls"><%= data[i].price_per_hour %></td>
+                <td class="note-cls"><%= data[i].notes %></td>
+                <input class="hidden_id" type="hidden" value="<%= data[i].id %>">
               </tr>
             <% } %>
             

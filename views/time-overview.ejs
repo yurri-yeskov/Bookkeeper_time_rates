@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include partials/head %> 
+</head>
+<body>
+  <% include partials/menu %>
+  <div class="container-fluid bg-3 text-center">    
+    <h3><%= page %></h3><br>
+    <div class="row">
+      <div class="container-fluid">
+        <div class="container-customer bg-3" style="margin-bottom: 50px;">
+          <div class="col-sm-3">
+            <label>Year: &emsp;</label>
+            <input type="number" id="input-year" maxlength="4" style="height: 25px; width: 80px;" value="<%=this_year%>">
+          </div>
+          <div class="col-sm-3">
+            <label>Bookkeeper: &emsp;</label>
+            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-bookkeeper" data-width="180px" multiple>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <label>Package: &emsp;</label>
+            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-package" data-width="180px" multiple>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <label>Customer Has Paid: &emsp;</label>
+            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-paid" data-width="180px" multiple>
+            </select>
+          </div>
+        </div>
+        <div class="container-customer bg-3" style="margin-bottom: 100px;">
+          <div class="col-sm-3">
+            <label>Company Type: &emsp;</label>
+            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-company-type" data-width="180px" multiple>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <label>Moms: &emsp;</label>
+            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true"  id="input-moms" data-width="180px" multiple>
+              <option value="quarterly">quarterly</option>
+              <option value="half-year">half-year</option>
+              <option value="N/A">N/A</option>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <label>Reporting: &emsp;</label>
+            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-reporting" data-width="180px" multiple>
+              <option value="quarterly">quarterly</option>
+              <option value="half-year">half-year</option>
+              <option value="yearly">yearly</option>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <label>Used time xx: &emsp;</label>
+            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-used-time" data-width="180px" multiple>
+            </select>
+          </div>
+        </div>
+        <div class="pull-left" style="margin-bottom: 10px; display: none;">
+          <label>Counter: &emsp;</label>
+          <input type="number" id="input-counter" maxlength="4" style="height:25px; width: 80px;" value="">
+        </div>
+        <div class="pull-right" style="display: none;">
+          <label>Search: &emsp;</label>
+          <input type="text" id="input-search" style="height:25px;" value="">
+        </div>
+        
+        <div style="overflow: hidden; width: 100%; max-height: 100vh;">
+          <div  id="custom-table-info" style="position: absolute; width: 95%; margin-top: 10px; display:none;" >Showing 11 to 20 of 661 entries</div>
+          <table class="table table-striped table-bordered" id="leverance-oversigt-table" style="font-size: 11px;">
+            <thead class="thead-dark">
+              <tr style="background-color: #b4d2b4;">
+                <th scope="col" style="text-align: center;">Customer ID</th>
+                <th scope="col" style="text-align: center;">Email Address</th>
+                <th scope="col" style="text-align: center;">Bookkeeper ID</th>
+                <th scope="col" style="text-align: center;">Company Type</th>
+                <th scope="col" style="text-align: center;">Moms</th>
+                <th scope="col" style="text-align: center;">Reporting</th>
+                <th scope="col" style="text-align: center;">Stoppet</th>
+                <th scope="col" style="width: 100px; text-align: center;">Package</th>
+                <th scope="col" style="text-align: center;">Receipts Paid For</th>
+                <th scope="col" style="text-align: center;">Receipts Used</th>
+                <th scope="col" style="text-align: center; background-color: #e975a0;">Customer Has Paid</th>
+                <th scope="col" style="text-align: center;">First End Of Year</th>
+                <th scope="col" style="text-align: center;">New Customer</th>
+                <th scope="col" style="text-align: center;">Q1 Estimated Time</th>
+                <th scope="col" style="text-align: center;background-color: #e975a0;">Q1 Used Time</th>
+                <th scope="col" style="text-align: center;">Q2 Estimated Time</th>
+                <th scope="col" style="text-align: center;background-color: #e975a0;">Q2 Used Time</th>
+                <th scope="col" style="text-align: center;">Q3 Estimated Time</th>
+                <th scope="col" style="text-align: center;background-color: #e975a0;">Q3 Used Time</th>
+                <th scope="col" style="text-align: center;">Q4 Estimated Time</th>
+                <th scope="col" style="text-align: center;background-color: #e975a0;">Q4 Used Time</th>
+                <th scope="col" style="text-align: center;">Year-end Estimated Time</th>
+                <th scope="col" style="text-align: center; background-color: #e975a0;">Year-end Used Time</th>
+                <th scope="col" style="text-align: center; background-color: #e975a0;">Extra Time Agreed</th>
+                <th scope="col" style="text-align: center; background-color: #e975a0;">Extra Time Used</th>
+                <th scope="col" style="text-align: center;">Total Time Estimated</th>
+                <th scope="col" style="text-align: center; background-color: #e975a0;">Total Time Used</th>
+                <th scope="col" style="text-align: center;">Total Cost Estimated</th>
+                <th scope="col" style="text-align: center; background-color: #e975a0;">Total Cost Used</th>
+                <th scope="col" style="text-align: center;">Total Invoiced Price</th>
+                <th scope="col" style="text-align: center;">Expected Efficiency</th>
+                <th scope="col" style="text-align: center; background-color: #e975a0;">Delivery Efficiency</th>
+              </tr>
+            </thead>
+            <tbody id="leverance-oversigt">
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<% include partials/script %>
+<script src="./javascripts/time-overview.js"></script>
+</html>

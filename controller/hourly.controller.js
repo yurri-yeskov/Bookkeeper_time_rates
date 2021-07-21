@@ -1,28 +1,42 @@
+const dbConfig = require("../config/db.config");
 const {Client} = require('pg');
+
 const client = new Client ({
-    user: "postgres",
-    host: "localhost",
-    database: "dvdrental",
-    password: "~!@`12",
-    port: 5732,
+    user: dbConfig.USER,
+    host: dbConfig.HOST,
+    database: dbConfig.DB_NAME,
+    password: dbConfig.PASSWORD,
+    port: dbConfig.DB_PORT,
 });
+
+// For dev
+// const client = new Client({
+//     user: "z_new_user",
+//     host: "replica-of-live2.cas2tln5cone.us-east-1.rds.amazonaws.com",
+//     database: "dama86dd4g3vj6",
+//     password: "MJ4MXjmK4TSK",
+//     port: 5732
+// });
 
 client.connect();
 
-exports.findAll = (req, res) => {
+exports.findAll = (req, res) => { // Select all bookkeeper info - id, name, hourly, note
     
-    //LIMIT 4 OFFSET 3
-    client.query('SELECT actor_id, first_name, hourly, note from actor left join hourly_rates on hourly_rates.bookkeeper_id = actor.actor_id order by actor_id;', function (err, result) {
+    let query_str = 
+        "SELECT task_manager.freelancers.id, worker_initials, price_per_hour, notes FROM task_manager.freelancers " + 
+        "LEFT JOIN task_manager.freelancer_roles ON task_manager.freelancers.worker_initials = task_manager.freelancer_roles.freelancer_short_name " + 
+        "WHERE task_manager.freelancer_roles.role_name = 'bookkeeper';"
+        
+    client.query(query_str, function (err, result) {
         if (err) {
             console.log(err);
             res.status(400).send(err);
         }
-        // console.log(result.rows);
         res.render('index', {page:'Bookkeeper hourly rates', menuId:'hourly-rates', data:result.rows});
     });
 };
 
-exports.update = (req, res) => {
+exports.update = (req, res) => { // Update bookkeeper's hourly and note
     if (!req.body) {
         return res.status(400).send({
           message: "Data to update can not be empty!"
@@ -35,18 +49,15 @@ exports.update = (req, res) => {
         return;
     }
 
-    let query_str = "UPDATE hourly_rates SET hourly=" + req.body.new_hourly + ", note='" + req.body.new_note + "' where bookkeeper_id=" + req.body.bookkeeper_id + "; " +
-                    "INSERT INTO hourly_rates (bookkeeper_id, hourly, note)" +
-                    " SELECT " + req.body.bookkeeper_id + ", " + req.body.new_hourly + ", '" + req.body.new_note + 
-                    "' WHERE NOT EXISTS (SELECT * FROM hourly_rates WHERE bookkeeper_id=" + req.body.bookkeeper_id + ");";
-    console.log(query_str)
+    let query_str = 
+        "UPDATE task_manager.freelancers SET price_per_hour=" + req.body.new_hourly + ", notes='" + req.body.new_note + 
+        "' WHERE id=" + req.body.bookkeeper_id + ";";
     client.query(query_str, function(err, result) {
     if (err) {
         console.log(err);
         res.status(400).send(err);
     }
     res.send({ message: "It was updated successfully." });
-    // res.redirect("/");
     });
 
     return;
