@@ -1,6 +1,7 @@
 var time_entry_table;
-
 $(document).ready(function(){
+
+  alert(base_url);
 
   time_entry_table = $("#time-entry-table").DataTable({
     "scrollCollapse": true,
