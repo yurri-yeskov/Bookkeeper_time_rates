@@ -286,7 +286,8 @@ function calcTimeSubmits(e) {
                     return;
                 }
   
-                $('#company-name').html(data.data[0].company_type);
+                $('#company-name').html(data.data[0].name);
+                // console.log("asdf", data.data[0].name);
                 $.ajax({
                     type: "post",
                     url: "/calculate_time",

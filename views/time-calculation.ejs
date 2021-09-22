@@ -12,12 +12,7 @@
         <div class="container-customer bg-3" style="margin-bottom: 50px; font-size: 17px;">
           <div class="col-sm-4">
             <label>Customer ID: &emsp;</label>
-            <input type="number" id="input-customer">
-            <!-- <select class="selectpicker" id="customer_selectpicker" title="Choose one of the Customer IDs" data-live-search="true">
-              <option>My_customer_id1</option>
-              <option>My_customer_id2</option>
-              <option>My_customer_id3</option>
-            </select> -->
+            <input class="form-control-custom" type="number" id="input-customer">
           </div>
           <div class="col-sm-4">
             <label>Company Name: &emsp;</label>
@@ -31,14 +26,9 @@
         </div>
         <div class="pull-left">
           <label>Year: &emsp;</label>
-          <input type="number" id="input-year" maxlength="4" style="height:25px;" value="<%=this_year%>">
-          <!-- <select class="selectpicker pull-left" id="input-year" disabled data-width="100px">
-            <option>2021</option>
-            <option>2020</option>
-            <option>2019</option>
-          </select> -->
+          <input class="form-control-custom" type="number" id="input-year" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="<%=this_year%>">
         </div>
-        <button id="add-button" style="margin-bottom: 10px;" class="btn btn-dark pull-right" data-toggle="modal" data-target="#basicModal"><b>Add New Product Profile</b></button>
+        <button id="add-button" style="margin-bottom: 10px;" class="btn btn-default pull-right" data-toggle="modal" data-target="#basicModal"><b>Add New Product Profile</b></button>
         <table class="table table-striped table-bordered" id="product-profile-table">
           <thead class="thead-dark">
             <tr style="background-color: #b4d2b4;">
@@ -114,13 +104,11 @@
                 <label for="input-package" class="form-label">Package:</label>
                 <select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-package" multiple>
                 </select>
-                <!-- <input type="text" class="form-control" id="input-package"> -->
               </div>
               <div class="col-12 modal-margin">
                 <label for="input-company" class="form-label">Company Type:</label>
                 <select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-company" multiple>
                 </select>
-                <!-- <input type="text" class="form-control" id="input-company"> -->
               </div>
               <div class="col-12 modal-margin hidden-div" style="display: none;">
                 <label for="input-new-elements" class="form-label">Elements selected in Product Profile:</label><br>
@@ -128,7 +116,6 @@
                 <select class="selectpicker form-control" data-live-search="true" data-dropup-auto="false" data-size="5" id="input-new-elements" multiple>
                   
                 </select>
-                <!-- <input type="text" class="form-control" id="input-new-elements"> -->
               </div>
               <div class="col-12 modal-margin">
                 <label for="input-exist-elements" class="form-label">Elements selected in Product Profile:</label><br>
@@ -136,7 +123,6 @@
                 <select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-exist-elements" multiple>
                   
                 </select>
-                <!-- <input type="text" class="form-control" id="input-exist-elements"> -->
               </div>
               <div class="col-12 modal-margin">
                 <label for="input-note" class="form-label">Note:</label>

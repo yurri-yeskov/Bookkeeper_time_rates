@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include partials/head %> 
+  <link rel="stylesheet" type="text/css" href="./stylesheets/tipped.css"/>
+</head>
+<body>
+  <% include partials/menu %>
+  <div class="container-fluid bg-3 text-center">    
+    <h3><%= page %></h3><br>
+    <div class="row">
+      <div class="container-fluid">
+        <div class="container-customer bg-3" style="margin-bottom: 30px;">
+          <table class="table table-striped table-bordered" id="over-spent-table" style="font-size: 11px;">
+            <thead class="thead-dark">
+              <tr>
+                <th rowspan="2" style="background-color: #ead1dc; text-align: center; font-size: 20px; width: 9%;">Time Spent Overview</th>
+                <th scope="col" style="background-color: #b4d2b4; text-align: center; font-size: 15px; width: 7%;">January</th>
+                <th scope="col" style="background-color: #b4d2b4; text-align: center; font-size: 15px; width: 7%;">February</th>
+                <th scope="col" style="background-color: #b4d2b4; text-align: center; font-size: 15px; width: 7%;">March</th>
+                <th scope="col" style="background-color: #b4d2b4; text-align: center; font-size: 15px; width: 7%;">April</th>
+                <th scope="col" style="background-color: #b4d2b4; text-align: center; font-size: 15px; width: 7%;">May</th>
+                <th scope="col" style="background-color: #b4d2b4; text-align: center; font-size: 15px; width: 7%;">June</th>
+                <th scope="col" style="background-color: #b4d2b4; text-align: center; font-size: 15px; width: 7%;">July</th>
+                <th scope="col" style="background-color: #b4d2b4; text-align: center; font-size: 15px; width: 7%;">August</th>
+                <th scope="col" style="background-color: #b4d2b4; text-align: center; font-size: 15px; width: 7%;">September</th>
+                <th scope="col" style="background-color: #b4d2b4; text-align: center; font-size: 15px; width: 7%;">October</th>
+                <th scope="col" style="background-color: #b4d2b4; text-align: center; font-size: 15px; width: 7%;">November</th>
+                <th scope="col" style="background-color: #b4d2b4; text-align: center; font-size: 15px; width: 7%;">December</th>
+                <th scope="col" style="background-color: #ea9999; text-align: center; font-size: 15px; width: 7%;">Total Time</th>
+              </tr>
+              <tr class="total-times">
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+              </tr>
+            </thead>
+          </table>
+        </div>
+
+        <div class="container-customer bg-3" style="margin-bottom: 80px;">
+          <div class="col-sm-3" style="display: none;">
+            <label>Year: &emsp;</label>
+            <input type="number" id="input-year" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" style="height: 25px; width: 80px;" value="<%=this_year%>">
+          </div>
+          <div class="col-sm-4 row">
+            <div class="col-xs-5" style="text-align: right; padding-top: 7px;">
+              <label>Date interval:</label>
+            </div>
+            <div class="col-xs-7" style="text-align: left; padding-left: 0;">
+              <div class="input-daterange input-group" id="datepicker" style="display: inline-flex; width: 200px;">
+                <input type="text" class="input-sm form-control" id="start-date" name="start" />
+                <span class="input-group-addon" style="min-width: 35px;">to</span>
+                <input type="text" class="input-sm form-control" id="end-date" name="end" />
+              </div>
+              <button type="button" class="btn btn-default sbm-button" style="padding: 4px 7px; width: 30px; height: 30px;"><span class="fa fa-paper-plane" ></span></button>
+            </div>
+          </div>
+          <div class="col-sm-4 row">
+            <div class="col-xs-5" style="text-align: right; padding-top: 10px;">
+              <label>Bookkeeper:</label>
+            </div>
+            <div class="col-xs-7" style="text-align: left; padding-left: 0;">
+              <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-bookkeeper" data-width="235px" multiple>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4 row">
+            <div class="col-xs-5" style="text-align: right; padding-top: 10px;">
+              <label>Deleted:</label>
+            </div>
+            <div class="col-xs-7" style="text-align: left; padding-left: 0;">
+              <select class="selectpicker sigle_selection" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-deleted" data-width="235px">
+                <option value="show_all" selected>Show All</option>
+                <option value="false">Not Deleted</option>
+                <option value="true">Deleted</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="container-customer bg-3" style="margin-bottom: 130px;">
+          <div class="col-sm-4 row">
+            <div class="col-xs-5" style="text-align: right; padding-top: 10px;">
+              <label>Primary Task Type:</label>
+            </div>
+            <div class="col-xs-7" style="text-align: left; padding-left: 0;">
+              <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-task" data-width="235px" multiple>
+                <option value="1">Almindelig kontering</option>
+                <option value="2">Årsafslutningspakke - Selskaber 1. År</option>
+                <option value="3">Årsafslutningspakke - Selskaber eksisterende kunde</option>
+                <option value="4">Årsafslutningspakke - Enkeltmands 1. År</option>
+                <option value="5">Årsafslutningspakke - Enkeltmands eksisterende kunde</option>
+                <option value="6">VSO - beregning ny kunde</option>
+                <option value="7">VSO - beregning eksisterende kunde</option>
+                <option value="8">Samtale/Rådgivning af kunde</option>
+                <option value="9">Intern kommunikation og møder</option>
+                <option value="10">Primo ny kunde</option>
+                <option value="11">Primo eksisterende</option>
+                <option value="12">kundeCatchup/kontering</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4 row">
+            <div class="col-xs-5" style="text-align: right; padding-top: 10px;">
+              <label>Delivery Period:</label>
+            </div>
+            <div class="col-xs-7" style="text-align: left; padding-left: 0;">
+              <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true"  id="input-period" data-width="235px" multiple>
+                <option value="Q1">Q1</option>
+                <option value="Q2">Q2</option>
+                <option value="Q3">Q3</option>
+                <option value="Q4">Q4</option>
+                <option value="Year-end">Year-end</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4 row">
+            <div class="col-xs-5" style="text-align: right; padding-top: 10px;">
+              <label>Note:</label>
+            </div>
+            <div class="col-xs-7" style="text-align: left; padding-left: 0;">
+              <select class="selectpicker sigle_selection" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-note" data-width="235px">
+                <option value="show_all">Show All</option>
+                <option value="not null">Not Empty</option>
+                <option value="null">Empty</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="container-customer bg-3" style="margin-bottom: 165px;">
+          <div class="col-sm-4">
+            <label>Rows Selected: &emsp;</label>
+            <label id="rows-selected" style="font-weight:normal">N/A</label>
+          </div>
+          <div class="col-sm-4">
+            <label>Total Time for selection (min): &emsp;</label>
+            <label id="total-time-min" style="font-weight:normal">N/A</label>
+          </div>
+          <div class="col-sm-4">
+            <label>Total Time for section (hours): &emsp;</label>
+            <label id="total-time-hour" style="font-weight:normal">N/A</label>
+          </div>
+        </div>
+        <!-- <div style="overflow: hidden; width: 100%; max-height: 100vh;"> -->
+          <div  id="custom-table-info" style="position: absolute; width: 95%; margin-top: 10px; display:none;" ></div>
+          <table class="table table-striped table-bordered" id="time-entry-table" style="font-size: 11px;">
+            <thead class="thead-dark">
+              <tr style="background-color: #b4d2b4;">
+                <th scope="col" style="text-align: center;">Links</th>
+                <th scope="col" style="text-align: center;">Customer ID</th>
+                <th scope="col" style="text-align: center;">Email Address</th>
+                <th scope="col" style="text-align: center;">Company Name</th>
+                <th scope="col" style="text-align: center;">Bookkeeper Name</th>
+                <th scope="col" style="text-align: center;">Primary Task Type</th>
+                <th scope="col" style="text-align: center;">Delivery Period</th>
+                <th scope="col" style="text-align: center;">Delivery Year</th>
+                <th scope="col" style="text-align: center;">Time Spent</th>
+                <th scope="col" style="text-align: center;">Deleted</th>
+                <th scope="col" style="text-align: center;">Note</th>
+                <th scope="col" style="text-align: center;">Month</th>
+              </tr>
+            </thead>
+            <tbody id="time-entry">
+              
+            </tbody>
+          </table>
+        <!-- </div> -->
+      </div>
+    </div>
+    <!-- Edit Modal begin-->
+    <div class="modal fade text-left" style="margin-top: 20px;" id="editAModal" tabindex="-1" role="dialog" aria-labelledby="editAModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Add Time For Customer</h4>
+          </div>
+          <div class="modal-body">
+            <div class="loader" style="display: none;"></div>
+            <form id="report-time-frm" style="display: block;">
+              <input type="hidden" class="current_id" value="">
+              <input type="hidden" class="current_month" value="">
+              <div class="col-12 modal-margin">
+                <b>Customer ID: </b> <label class="customer-id" style="font-weight:normal">1</label> <!--change when showing-->
+              </div>
+              <div class="col-12 modal-margin">
+                <b>Bookkeeper Name: </b> <label class="bookkeeper-name" style="font-weight:normal">bookkeeper test</label> <!--change when showing-->
+              </div>
+              <div class="col-12 modal-margin">
+                <b>Company Name: </b> <label class="company-name" style="font-weight:normal">company test</label> <!--change when showing-->
+              </div>
+              <div class="col-12 modal-margin">
+                <b>Email Address: </b> <label class="email-addr" style="font-weight:normal">email@addr.com</label> <!--change when showing-->
+              </div>
+              <div class="col-12 modal-margin">
+                <input type="hidden" id="hidden-mtask" value="">
+                <label for="input-mtask" class="form-label">Primary Task Type:</label>
+                <select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-mtask">
+                  <option value="1">Almindelig kontering</option>
+                  <option value="2">Årsafslutningspakke - Selskaber 1. År</option>
+                  <option value="3">Årsafslutningspakke - Selskaber eksisterende kunde</option>
+                  <option value="4">Årsafslutningspakke - Enkeltmands 1. År</option>
+                  <option value="5">Årsafslutningspakke - Enkeltmands eksisterende kunde</option>
+                  <option value="6">VSO - beregning ny kunde</option>
+                  <option value="7">VSO - beregning eksisterende kunde</option>
+                  <option value="8">Samtale/Rådgivning af kunde</option>
+                  <option value="9">Intern kommunikation og møder</option>
+                  <option value="10">Primo ny kunde</option>
+                  <option value="11">Primo eksisterende</option>
+                  <option value="12">kundeCatchup/kontering</option>
+                </select>
+              </div>
+              <div class="col-12 modal-margin">
+                <input type="hidden" id="hidden-mperiod" value="">
+                <label for="input-mperiod" class="form-label">Period:</label>
+                <select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-mperiod">
+                  <option value="Q1">Q1</option>
+                  <option value="Q2">Q2</option>
+                  <option value="Q3">Q3</option>
+                  <option value="Q4">Q4</option>
+                  <option value="Year-end">Year-end</option>
+                </select>
+              </div>
+              <div class="col-12 modal-margin">
+                <input type="hidden" id="hidden-myear" value="">
+                <label for="input-mdelivery-year" class="form-label">Delivery Year: </label>
+                <input type="number" class="form-control" id="input-mdelivery-year" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="4" value="<%=this_year%>">
+              </div>
+              <div class="col-12 modal-margin">
+                <input type="hidden" id="hidden-mtime" value="">
+                <label for="input-mtime" class="form-label">Time Spent (in min): </label>
+                <input type="number" class="form-control" id="input-mtime">
+              </div>
+              <div class="col-12 modal-margin">
+                <input type="hidden" id="hidden-mnote" value="">
+                <label for="input-mnote" class="form-label">Note:</label>
+                <textarea style="resize:none; height: 80px;" class="form-control" id="input-mnote"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary"  onclick="updateAReportTime()"> Save </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal end -->
+    <!--Audit Modal begin-->
+    <div class="modal fade text-left" style="margin-top: 100px;" id="auditModal" tabindex="-1" role="dialog" aria-labelledby="auditModal" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Audit log for Customer</h4>
+          </div>
+          <div class="modal-body">
+            <div class="loader" style="display: none;"></div>
+            <form id="audit-time-frm" style="display: block;">
+              <div class="col-12 modal-margin">
+                <ul class="nav nav-tabs tab-link">
+                  <% for(var i=0; i<month_index.length; i++) {%>
+                    <li><a data-toggle="tab" href="#a_<%= month_index[i] %>"><%= month_index[i] %></a></li>
+                  <% } %>
+                </ul>
+                <div class="tab-content">
+                  <% for(var i=0; i<month_index.length; i++) {%>
+                    <div id="a_<%= month_index[i] %>" class="tab-pane fade">
+                      <h4><b><%= month_list[i] %></b></h4>
+                      <div style="overflow-x: auto; min-height: 100px; max-height: 375px;" >
+                        <table class="table table-striped table-bordered" style="font-size: 11px;">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col" style="background-color: #b4d2b4; text-align: center;">Customer ID</th>
+                              <th scope="col" style="background-color: #b4d2b4; text-align: center;">Bookkeeper Name</th>
+                              <th scope="col" style="background-color: #b4d2b4; text-align: center;">Company Name</th>
+                              <th scope="col" style="background-color: #b4d2b4; text-align: center;">Email Address</th>
+                              <th scope="col" style="background-color: #b4d2b4; text-align: center;">Delivery Year</th>
+                              <th scope="col" style="background-color: #b4d2b4; text-align: center;">Column</th>
+                              <th scope="col" style="background-color: #b4d2b4; text-align: center;">Old Value</th>
+                              <th scope="col" style="background-color: #b4d2b4; text-align: center;">New Value</th>
+                              <th scope="col" style="background-color: #b4d2b4; text-align: center;">Timestamp</th>
+                            </tr>
+                          </thead>
+                          <tbody class="atable-body" style="text-align: center;" id="a_<%= month_list[i] %>">
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  <% } %>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal end -->
+  </div>
+</body>
+<% include partials/script %>
+<script type="text/javascript" src="./javascripts/tipped.min.js"></script>  
+<script src="./javascripts/report-overview.js"></script>
+</html>

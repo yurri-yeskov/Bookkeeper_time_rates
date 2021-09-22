@@ -1,4 +1,5 @@
 const dbConfig = require("../config/db.config");
+const linkConfig = require("../config/links.config");
 const {Client} = require('pg');
 
 const client = new Client ({
@@ -21,31 +22,76 @@ const client = new Client ({
 client.connect();
 
 exports.findProductProfiles = (req, res) => { // Select All product info - id, use_a, name, note
-    
-    let query_str = 
-        "SELECT task_manager.product_profiles.id, use_a, product_profile_nid, task_manager.product_profiles.note " +
-        "FROM task_manager.product_profiles ORDER BY product_profile_nid";
-    
-    client.query(query_str, function (err, result) {
-      
+
+    let admin_emails = ['tk@ebogholderen.dk', 'tr@ebogholderen.dk', 'thra@c.dk', 'yurii@gmail.com'];
+
+    if (!req.body.user_token) {
+        console.log("Oops!");
+        res.redirect(linkConfig.OTHER_LINK);
+        return;             
+    }
+    let pre_query_str = "SELECT user_email FROM interfaces.user_tokens WHERE user_token='" + req.body.user_token + "';";
+
+    client.query(pre_query_str, function(err, result) {
         if (err) {
             console.log(err);
-            res.status(400).send(err);
+            res.status(400).send(err);  
         }
-        let new_arr = [];
-        let next_index = "P1";
-        if (result.rows.length > 0){
-            new_arr = result.rows;
-            new_arr.sort(stringNumberSort);
+        let my_email = "";
+        if (result.rows.length > 0) {
+            my_email = result.rows[0].user_email;
+        } else {
+            res.redirect(linkConfig.OTHER_LINK);
+            return;
+        }
+
+        let acl_level = admin_emails.includes(my_email) ? 1 : 0;
+        let acl_query_str = "SELECT interface_name FROM interfaces.acl WHERE user_email='" + my_email + "';";
+        let acl_array = [];
+        client.query(acl_query_str, function(err, result) {
+            if (result.rows.length > 0) {
+                for (let i=0; i<result.rows.length; i++) {
+                    acl_array[i] = result.rows[i].interface_name;
+                }
+            }
+
+            let query_str = 
+                "SELECT task_manager.product_profiles.id, use_a, product_profile_nid, task_manager.product_profiles.note " +
+                "FROM task_manager.product_profiles ORDER BY product_profile_nid";
+        
+            client.query(query_str, function (err, result) {
             
-            let getPart = new_arr[new_arr.length - 1].product_profile_nid.replace( /[^\d.]/g, '' );
-            var num = parseInt(getPart); 
-            var newVal = num+1; 
-            next_index = "P" + newVal
-        }
-        let this_year = new Date();
-        this_year = this_year.getFullYear();
-        res.render('time-calculation', {page:'Product Time Calculation', menuId:'time-calculation', data:new_arr, next_index: next_index, this_year:this_year});
+                if (err) {
+                    console.log(err);
+                    res.status(400).send(err);
+                }
+                let new_arr = [];
+                let next_index = "P1";
+                if (result.rows.length > 0) {
+                    new_arr = result.rows;
+                    new_arr.sort(stringNumberSort);
+                    
+                    let getPart = new_arr[new_arr.length - 1].product_profile_nid.replace( /[^\d.]/g, '' );
+                    var num = parseInt(getPart); 
+                    var newVal = num+1; 
+                    next_index = "P" + newVal
+                }
+                let this_year = new Date();
+                this_year = this_year.getFullYear();
+                res.render('time-calculation', {
+                    page: 'Product Time Calculation', 
+                    menuId: 'time-calculation', 
+                    data: new_arr, 
+                    next_index: next_index, 
+                    this_year: this_year,
+                    other_link:linkConfig.OTHER_LINK,
+                    my_email: my_email,
+                    acl_level: acl_level,
+                    acl_array: acl_array,
+                    user_token: req.body.user_token
+                });
+            });
+        });
     });
 };
 
@@ -58,7 +104,8 @@ exports.findCustomer = (req, res) => { // Select a specified customer_id info
     }
     
     let query_str = 
-        "SELECT service_from, service_until, receipts_paid_for, vat_period, reporting_period, package, public.customers.id, public.customers.company_type FROM public.customers " +
+        "SELECT service_from, service_until, receipts_paid_for, vat_period, reporting_period, package, public.customers.id, " + 
+        "public.customers.company_type, public.customers.name FROM public.customers " +
         "JOIN public.customer_payments ON public.customers.id = public.customer_payments.customer_id " +
         "WHERE public.customers.id = " + req.body.customer_id + " " +
         "ORDER BY public.customer_payments.service_from ";
@@ -87,16 +134,21 @@ exports.findCustomer = (req, res) => { // Select a specified customer_id info
 exports.calculationTime = (req, res) => { // calculcate Time for a special customer
     
     let query_str = 
-        "SELECT task_manager.product_profiles.id, product_profile_nid, task_manager.time_elements.element_id, element_value, new_customer, package_id, company_type FROM task_manager.product_profiles " +
+        "SELECT task_manager.product_profiles.id, product_profile_nid, task_manager.time_elements.element_id, element_value, " + 
+                "new_customer, package_id, company_type FROM task_manager.product_profiles " +
         "JOIN task_manager.product_profile_package ON task_manager.product_profile_package.product_profile_id = task_manager.product_profiles.id " +
-        "JOIN task_manager.product_profile_company_type ON task_manager.product_profile_company_type.product_profile_id = task_manager.product_profiles.id " +
-        "JOIN task_manager.product_profile_time_element ON task_manager.product_profile_time_element.product_profile_id = task_manager.product_profiles.id " +
+        "JOIN task_manager.product_profile_company_type ON " + 
+        "task_manager.product_profile_company_type.product_profile_id = task_manager.product_profiles.id " +
+        "JOIN task_manager.product_profile_time_element ON " + 
+        "task_manager.product_profile_time_element.product_profile_id = task_manager.product_profiles.id " +
         "JOIN task_manager.time_elements ON task_manager.time_elements.id = task_manager.product_profile_time_element.element_id " +
         "WHERE ";
     let customer_info_arr = JSON.parse(req.body.customer_info);
-    query_str = query_str + "(package_id='" + customer_info_arr[0].package + "' AND company_type='" + customer_info_arr[0].company_type + "' AND new_customer=" + req.body.new_customer + ") ";
+    query_str = query_str + "(package_id='" + customer_info_arr[0].package + "' AND company_type='" + 
+                            customer_info_arr[0].company_type + "' AND new_customer=" + req.body.new_customer + ") ";
     for (let i = 1; i < customer_info_arr.length; i++) {
-        query_str = query_str + "OR " + "(package_id='" + customer_info_arr[i].package + "' AND company_type='" + customer_info_arr[i].company_type + "' AND new_customer=" + req.body.new_customer + ") ";
+        query_str = query_str + "OR " + "(package_id='" + customer_info_arr[i].package + "' AND company_type='" + 
+                    customer_info_arr[i].company_type + "' AND new_customer=" + req.body.new_customer + ") ";
     }
                     
     query_str = query_str + "ORDER BY task_manager.product_profiles.id;";
@@ -173,7 +225,8 @@ exports.getProductProfilePackage = (req, res) => { // Select All Product and it'
         "SELECT task_manager.product_profiles.id, " + 
         "task_manager.product_profile_package.package_id " +
         "FROM task_manager.product_profiles " + 
-        "JOIN task_manager.product_profile_package ON task_manager.product_profile_package.product_profile_id = task_manager.product_profiles.id ORDER BY task_manager.product_profiles.id"
+        "JOIN task_manager.product_profile_package ON " +
+        "task_manager.product_profile_package.product_profile_id = task_manager.product_profiles.id ORDER BY task_manager.product_profiles.id"
     
     client.query(query_str, function (err, result) {
       
@@ -192,7 +245,8 @@ exports.getProductProfileCompanyType = (req, res) => { // Select All Product and
         "SELECT task_manager.product_profiles.id," + 
         "task_manager.product_profile_company_type.company_type " +
         "FROM task_manager.product_profiles " + 
-        "JOIN task_manager.product_profile_company_type ON task_manager.product_profile_company_type.product_profile_id = task_manager.product_profiles.id ORDER BY task_manager.product_profiles.id"
+        "JOIN task_manager.product_profile_company_type ON " + 
+        "task_manager.product_profile_company_type.product_profile_id = task_manager.product_profiles.id ORDER BY task_manager.product_profiles.id"
     
     client.query(query_str, function (err, result) {
       
@@ -211,8 +265,10 @@ exports.getProductProfileTimeElement = (req, res) => {
         "SELECT task_manager.product_profiles.id, use_a, task_manager.time_elements.id AS ele_id, " + 
         "task_manager.time_elements.element_id, new_customer, task_manager.time_elements.element_name " +
         "FROM task_manager.product_profiles " + 
-        "JOIN task_manager.product_profile_time_element ON task_manager.product_profiles.id = task_manager.product_profile_time_element.product_profile_id " + 
-        "JOIN task_manager.time_elements ON task_manager.product_profile_time_element.element_id = task_manager.time_elements.id ORDER BY task_manager.product_profiles.id;"
+        "JOIN task_manager.product_profile_time_element ON " +
+        "task_manager.product_profiles.id = task_manager.product_profile_time_element.product_profile_id " + 
+        "JOIN task_manager.time_elements ON " + 
+        "task_manager.product_profile_time_element.element_id = task_manager.time_elements.id ORDER BY task_manager.product_profiles.id;"
    
     client.query(query_str, function (err, result) {
       
@@ -266,7 +322,7 @@ exports.addProductProfile = (req, res) => {
     
     if (!req.body) {
         return res.status(400).send({
-          message: "Data to update can not be empty!"
+          message: "Data to add can not be empty!"
         });
     }
 
@@ -278,7 +334,7 @@ exports.addProductProfile = (req, res) => {
             console.log(err);
             res.status(400).send(err);
         }
-        res.send({ message: "It was updated successfully.", product_profile: result.rows[0]});
+        res.send({ message: "It was added successfully.", product_profile: result.rows[0]});
     });
 };
 
@@ -290,7 +346,8 @@ exports.updateProductProfile = (req, res) => {
         });
     }
 
-    let query_str = "UPDATE task_manager.product_profiles SET use_a=" + req.body.use_a + ", note='" + req.body.product_note + "' WHERE product_profile_nid='" + req.body.product_profile_id + "' RETURNING *;";
+    let query_str = "UPDATE task_manager.product_profiles SET use_a=" + req.body.use_a + ", note='" + req.body.product_note + 
+                    "' WHERE product_profile_nid='" + req.body.product_profile_id + "' RETURNING *;";
     client.query(query_str, function(err, result) {
 
         if (err) {
@@ -305,7 +362,7 @@ exports.addProductProfilePackage = (req, res) => {
 
     if (!req.body) {
         return res.status(400).send({
-          message: "Data to update can not be empty!"
+          message: "Data to add can not be empty!"
         });
     }
 
@@ -323,7 +380,7 @@ exports.addProductProfilePackage = (req, res) => {
             console.log(err);
             res.status(400).send(err);
         }
-        res.send({ message: "It was updated successfully."});
+        res.send({ message: "It was added successfully."});
     });
 };
 
@@ -358,7 +415,7 @@ exports.addProductProfileCompanyType = (req, res) => {
 
     if (!req.body) {
         return res.status(400).send({
-          message: "Data to update can not be empty!"
+          message: "Data to add can not be empty!"
         });
     }
 
@@ -376,7 +433,7 @@ exports.addProductProfileCompanyType = (req, res) => {
             console.log(err);
             res.status(400).send(err);
         }
-        res.send({ message: "It was updated successfully."});
+        res.send({ message: "It was added successfully."});
     });
 };
 
@@ -398,7 +455,6 @@ exports.updateProductProfileCompanyType = (req, res) => {
     }
     
     client.query(query_str, function(err, result) {
-
         if (err) {
             console.log(err);
             res.status(400).send(err);
@@ -411,7 +467,7 @@ exports.addProductProfileTimeElement = (req, res) => {
 
     if (!req.body) {
         return res.status(400).send({
-          message: "Data to update can not be empty!"
+          message: "Data to add can not be empty!"
         });
     }
 
@@ -430,7 +486,7 @@ exports.addProductProfileTimeElement = (req, res) => {
             console.log(err);
             res.status(400).send(query_str);
         }
-        res.send({ message: "It was updated successfully."});
+        res.send({ message: "It was added successfully."});
     });
 };
 
@@ -467,7 +523,6 @@ change_arr = {
     'A' : '65', 'B' : '66', 'C' : '67', 'D' : '68', 'E' : '69', 'F' : '70', 'G' : '71', 'H' : '72', 'I' : '73',
     'J' : '74', 'K' : '75', 'L' : '76', 'M' : '77', 'N' : '78', 'O' : '79', 'P' : '80', 'Q' : '81', 'R' : '82', 
     'S' : '83', 'T' : '84', 'U' : '85', 'V' : '86', 'W' : '87', 'X' : '88', 'Y' : '89', 'Z' : '90' };
-  
     
 function sortMyArray(my_array) {
     for (let i = 0; i < my_array.length; i++) {

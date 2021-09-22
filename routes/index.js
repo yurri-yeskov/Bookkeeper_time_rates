@@ -5,20 +5,28 @@ const actorCtrl = require('../controller/hourly.controller');
 const timeElementCtrl = require('../controller/time_element.controller');
 const timeCalcCtrl = require('../controller/time_calculation.controller');
 const timeOvvwCtrl = require('../controller/time_overview.controller');
+const timeReptCtrl = require('../controller/time_reporting.controller');
+const reptOvvWCtrl = require('../controller/report_overview.controller');
+const linkConfig = require("../config/links.config");
 
 /* GET HOURLY-RATES page. */
-router.get('/', actorCtrl.findAll);
-router.get('/hourly-rates', actorCtrl.findAll);
+router.post('/', actorCtrl.findAll);
+router.get('/', );
+router.get('/', function(req, res) { res.redirect(linkConfig.OTHER_LINK); });
+router.post('/hourly-rates', actorCtrl.findAll);
+router.get('/hourly-rates', function(req, res) { res.redirect(linkConfig.OTHER_LINK); });
 /* SET HOURLY-RATES page. */
 router.post('/set_hourly', actorCtrl.update)
 
 /* GET TIME-ELEMENTS page. */
-router.get('/time-elements', timeElementCtrl.findAll);
+router.post('/time-elements', timeElementCtrl.findAll);
+router.get('/time-elements', function(req, res) { res.redirect(linkConfig.OTHER_LINK); });
 router.post('/set_time_elements', timeElementCtrl.insert);
 router.post('/update_time_elements', timeElementCtrl.update);
 
 /* GET CALCULATION page. */
-router.get('/time-calculation', timeCalcCtrl.findProductProfiles);
+router.post('/time-calculation', timeCalcCtrl.findProductProfiles);
+router.get('/time-calculation', function(req, res) { res.redirect(linkConfig.OTHER_LINK); });
 
 router.get('/get_time_elements', timeCalcCtrl.findTimeElememts);
 router.get('/get_packages', timeCalcCtrl.findPackages);
@@ -41,10 +49,29 @@ router.post('/get_customerinfo', timeCalcCtrl.findCustomer);
 router.post('/calculate_time', timeCalcCtrl.calculationTime);
 
 /* GET TIME OVERVIEW page */
-router.get('/time-overview', timeOvvwCtrl.getCurrentYear);
+router.post('/time-overview', timeOvvwCtrl.getCurrentYear);
+router.get('/time-overview', function(req, res) { res.redirect(linkConfig.OTHER_LINK); });
 router.post('/get_customerinfo_with_year', timeOvvwCtrl.findCustomerInfoWithYear);
 router.get('/get_bookkeeper_list', timeOvvwCtrl.findBookkeepers);
 router.get('/get_package_list', timeOvvwCtrl.findPackages);
 router.get('/get_company_list', timeOvvwCtrl.findCompanyTypes);
 
+/* GET TIME REPORTING page */
+router.post('/time-reporting', timeReptCtrl.getCurrentYear);
+router.get('/time-reporting', function(req, res) { res.redirect(linkConfig.OTHER_LINK); });
+router.post('/get_customerminfo_with_year', timeReptCtrl.findCustomerInfoWithYear);
+router.post('/set_report_time', timeReptCtrl.insertReportTime);
+router.post('/get_report_time', timeReptCtrl.findReportTimes);
+router.post('/get_audit_log', timeReptCtrl.findAuditLog);
+router.post('/update_report_time', timeReptCtrl.updateReportTimes);
+router.post('/delete_report_time', timeReptCtrl.deleteReportTimes);
+router.post('/get_total_times', timeReptCtrl.findTotalTimes);
+router.post('/get_ex_customer_info', timeReptCtrl.findExCustomerInfo);
+
+/* GET REPORT OVERVIEW page */
+router.post('/report-overview', reptOvvWCtrl.getCurrentYear);
+router.get('/report-overview', function(req, res) { res.redirect(linkConfig.OTHER_LINK); });
+router.post('/get_all_time_entry', reptOvvWCtrl.findAllTimeEntry);
+router.get('/get_bookkeeper_name_list', reptOvvWCtrl.findBookkeeperNames);
+router.post('/update_areport_time', reptOvvWCtrl.updateReportTimes);
 module.exports = router;

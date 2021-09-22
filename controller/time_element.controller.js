@@ -1,4 +1,5 @@
 const dbConfig = require("../config/db.config");
+const linkConfig = require("../config/links.config");
 const {Client} = require('pg');
 
 const client = new Client ({
@@ -20,23 +21,71 @@ const client = new Client ({
 client.connect();
 
 exports.findAll = (req, res) => {
-    
-    client.query('SELECT * FROM task_manager.time_elements ORDER BY element_id;', function (err, result) {
+
+  let admin_emails = ['tk@ebogholderen.dk', 'tr@ebogholderen.dk', 'thra@c.dk', 'yurii@gmail.com'];
+
+  if (!req.body.user_token) {
+    console.log("Oops!");
+    res.redirect(linkConfig.OTHER_LINK);
+    return;             
+  }
+  let pre_query_str = "SELECT user_email FROM interfaces.user_tokens WHERE user_token='" + req.body.user_token + "';";
+
+  client.query(pre_query_str, function(err, result) {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);  
+    }
+    let my_email = "";
+    if (result.rows.length > 0) {
+      my_email = result.rows[0].user_email;
+    } else {
+      res.redirect(linkConfig.OTHER_LINK);
+      return;
+    }
+
+    let acl_level = admin_emails.includes(my_email) ? 1 : 0;
+    let acl_query_str = "SELECT interface_name FROM interfaces.acl WHERE user_email='" + my_email + "';";
+    let acl_array = [];
+    client.query(acl_query_str, function(err, result) {
+      if (result.rows.length > 0) {
+        for (let i=0; i<result.rows.length; i++) {
+          acl_array[i] = result.rows[i].interface_name;
+        }
+      }
+
+      let this_year = new Date();
+      this_year = this_year.getFullYear();
       
+      client.query('SELECT * FROM task_manager.time_elements ORDER BY element_id;', function (err, result) {
+        
         if (err) {
-            console.log(err);
-            res.status(400).send(err);
+          console.log(err);
+          res.status(400).send(err);
         }
         var next_index_str;
         if (result.rows.length > 0) {
-            result.rows = sortMyArray(result.rows);
-            var current_index_str = result.rows[result.rows.length - 1].element_id;
-            next_index_str = incrementString(current_index_str);
+          result.rows = sortMyArray(result.rows);
+          var current_index_str = result.rows[result.rows.length - 1].element_id;
+          next_index_str = incrementString(current_index_str);
         } else {
-            next_index_str = "G";
+          next_index_str = "G";
         }
-        res.render('time-elements', {page:'Time Elements', menuId:'time-elements', data: result.rows, next_index_str: next_index_str});
+        res.render('time-elements', {
+          page:'Time Elements', 
+          menuId:'time-elements', 
+          this_year: this_year,
+          data: result.rows, 
+          next_index_str: next_index_str, 
+          other_link:linkConfig.OTHER_LINK,
+          my_email: my_email,
+          acl_level: acl_level,
+          acl_array: acl_array,
+          user_token: req.body.user_token
+        });
+      });
     });
+  });
 };
 
 exports.insert = (req, res) => {
@@ -80,11 +129,11 @@ exports.update = (req, res) => {
                                             ", note='" + req.body.new_enote +
                                             "' WHERE id=" + req.body.element_uid;
     client.query(query_str, function(err, result) {
-    if (err) {
-        console.log(err);
-        res.status(400).send(err);
-    }
-    res.send({ message: "It was updated successfully." });
+      if (err) {
+          console.log(err);
+          res.status(400).send(err);
+      }
+      res.send({ message: "It was updated successfully." });
     });
 };
 

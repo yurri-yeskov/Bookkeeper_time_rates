@@ -7,7 +7,7 @@ $(document).ready(function(){
         "ScrollInfinite": true,
         "ordering": true,
         "scrollX": true,
-        "scrollY": "43vh",
+        "scrollY": "48vh",
         "paging": true,
         "pageLength": 100,
         "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
@@ -17,15 +17,15 @@ $(document).ready(function(){
         drawCallback: function(){
           $('#custom-table-info').html($('#leverance-oversigt-table_info').html());
           $('#leverance-oversigt tr td:nth-child(11)').css('background-color', '#e975a0'); // delete
-          $('#leverance-oversigt tr td:nth-child(15)').css('background-color', '#e975a0'); // delete
-          $('#leverance-oversigt tr td:nth-child(17)').css('background-color', '#e975a0'); // delete
-          $('#leverance-oversigt tr td:nth-child(19)').css('background-color', '#e975a0'); // delete
-          $('#leverance-oversigt tr td:nth-child(21)').css('background-color', '#e975a0'); // delete
-          $('#leverance-oversigt tr td:nth-child(23)').css('background-color', '#e975a0'); // delete
+          // $('#leverance-oversigt tr td:nth-child(15)').css('background-color', '#e975a0'); // delete
+          // $('#leverance-oversigt tr td:nth-child(17)').css('background-color', '#e975a0'); // delete
+          // $('#leverance-oversigt tr td:nth-child(19)').css('background-color', '#e975a0'); // delete
+          // $('#leverance-oversigt tr td:nth-child(21)').css('background-color', '#e975a0'); // delete
+          // $('#leverance-oversigt tr td:nth-child(23)').css('background-color', '#e975a0'); // delete
           $('#leverance-oversigt tr td:nth-child(24)').css('background-color', '#e975a0'); // delete
           $('#leverance-oversigt tr td:nth-child(25)').css('background-color', '#e975a0'); // delete
-          $('#leverance-oversigt tr td:nth-child(27)').css('background-color', '#e975a0'); // delete
-          $('#leverance-oversigt tr td:nth-child(29)').css('background-color', '#e975a0'); // delete
+          // $('#leverance-oversigt tr td:nth-child(27)').css('background-color', '#e975a0'); // delete
+          // $('#leverance-oversigt tr td:nth-child(29)').css('background-color', '#e975a0'); // delete
           $('#leverance-oversigt tr td:nth-child(32)').css('background-color', '#e975a0'); // delete
 
           if ($('#input-bookkeeper').val().length > 0) 
@@ -79,21 +79,21 @@ $(document).ready(function(){
             { data: 'first_end_year' },           // First End Of Year
             { data: 'new_customer' },             // New Customer
             { data: 'q13' },                      // Q1 Estimated Time
-            { data: 'q13' },                      // Q1 Used Time         // to change
+            { data: 'q1_used' },                  // Q1 Used Time         
             { data: 'q24' },                      // Q2 Estimated Time
-            { data: 'q24' },                      // Q2 Used Time         // to change
+            { data: 'q2_used' },                  // Q2 Used Time         
             { data: 'q13' },                      // Q3 Estimated Time
-            { data: 'q13' },                      // Q3 Used Time         // to change
+            { data: 'q3_used' },                  // Q3 Used Time         
             { data: 'q24' },                      // Q4 Estimated Time
-            { data: 'q24' },                      // Q4 Used Time         // to change
+            { data: 'q4_used' },                  // Q4 Used Time         
             { data: 'y_est' },                    // Year End Estimated Time
-            { data: 'y_est' },                    // Year End Used Time   // to change
+            { data: 'y_used' },                   // Year End Used Time   
             { data: 't_est' },                    // Extra Time Agreed    // to change
             { data: 't_est' },                    // Extra Time Used      // to change
             { data: 't_est' },                    // Total Time Estimated
-            { data: 't_est' },                    // Total Time Used      // to change
+            { data: 't_used' },                   // Total Time Used    
             { data: 'tc_est' },                   // Total Cost Estimated
-            { data: 'tc_est' },                   // Total Cost Used      // to change
+            { data: 'tc_used' },                   // Total Cost Used      // to change
             { data: 't_inv' },                    // Total Invoiced Price
             { data: 'effic' },                    // Expected Efficiency
             { data: 'effic' },                    // Delivery Efficiency  // to change 
@@ -113,14 +113,7 @@ $(document).ready(function(){
     $('#custom-table-info').css('display', 'block');
     $('#custom-table-info').html($('#leverance-oversigt-table_info').html());
 
-    $('.selectpicker').selectpicker({
-      selectAllText: 'ALL',
-      deselectAllText: 'NONE'
-    });
-    // $('.selectpicker').selectpicker('setStyle', '');
-
-
-    $('<div class="pull-right" style="max-height: 50px; margin:5px;"><button type="button" class="sbm-button btn btn-sm btn-light">Submit</button></div>').appendTo($('.dropdown-menu.open')); 
+    $('<div class="pull-right" style="max-height: 50px; margin:5px;"><button type="button" class="btn btn-default sbm-button">Submit</button></div>').appendTo($('.dropdown-menu.open')); 
     extraShearchSubmit();
     $.ajax({
       type: "get",
@@ -129,8 +122,6 @@ $(document).ready(function(){
       dataType: "json",
       success: function(data) {
         for (var i = 0; i < data.data.length; i++) {
-          if (data.data[i].price_per_hour == null)
-            data.data[i].price_per_hour = 0;
           $('#input-bookkeeper').append('<option value="' + data.data[i].worker_initials + '">' + data.data[i].worker_initials + '</option>');    
         }
         $("#input-bookkeeper").selectpicker("refresh");
@@ -176,7 +167,7 @@ function selectRows() {
   $('#leverance-oversigt-table tbody').on( 'click', 'tr', function () {
       
       if ( $(this).hasClass('selected') ) {
-          $(this).removeClass('selected');
+          // $(this).removeClass('selected');
       }
       else {
           leverance_oversigt_table.$('tr.selected').removeClass('selected');

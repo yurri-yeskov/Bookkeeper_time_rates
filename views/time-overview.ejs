@@ -10,62 +10,91 @@
     <div class="row">
       <div class="container-fluid">
         <div class="container-customer bg-3" style="margin-bottom: 50px;">
-          <div class="col-sm-3">
-            <label>Year: &emsp;</label>
-            <input type="number" id="input-year" maxlength="4" style="height: 25px; width: 80px;" value="<%=this_year%>">
+          <div class="col-sm-3 row">
+            <div class="col-xs-5" style="text-align: right; padding-top: 10px;">
+              <label>Year:</label>
+            </div>
+            <div class="col-xs-7" style="text-align: left; padding-left: 0;">
+              <input class="form-control-custom" type="number" id="input-year" maxlength="4" style="width:200px" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="<%=this_year%>">
+            </div>
           </div>
-          <div class="col-sm-3">
-            <label>Bookkeeper: &emsp;</label>
-            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-bookkeeper" data-width="180px" multiple>
-            </select>
+          <div class="col-sm-3 row">
+            <div class="col-xs-5" style="text-align: right; padding-top: 10px;">
+              <label>Bookkeeper:</label>
+            </div>
+            <div class="col-xs-7" style="text-align: left; padding-left: 0;">
+              <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-bookkeeper" data-width="200px" multiple></select>
+            </div>
           </div>
-          <div class="col-sm-3">
-            <label>Package: &emsp;</label>
-            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-package" data-width="180px" multiple>
-            </select>
+          <div class="col-sm-3 row">
+            <div class="col-xs-5" style="text-align: right; padding-top: 10px;">
+              <label>Package:</label>
+            </div>
+            <div class="col-xs-7" style="text-align: left; padding-left: 0;">
+              <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-package" data-width="200px" multiple></select>
+            </div>
           </div>
-          <div class="col-sm-3">
-            <label>Customer Has Paid: &emsp;</label>
-            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-paid" data-width="180px" multiple>
-            </select>
+          <div class="col-sm-3 row">
+            <div class="col-xs-6" style="text-align: right; padding-top: 10px;">
+              <label>Customer Has Paid:</label>
+            </div>
+            <div class="col-xs-6" style="text-align: left; padding-left: 0;">
+              <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-paid" data-width="200px" multiple>
+              </select>
+            </div>
           </div>
         </div>
         <div class="container-customer bg-3" style="margin-bottom: 100px;">
-          <div class="col-sm-3">
-            <label>Company Type: &emsp;</label>
-            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-company-type" data-width="180px" multiple>
-            </select>
+          <div class="col-sm-3 row">
+            <div class="col-xs-5" style="text-align: right; padding-top: 10px;">
+              <label>Company Type:</label>
+            </div>
+            <div class="col-xs-7" style="text-align: left; padding-left: 0;">
+              <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-company-type" data-width="200px" multiple></select>
+            </div>
           </div>
-          <div class="col-sm-3">
-            <label>Moms: &emsp;</label>
-            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true"  id="input-moms" data-width="180px" multiple>
-              <option value="quarterly">quarterly</option>
-              <option value="half-year">half-year</option>
-              <option value="N/A">N/A</option>
-            </select>
+          <div class="col-sm-3 row">
+            <div class="col-xs-5" style="text-align: right; padding-top: 10px;">
+              <label>Moms:</label>
+            </div>
+            <div class="col-xs-7" style="text-align: left; padding-left: 0;">
+              <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true"  id="input-moms" data-width="200px" multiple>
+                <option value="quarterly">quarterly</option>
+                <option value="half-year">half-year</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </div>
           </div>
-          <div class="col-sm-3">
-            <label>Reporting: &emsp;</label>
-            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-reporting" data-width="180px" multiple>
-              <option value="quarterly">quarterly</option>
-              <option value="half-year">half-year</option>
-              <option value="yearly">yearly</option>
-            </select>
+          <div class="col-sm-3 row">
+            <div class="col-xs-5" style="text-align: right; padding-top: 10px;">
+              <label>Reporting:</label>
+            </div>
+            <div class="col-xs-7" style="text-align: left; padding-left: 0;">
+              <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-reporting" data-width="200px" multiple>
+                <option value="quarterly">quarterly</option>
+                <option value="half-year">half-year</option>
+                <option value="yearly">yearly</option>
+              </select>
+            </div>
           </div>
-          <div class="col-sm-3">
-            <label>Used time xx: &emsp;</label>
-            <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-used-time" data-width="180px" multiple>
-            </select>
+          <div class="col-sm-3 row">
+            <div class="col-xs-6" style="text-align: right; padding-top: 10px;">
+              <label>Used time xx:</label>
+            </div>
+            <div class="col-xs-6" style="text-align: left; padding-left: 0;">
+              <select class="selectpicker" data-actions-box="true" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-used-time" data-width="200px" multiple>
+              </select>
+            </div>
           </div>
         </div>
-        <div class="pull-left" style="margin-bottom: 10px; display: none;">
+        <!-- <div class="pull-left" style="margin-bottom: 10px; display: none;">
           <label>Counter: &emsp;</label>
-          <input type="number" id="input-counter" maxlength="4" style="height:25px; width: 80px;" value="">
+          <input type="number" id="input-counter" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" style="height:25px; width: 80px;" value="">
         </div>
         <div class="pull-right" style="display: none;">
           <label>Search: &emsp;</label>
           <input type="text" id="input-search" style="height:25px;" value="">
-        </div>
+        </div> -->
         
         <div style="overflow: hidden; width: 100%; max-height: 100vh;">
           <div  id="custom-table-info" style="position: absolute; width: 95%; margin-top: 10px; display:none;" >Showing 11 to 20 of 661 entries</div>
@@ -86,21 +115,21 @@
                 <th scope="col" style="text-align: center;">First End Of Year</th>
                 <th scope="col" style="text-align: center;">New Customer</th>
                 <th scope="col" style="text-align: center;">Q1 Estimated Time</th>
-                <th scope="col" style="text-align: center;background-color: #e975a0;">Q1 Used Time</th>
+                <th scope="col" style="text-align: center;">Q1 Used Time</th>
                 <th scope="col" style="text-align: center;">Q2 Estimated Time</th>
-                <th scope="col" style="text-align: center;background-color: #e975a0;">Q2 Used Time</th>
+                <th scope="col" style="text-align: center;">Q2 Used Time</th>
                 <th scope="col" style="text-align: center;">Q3 Estimated Time</th>
-                <th scope="col" style="text-align: center;background-color: #e975a0;">Q3 Used Time</th>
+                <th scope="col" style="text-align: center;">Q3 Used Time</th>
                 <th scope="col" style="text-align: center;">Q4 Estimated Time</th>
-                <th scope="col" style="text-align: center;background-color: #e975a0;">Q4 Used Time</th>
+                <th scope="col" style="text-align: center;">Q4 Used Time</th>
                 <th scope="col" style="text-align: center;">Year-end Estimated Time</th>
-                <th scope="col" style="text-align: center; background-color: #e975a0;">Year-end Used Time</th>
+                <th scope="col" style="text-align: center;">Year-end Used Time</th>
                 <th scope="col" style="text-align: center; background-color: #e975a0;">Extra Time Agreed</th>
                 <th scope="col" style="text-align: center; background-color: #e975a0;">Extra Time Used</th>
                 <th scope="col" style="text-align: center;">Total Time Estimated</th>
-                <th scope="col" style="text-align: center; background-color: #e975a0;">Total Time Used</th>
+                <th scope="col" style="text-align: center;">Total Time Used</th>
                 <th scope="col" style="text-align: center;">Total Cost Estimated</th>
-                <th scope="col" style="text-align: center; background-color: #e975a0;">Total Cost Used</th>
+                <th scope="col" style="text-align: center;">Total Cost Used</th>
                 <th scope="col" style="text-align: center;">Total Invoiced Price</th>
                 <th scope="col" style="text-align: center;">Expected Efficiency</th>
                 <th scope="col" style="text-align: center; background-color: #e975a0;">Delivery Efficiency</th>

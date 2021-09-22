@@ -178,11 +178,11 @@ class BSTable {
       $('#input-exist-elements').selectpicker('val', element2_arr);
 
       let package_arr = $currentRow.find('.package-plain').html().split(', ');
-      package_arr.pop();
+      // package_arr.pop();
       $('#input-package').selectpicker('val', package_arr);
 
       let company_type_arr = $currentRow.find('.company-plain').html().split(', ');
-      company_type_arr.pop();
+      // company_type_arr.pop();
       $('#input-company').selectpicker('val', company_type_arr);
       
       $(".selectpicker").selectpicker("refresh");

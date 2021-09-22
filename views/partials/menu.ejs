@@ -1,20 +1,303 @@
-<nav class="navbar navbar-default">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>                        
-        </button>
-        <!-- <a class="navbar-brand" href="#">LOGO</a> -->
-      </div>
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav navbar-center">
-          <li id="hourly-rates"><a href="/hourly-rates">BOOKKEEPER HOURLY RATES</a></li>
-          <li id="time-elements"><a href="/time-elements">TIME ELEMENTS</a></li>
-          <li id="time-calculation"><a href="/time-calculation">PRODUCT TIME CALCULATION</a></li>
-          <li id="time-overview"><a href="/time-overview">BOOKKEEPER TIME OVERVIEW</a></li>
-        </ul>
-      </div>
+<nav class="navbar navbar-default fixed-top bg-dark navbar-inverse">
+  <a class="navbar-brand my-brand" style="color: white;" href="<%= other_link %>">Interfaces</a>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
     </div>
-  </nav>
+    
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown my-dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vælg en <span class="caret"></span></a>
+          <ul class="dropdown-menu my-dropdown-menu" id="my-menu-list">
+            <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Frontpage <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<%= other_link %>">Frontpage</a></li>
+                <% if (acl_array.includes('frontpage-overview') || acl_level == 1) { %>
+                  <li><a href="<%= other_link %>site/overview">Frontpage - Overview</a></li>  
+                <% } %>
+              </ul>
+            </li>
+            <% if (acl_array.includes('customer-notes') || acl_level == 1) { %>
+              <li><a href="<%= other_link %>customer-notes">Kundebemærkninger</a></li>      
+            <% } %>
+            
+            <% if (acl_array.includes('onboarding') || acl_array.includes('onboarding-stat') || acl_array.includes('onboarding-leads-overview') || acl_level == 1) { %>
+              <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Onboarding <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <% if (acl_array.includes('onboarding') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>onboarding">Onboarder</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('onboarding-stat') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>onboarding-stat">Onboarder Conversion Statistics</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('onboarding-leads-overview') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>onboarding-stat/leads-overview">Leads overview</a></li>
+                  <% } %>
+                </ul>
+              </li>
+            <% } %>
+
+            <% if (acl_array.includes('startup-call') || 
+                   acl_array.includes('delivery-overview') || 
+                   acl_array.includes('reminder-no-delivery') || 
+                   acl_array.includes('info-mails') || 
+                   acl_array.includes('bank-handling') || 
+                   acl_array.includes('customer-data-import') || 
+                   acl_array.includes('check-receipts') || 
+                   acl_array.includes('master-bank-reconciliation') || 
+                   acl_array.includes('master-bank-reconciliation-advanced') || 
+                   acl_array.includes('exception-list-sent') || 
+                   acl_array.includes('exception-list-check') || 
+                   acl_level == 1) { %>
+              <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Delivery Process Support <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <% if (acl_array.includes('startup-call') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>startup-call">Startup Call</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('delivery-overview') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>delivery-process/overview">Delivery Overview</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('reminder-no-delivery') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>delivery-process/no-delivery">No Service</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('info-mails') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>delivery-process/info-mails">1-2. Info mails</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bank-handling') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>delivery-process/bank-handling">3. A Bank handling [D1]</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('customer-data-import') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>delivery-process/customer-data-import">3. C Customer Data import [D2]</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('check-receipts') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>delivery-process/check-receipts">3. D Check Receipts</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('master-bank-reconciliation') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>delivery-process/master-bank-reconciliation">4. Master Bank Reconciliation [D3]</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('master-bank-reconciliation-advanced') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>delivery-process/master-bank-reconciliation-advanced">5. Master Bank Advanced Reconciliation [D4]</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('exception-list-sent') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>delivery-process/exception-list-sent">6. Check if exception list answered</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('exception-list-check') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>delivery-process/exception-list-check">7. Check of exception list</a></li>
+                  <% } %>
+                </ul>
+              </li>
+            <% } %>
+
+            <% if (acl_array.includes('bookkeeper') || 
+                   acl_array.includes('bookkeeper-overview') || 
+                   acl_array.includes('bookkeeper-year') || 
+                   acl_array.includes('bookkeeper-overview-year') || 
+                   acl_array.includes('bookkeeper-statistic') || 
+                   acl_array.includes('bookkeeper-data-year') || 
+                   acl_array.includes('bookkeeper-bulk-accounting') || 
+                   acl_array.includes('bookkeeper-special-delivery') || 
+                   acl_array.includes('bookkeeper-special-delivery-overview') || 
+                   acl_array.includes('bookkeeper-bankview') || 
+                   acl_level == 1) { %>
+              <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Bookkeeper <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <% if (acl_array.includes('bookkeeper') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bookkeeper">Bookkeeper Quarterly Delivery</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bookkeeper-overview') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bookkeeper/overview">Bookkeeper Quarterly Overview</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bookkeeper-year') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bookkeeper/year-end">Bookkeeper Year-end Delivery</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bookkeeper-overview-year') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bookkeeper/year-end-overview">Bookkeeper Year-end Overview</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bookkeeper-statistic') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bookkeeper/statistic">Bookkeeper Statistic</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bookkeeper-data-year') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bookkeeper/year-end-data">Year-end Data</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bookkeeper-bulk-accounting') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bookkeeper/bulk-accounting">Bulk accounting</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bookkeeper-special-delivery') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bookkeeper/special-delivery">Special Delivery</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bookkeeper-special-delivery-overview') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bookkeeper/special-delivery-overview">Special Delivery Overview</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bookkeeper-bankview') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bookkeeper/bankview">Bankview</a></li>
+                  <% } %>
+                </ul>
+              </li>
+            <% } %>
+
+            <% if (acl_array.includes('bank-access-overview') || 
+                   acl_array.includes('bank-import') || 
+                   acl_array.includes('bank-import-bulk') || 
+                   acl_array.includes('bank-administration') || 
+                   acl_array.includes('hooks') || 
+                   acl_level == 1) { %>
+              <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Bank <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <% if (acl_array.includes('bank-access-overview') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bank/access-overview">Bank Access Overview</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bank-import') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bank/import">Bank Connection Administration</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bank-import-bulk') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bank/import-bulk">Bank Bulk Import</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bank-administration') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bank/administration">Bank Administration</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('hooks') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>hooks">Aiia Hooks Browse</a></li>
+                  <% } %>
+                </ul>
+              </li>
+            <% } %>
+
+            <% if (acl_array.includes('invoices-outstanding') || 
+                   acl_array.includes('invoices-extra') || 
+                   acl_array.includes('invoices-packages') || 
+                   acl_array.includes('invoices-reinvoicing') || 
+                   acl_level == 1) { %>
+              <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Invoicing <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <% if (acl_array.includes('invoices-outstanding') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>invoices/outstanding">Outstanding Invoices</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('invoices-extra') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>invoices/extra">Invoicing Extra</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('invoices-packages') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>invoices/packages">Invoicing Receipt Packages</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('invoices-reinvoicing') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>invoices/reinvoicing">Re-invoicing Customers</a></li>
+                  <% } %>
+                </ul>
+              </li>
+            <% } %>
+
+            <% if (acl_array.includes('hourly-rates') || 
+                   acl_array.includes('time-elements') || 
+                   acl_array.includes('time-calculation') || 
+                   acl_array.includes('time-overview') || 
+                   acl_array.includes('time-reporting') || 
+                   acl_array.includes('report-overview') || 
+                   acl_level == 1) { %>
+              <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Time Registration <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <% if (acl_array.includes('hourly-rates') || acl_level == 1) { %>
+                    <form id="form_hourly-rates" method="post" action="/hourly-rates">
+                      <input name="user_token" type="hidden" value="<%= user_token %>">
+                      <li><a style="cursor: pointer;" onclick="document.getElementById('form_hourly-rates').submit();">Bookkeeper Hourly Rates</a></li>
+                    </form>
+                  <% } %>
+                  <% if (acl_array.includes('time-elements') || acl_level == 1) { %>
+                    <form id="form_time-elements" method="post" action="/time-elements">
+                      <input name="user_token" type="hidden" value="<%= user_token %>">
+                      <li><a style="cursor: pointer;" onclick="document.getElementById('form_time-elements').submit();">Time Elements</a></li>
+                    </form>
+                  <% } %>
+                  <% if (acl_array.includes('time-calculation') || acl_level == 1) { %>
+                    <form id="form_time-calculation" method="post" action="/time-calculation">
+                      <input name="user_token" type="hidden" value="<%= user_token %>">
+                      <li><a style="cursor: pointer;" onclick="document.getElementById('form_time-calculation').submit();">Product Time Calculation</a></li>
+                    </form>
+                  <% } %>
+                  <% if (acl_array.includes('time-overview') || acl_level == 1) { %>
+                    <form id="form_time-overview" method="post" action="/time-overview">
+                      <input name="user_token" type="hidden" value="<%= user_token %>">
+                      <li><a style="cursor: pointer;" onclick="document.getElementById('form_time-overview').submit();">Bookkeeper Time Overview</a></li>
+                    </form>
+                  <% } %>
+                  <% if (acl_array.includes('time-reporting') || acl_level == 1) { %>
+                    <form id="form_time-reporting" method="post" action="/time-reporting">
+                      <input name="user_token" type="hidden" value="<%= user_token %>">
+                      <li><a style="cursor: pointer;" onclick="document.getElementById('form_time-reporting').submit();">Bookkeeper Time Reporting</a></li>
+                    </form>
+                  <% } %>
+                  <% if (acl_array.includes('report-overview') || acl_level == 1) { %>
+                    <form id="form_report-overview" method="post" action="/report-overview">
+                      <input name="user_token" type="hidden" value="<%= user_token %>">
+                      <li><a style="cursor: pointer;" onclick="document.getElementById('form_report-overview').submit();">Time Entry Overview</a></li>
+                    </form>
+                    <li><a href="/report-overview"></a></li>
+                  <% } %>
+                </ul>
+              </li>
+            <% } %>
+
+            <% if (acl_array.includes('admin-acl') || 
+                   acl_array.includes('admin-canned-responses') || 
+                   acl_array.includes('admin-product-view') || 
+                   acl_array.includes('admin-monitoring') || 
+                   acl_array.includes('admin-notificator') || 
+                   acl_level == 1) { %>
+              <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <% if (acl_array.includes('admin-acl') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>admin/acl">Interface Access</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('admin-canned-responses') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>admin/canned-responses">Canned Responses</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('admin-product-view') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>admin/product-view">Product View</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('admin-monitoring') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>admin/monitoring">System Monitoring</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('admin-notificator') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>admin/notificator">Notificator settings</a></li>
+                  <% } %>
+                </ul>
+              </li>
+            <% } %>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-center">
+        <li style="padding-top:15px; ">
+          <form id="frm_hourly-rates" method="post" action="/hourly-rates">
+            <input name="user_token" type="hidden" value="<%= user_token %>">
+            <a style="cursor: pointer; text-decoration: none;" onclick="document.getElementById('frm_hourly-rates').submit();">Time Registration</a>
+          </form>
+        </li>
+        <li><a>/</a></li>
+        <li style="padding-top:15px; ">
+          <form id="sub_frm" method="post" action="/<%= menuId %>">
+            <input name="user_token" type="hidden" value="<%= user_token %>">
+            <a style="cursor: pointer; text-decoration: none;" onclick="document.getElementById('sub_frm').submit();"><%= page %></a>
+          </form>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="<%= other_link %>logout">Log ud (<%= my_email %>)</a></li>
+      </ul>
+    </div>
+
+    <!-- <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-center">
+        <li id="hourly-rates"><a href="/hourly-rates">BOOKKEEPER HOURLY RATES</a></li>
+        <li id="time-elements"><a href="/time-elements">TIME ELEMENTS</a></li>
+        <li id="time-calculation"><a href="/time-calculation">PRODUCT TIME CALCULATION</a></li>
+        <li id="time-overview"><a href="/time-overview">BOOKKEEPER TIME OVERVIEW</a></li>
+        <li id="time-reporting"><a href="/time-reporting">BOOKKEPER TIME REPORTING</a></li>
+        <li id="report-overview"><a href="/report-overview">TIME ENTRY OVERVIEW</a></li>
+      </ul>
+    </div> -->
+  </div>
+</nav>
