@@ -148,7 +148,7 @@
       $('#basicModal').hide();
       $.ajax({
           type: "post",
-          url: "/set_time_elements",
+          url: base_url + "/set_time_elements",
           data: {
               element_name: $('#input-name').val(),
               element_value: $('#input-value').val(),

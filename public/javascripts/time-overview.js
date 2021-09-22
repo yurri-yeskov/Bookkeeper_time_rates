@@ -53,7 +53,7 @@ $(document).ready(function(){
         
         "paging": true,
         "ajax": {
-            url:'/get_customerinfo_with_year',
+            url: base_url + '/get_customerinfo_with_year',
             type: "post",
             // data: {
             //     this_year: $('#input-year').val()
@@ -117,7 +117,7 @@ $(document).ready(function(){
     extraShearchSubmit();
     $.ajax({
       type: "get",
-      url: "/get_bookkeeper_list",
+      url: base_url + "/get_bookkeeper_list",
       data: {},
       dataType: "json",
       success: function(data) {
@@ -130,7 +130,7 @@ $(document).ready(function(){
     
     $.ajax({
       type: "get",
-      url: "/get_package_list",
+      url: base_url + "/get_package_list",
       data: {},
       dataType: "json",
       success: function(data) {
@@ -144,7 +144,7 @@ $(document).ready(function(){
 
     $.ajax({
       type: "get",
-      url: "/get_company_list",
+      url: base_url + "/get_company_list",
       data: {},
       dataType: "json",
       success: function(data) {

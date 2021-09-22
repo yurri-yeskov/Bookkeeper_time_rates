@@ -1,8 +1,6 @@
 var time_entry_table;
 $(document).ready(function(){
 
-  alert(base_url);
-
   time_entry_table = $("#time-entry-table").DataTable({
     "scrollCollapse": true,
     "ScrollInfinite": true,
@@ -54,7 +52,7 @@ $(document).ready(function(){
         $('#time-entry tr td:nth-child(11)').css("background-color", "#d1d0d0");
     },
     "ajax": {
-      url:'/get_all_time_entry',
+      url: base_url + '/get_all_time_entry',
       type: "post",
       data: function(d){
         d.extra_search = getExtraSearch();
@@ -101,7 +99,7 @@ $(document).ready(function(){
 
   $.ajax({
     type: "get",
-    url: "/get_bookkeeper_name_list",
+    url: base_url + "/get_bookkeeper_name_list",
     data: {},
     dataType: "json",
     success: function(data) {
@@ -131,7 +129,7 @@ $(document).ready(function(){
 function getTotalTimes(sel_year) {
   $.ajax({
     type: "post",
-    url: "/get_total_times",
+    url: base_url + "/get_total_times",
     data: {
       sel_year: sel_year
     },
@@ -320,7 +318,7 @@ function showAuditModal(e) {
 
   $.ajax({
     type: "post",
-    url: "/get_audit_log",
+    url: base_url + "/get_audit_log",
     data: {
       customer_id: customer_id,
       sel_year: $('#input-year').val(),
@@ -459,7 +457,7 @@ function showAuditModal(e) {
 //     $('.btn').prop('disabled', true);
 //     $.ajax({
 //       type: "post",
-//       url: "/update_report_time",
+//       url: base_url + "/update_report_time",
 //       data: change_data,
 //       dataType: "json",
 //       success: function(data) {
@@ -486,7 +484,7 @@ function showAuditModal(e) {
 //     $('.btn').prop('disabled', true);
 //     $.ajax({
 //       type: "post",
-//       url: "/delete_report_time",
+//       url: base_url + "/delete_report_time",
 //       data: {
 //         id: id,
 //         month: month_name,
@@ -654,7 +652,7 @@ function updateAReportTime() {
     
     $.ajax({
       type: "post",
-      url: "/update_areport_time",
+      url: base_url + "/update_areport_time",
       data: change_data,
       dataType: "json",
       success: function(data) {

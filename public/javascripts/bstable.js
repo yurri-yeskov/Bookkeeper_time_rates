@@ -292,7 +292,7 @@ class BSTable {
     this.options.onEdit($currentRow[0]);
     if (my_table_id == "bookkeeper-table") {
       $.ajax({
-        url: '/set_hourly',
+        url: base_url + '/set_hourly',
         type: 'post',
         data: {
           new_hourly : $('#new_hourly').val(),
@@ -305,7 +305,7 @@ class BSTable {
       })
     } else if (my_table_id == "element-table") {
       $.ajax({
-        url: '/update_time_elements',
+        url: base_url + '/update_time_elements',
         type: 'post',
         data: {
           new_ename : $('#new_ename').val(),

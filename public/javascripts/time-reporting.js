@@ -39,7 +39,7 @@ $(document).ready(function(){
           });
         },
         "ajax": {
-            url:'/get_customerminfo_with_year',
+            url: base_url + '/get_customerminfo_with_year',
             type: "post",
             data: function(d){
               d.this_year = getSelYear();
@@ -98,7 +98,7 @@ $(document).ready(function(){
 function getTotalTimes(sel_year) {
   $.ajax({
     type: "post",
-    url: "/get_total_times",
+    url: base_url + "/get_total_times",
     data: {
       sel_year: sel_year
     },
@@ -180,7 +180,7 @@ function showEditModal(e) {
 
   $.ajax({
     type: "post",
-    url: "/get_report_time",
+    url: base_url + "/get_report_time",
     data: {
       customer_id: customer_id,
       sel_year: $('#input-year').val() // changechange
@@ -271,7 +271,7 @@ function showAuditModal(e) {
 
   $.ajax({
     type: "post",
-    url: "/get_audit_log",
+    url: base_url + "/get_audit_log",
     data: {
       customer_id: customer_id,
       sel_year: $('#input-year').val() //
@@ -497,7 +497,7 @@ function acepRow(id, month_name) {
     $('.btn').prop('disabled', true);
     $.ajax({
       type: "post",
-      url: "/update_report_time",
+      url: base_url + "/update_report_time",
       data: change_data,
       dataType: "json",
       success: function(data) {
@@ -524,7 +524,7 @@ function deleRow(id, month_name) {
     $('.btn').prop('disabled', true);
     $.ajax({
       type: "post",
-      url: "/delete_report_time",
+      url: base_url + "/delete_report_time",
       data: {
         id: id,
         month: month_name,
@@ -611,7 +611,7 @@ function searchWithCustomerId() {
       
       $.ajax({
         type: "post",
-        url: "/get_ex_customer_info",
+        url: base_url + "/get_ex_customer_info",
         data: {
           sel_id: $('#input-customer_id').val()
         },
@@ -690,7 +690,7 @@ function submitReportTime() {
     var cur_time = today_str + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     $.ajax({
       type: "post",
-      url: "/set_report_time",
+      url: base_url + "/set_report_time",
       data: {
         customer_id: $('.customer-id').html(),
         bookkeeper_name: $('.bookkeeper-name').html(),

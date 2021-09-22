@@ -76,7 +76,7 @@ function submitProductProfile() {
         if ($('.product_index').html() == $('#product_profile_id').val()) { // INSERT
             $.ajax({
                 type: "post",
-                url: "/set_product_profile",
+                url: base_url + "/set_product_profile",
                 data: {
                     // package_ids: JSON.stringify(return_packages),
                     use_a: use_a,
@@ -85,12 +85,12 @@ function submitProductProfile() {
                 },
                 dataType: "json",
                 success: function(data) {
-                    ajaxSubmits('/set_product_profile_package', {product_profile_id: data.product_profile.id, package_ids: JSON.stringify(return_packages)});
-                    ajaxSubmits('/set_product_profile_companytype', {product_profile_id: data.product_profile.id, company_types: JSON.stringify(return_companytypes)});
-                    ajaxSubmits('/set_product_profile_timeelement', {product_profile_id: data.product_profile.id, element_ids: JSON.stringify(return_exist_elements), new_customer:"FALSE"});
+                    ajaxSubmits(base_url + '/set_product_profile_package', {product_profile_id: data.product_profile.id, package_ids: JSON.stringify(return_packages)});
+                    ajaxSubmits(base_url + '/set_product_profile_companytype', {product_profile_id: data.product_profile.id, company_types: JSON.stringify(return_companytypes)});
+                    ajaxSubmits(base_url + '/set_product_profile_timeelement', {product_profile_id: data.product_profile.id, element_ids: JSON.stringify(return_exist_elements), new_customer:"FALSE"});
             
                     if (use_a == 'TRUE')
-                        ajaxSubmits('/set_product_profile_timeelement', {product_profile_id: data.product_profile.id, element_ids: JSON.stringify(return_new_elements), new_customer:"TRUE"});
+                        ajaxSubmits(base_url + '/set_product_profile_timeelement', {product_profile_id: data.product_profile.id, element_ids: JSON.stringify(return_new_elements), new_customer:"TRUE"});
                     setTimeout(function(){
                         location.reload(); 
                     }, 1000); 
@@ -99,7 +99,7 @@ function submitProductProfile() {
         } else { // UPDATE
             $.ajax({
                 type: "post",
-                url: "/update_product_profile",
+                url: base_url + "/update_product_profile",
                 data: {
                     // package_ids: JSON.stringify(return_packages),
                     use_a: use_a,
@@ -108,12 +108,12 @@ function submitProductProfile() {
                 },
                 dataType: "json",
                 success: function(data) {
-                    ajaxSubmits('/update_product_profile_package', {product_profile_id: data.product_profile.id, package_ids: JSON.stringify(return_packages)});
-                    ajaxSubmits('/update_product_profile_companytype', {product_profile_id: data.product_profile.id, company_types: JSON.stringify(return_companytypes)});
-                    ajaxSubmits('/update_product_profile_timeelement', {product_profile_id: data.product_profile.id, element_ids: JSON.stringify(return_exist_elements), new_customer:"FALSE"});
+                    ajaxSubmits(base_url + '/update_product_profile_package', {product_profile_id: data.product_profile.id, package_ids: JSON.stringify(return_packages)});
+                    ajaxSubmits(base_url + '/update_product_profile_companytype', {product_profile_id: data.product_profile.id, company_types: JSON.stringify(return_companytypes)});
+                    ajaxSubmits(base_url + '/update_product_profile_timeelement', {product_profile_id: data.product_profile.id, element_ids: JSON.stringify(return_exist_elements), new_customer:"FALSE"});
             
                     if (use_a == 'TRUE')
-                        ajaxSubmits('/update_product_profile_timeelement', {product_profile_id: data.product_profile.id, element_ids: JSON.stringify(return_new_elements), new_customer:"TRUE"});
+                        ajaxSubmits(base_url + '/update_product_profile_timeelement', {product_profile_id: data.product_profile.id, element_ids: JSON.stringify(return_new_elements), new_customer:"TRUE"});
                     setTimeout(function(){
                         location.reload(); 
                     }, 1000); 
@@ -126,7 +126,7 @@ function submitProductProfile() {
 function getTimeElements() {
     $.ajax({
         type: "get",
-        url: "/get_time_elements",
+        url: base_url + "/get_time_elements",
         data: {},
         dataType: "json",
         success: function(data) {
@@ -143,7 +143,7 @@ function getTimeElements() {
 function getPackages() {
     $.ajax({
         type: "get",
-        url: "/get_packages",
+        url: base_url + "/get_packages",
         data: {},
         dataType: "json",
         success: function(data) {
@@ -159,7 +159,7 @@ function getPackages() {
 function getCompanyTypes() {
     $.ajax({
         type: "get",
-        url: "/get_company_types",
+        url: base_url + "/get_company_types",
         data: {},
         dataType: "json",
         success: function(data) {
@@ -180,7 +180,7 @@ function getCompanyTypes() {
 function getProductProfilePackage() {
     $.ajax({
         type: "get",
-        url: "/get_product_profile_package",
+        url: base_url + "/get_product_profile_package",
         data: {},
         dataType: "json",
         success: function(data) {
@@ -198,7 +198,7 @@ function getProductProfilePackage() {
 function getProductProfileCompanyType() {
     $.ajax({
         type: "get",
-        url: "/get_product_profile_company_type",
+        url: base_url + "/get_product_profile_company_type",
         data: {},
         dataType: "json",
         success: function(data) {
@@ -217,7 +217,7 @@ function getProductProfileCompanyType() {
 function getProductProfileTimeElement() {
     $.ajax({
         type: "get",
-        url: "/get_product_profile_time_element",
+        url: base_url + "/get_product_profile_time_element",
         data: {},
         dataType: "json",
         success: function(data) {
@@ -270,7 +270,7 @@ function calcTimeSubmits(e) {
     if (e.key === 'Enter' || e.keyCode === 13) {
         $.ajax({
             type: "post",
-            url: "/get_customerinfo",
+            url: base_url + "/get_customerinfo",
             data: {
                 customer_id: $("#input-customer").val(),
                 sel_year: $('#input-year').val()
@@ -290,7 +290,7 @@ function calcTimeSubmits(e) {
                 // console.log("asdf", data.data[0].name);
                 $.ajax({
                     type: "post",
-                    url: "/calculate_time",
+                    url: base_url + "/calculate_time",
                     data: {
                         customer_info: JSON.stringify(data.data),
                         new_customer: data.new_customer
