@@ -200,37 +200,37 @@
               <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Time Registration <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <% if (acl_array.includes('hourly-rates') || acl_level == 1) { %>
-                    <form id="form_hourly-rates" method="post" action="/hourly-rates">
+                    <form id="form_hourly-rates" method="post" action="/interfaces/timereg/hourly-rates">
                       <input name="user_token" type="hidden" value="<%= user_token %>">
                       <li><a style="cursor: pointer;" onclick="document.getElementById('form_hourly-rates').submit();">Bookkeeper Hourly Rates</a></li>
                     </form>
                   <% } %>
                   <% if (acl_array.includes('time-elements') || acl_level == 1) { %>
-                    <form id="form_time-elements" method="post" action="/time-elements">
+                    <form id="form_time-elements" method="post" action="/interfaces/timereg/time-elements">
                       <input name="user_token" type="hidden" value="<%= user_token %>">
                       <li><a style="cursor: pointer;" onclick="document.getElementById('form_time-elements').submit();">Time Elements</a></li>
                     </form>
                   <% } %>
                   <% if (acl_array.includes('time-calculation') || acl_level == 1) { %>
-                    <form id="form_time-calculation" method="post" action="/time-calculation">
+                    <form id="form_time-calculation" method="post" action="/interfaces/timereg/time-calculation">
                       <input name="user_token" type="hidden" value="<%= user_token %>">
                       <li><a style="cursor: pointer;" onclick="document.getElementById('form_time-calculation').submit();">Product Time Calculation</a></li>
                     </form>
                   <% } %>
                   <% if (acl_array.includes('time-overview') || acl_level == 1) { %>
-                    <form id="form_time-overview" method="post" action="/time-overview">
+                    <form id="form_time-overview" method="post" action="/interfaces/timereg/time-overview">
                       <input name="user_token" type="hidden" value="<%= user_token %>">
                       <li><a style="cursor: pointer;" onclick="document.getElementById('form_time-overview').submit();">Bookkeeper Time Overview</a></li>
                     </form>
                   <% } %>
                   <% if (acl_array.includes('time-reporting') || acl_level == 1) { %>
-                    <form id="form_time-reporting" method="post" action="/time-reporting">
+                    <form id="form_time-reporting" method="post" action="/interfaces/timereg/time-reporting">
                       <input name="user_token" type="hidden" value="<%= user_token %>">
                       <li><a style="cursor: pointer;" onclick="document.getElementById('form_time-reporting').submit();">Bookkeeper Time Reporting</a></li>
                     </form>
                   <% } %>
                   <% if (acl_array.includes('report-overview') || acl_level == 1) { %>
-                    <form id="form_report-overview" method="post" action="/report-overview">
+                    <form id="form_report-overview" method="post" action="/interfaces/timereg/report-overview">
                       <input name="user_token" type="hidden" value="<%= user_token %>">
                       <li><a style="cursor: pointer;" onclick="document.getElementById('form_report-overview').submit();">Time Entry Overview</a></li>
                     </form>
