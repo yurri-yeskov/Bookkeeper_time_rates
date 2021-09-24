@@ -112,7 +112,21 @@ exports.findCustomerInfoWithYear = (req, res) => {
     let recordsFiltered = 0;
   
     let init_query = "CALL set_customer_time_into_temp('" + service_from + "', '" + service_until + "');"
-    let query_count = "SELECT COUNT(*) FROM temp_customer_time";
+    let query_count = "SELECT COUNT(vv.*) FROM " + 
+                        "(SELECT COALESCE(time_spent[1], 0.00) as january_spent, COALESCE(time_spent[2], 0.00) as february_spent, " + 
+                        "COALESCE(time_spent[3], 0.00) as march_spent, COALESCE(time_spent[4], 0.00) as april_spent, " + 
+                        "COALESCE(time_spent[5], 0.00) as may_spent, COALESCE(time_spent[6], 0.00) as june_spent, " +
+                        "COALESCE(time_spent[7], 0.00) as july_spent, COALESCE(time_spent[8], 0.00) as august_spent, " +
+                        "COALESCE(time_spent[9], 0.00) as september_spent, COALESCE(time_spent[10], 0.00) as october_spent, " +
+                        "COALESCE(time_spent[11], 0.00) as november_spent, COALESCE(time_spent[12], 0.00) as december_spent, " + 
+                        "COALESCE((COALESCE(time_spent[1], 0.00) + COALESCE(time_spent[2], 0.00) + COALESCE(time_spent[3], 0.00) + " + 
+                        "COALESCE(time_spent[4], 0.00) + COALESCE(time_spent[5], 0.00) + COALESCE(time_spent[6], 0.00) + COALESCE(time_spent[7], 0.00) + " + 
+                        "COALESCE(time_spent[8], 0.00) + COALESCE(time_spent[9], 0.00) + COALESCE(time_spent[10], 0.00) + COALESCE(time_spent[11], 0.00) + " + 
+                        "COALESCE(time_spent[12], 0.00)), 0.00) as total_spent, " +
+                        "aa.* FROM (" + 
+                        "SELECT customer_id, primary_email, company_name, bookkeeper_name, bookkeeper_email, " +
+                        "calc_timespent_month(customer_id, '" + service_from + "'::date, '" + service_until + "'::date) AS time_spent " +
+                        "FROM temp_customer_time) AS aa) AS vv WHERE bookkeeper_email = '" + my_email + "' ";
   
     let order_list = {
       'january_spent': 1, 'february_spent': 2, 'march_spent': 3, 'april_spent': 4, 'may_spent': 5, 'june_spent': 6, 'july_spent': 7,
