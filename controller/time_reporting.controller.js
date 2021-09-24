@@ -126,7 +126,10 @@ exports.findCustomerInfoWithYear = (req, res) => {
                         "aa.* FROM (" + 
                         "SELECT customer_id, primary_email, company_name, bookkeeper_name, bookkeeper_email, " +
                         "calc_timespent_month(customer_id, '" + service_from + "'::date, '" + service_until + "'::date) AS time_spent " +
-                        "FROM temp_customer_time) AS aa) AS vv WHERE bookkeeper_email = '" + my_email + "' ";
+                        "FROM temp_customer_time) AS aa) AS vv ";
+
+    let acl_level = admin_emails.includes(my_email) ? 1 : 0;
+    if (acl_level != 1) query_count += "WHERE bookkeeper_email = '" + my_email + "' ";
   
     let order_list = {
       'january_spent': 1, 'february_spent': 2, 'march_spent': 3, 'april_spent': 4, 'may_spent': 5, 'june_spent': 6, 'july_spent': 7,
@@ -144,17 +147,21 @@ exports.findCustomerInfoWithYear = (req, res) => {
     let order_by = " ORDER BY " + order_list[o_index] + " " + o_dir + " ";
   
     let searchStr = req.body["search[value]"];
+    searchStr = "WHERE "
     if(req.body["search[value]"])  {
-      searchStr = "WHERE bookkeeper_email = '" + my_email + "' AND " +
-                  "(vv.january_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.february_spent::TEXT ILIKE '%" + searchStr + 
-                  "%' OR vv.march_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.april_spent::TEXT ILIKE '%" + searchStr + 
-                  "%' OR vv.may_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.june_spent::TEXT ILIKE '%" + searchStr + 
-                  "%' OR vv.july_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.august_spent::TEXT ILIKE '%" + searchStr + 
-                  "%' OR vv.september_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.october_spent::TEXT ILIKE '%" + searchStr +
-                  "%' OR vv.november_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.december_spent::TEXT ILIKE '%" + searchStr +
-                  "%' OR vv.total_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.customer_id::TEXT ILIKE '%" + searchStr + 
-                  "%' OR vv.primary_email::TEXT ILIKE '%" + searchStr + "%') ";
-    } else searchStr = "WHERE bookkeeper_email = '" + my_email + "' ";
+      if (acl_level != 1) searchStr = "bookkeeper_email = '" + my_email + "' AND ";
+      searchStr += ("(vv.january_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.february_spent::TEXT ILIKE '%" + searchStr + 
+                   "%' OR vv.march_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.april_spent::TEXT ILIKE '%" + searchStr + 
+                   "%' OR vv.may_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.june_spent::TEXT ILIKE '%" + searchStr + 
+                   "%' OR vv.july_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.august_spent::TEXT ILIKE '%" + searchStr + 
+                   "%' OR vv.september_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.october_spent::TEXT ILIKE '%" + searchStr +
+                   "%' OR vv.november_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.december_spent::TEXT ILIKE '%" + searchStr +
+                   "%' OR vv.total_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.customer_id::TEXT ILIKE '%" + searchStr + 
+                   "%' OR vv.primary_email::TEXT ILIKE '%" + searchStr + "%') ");
+    } else {
+      if (acl_level != 1) searchStr = "bookkeeper_email = '" + my_email + "' ";
+      else searchStr = "";
+    }
   
     // change based on Search//
     let query_search_count = "SELECT COUNT(vv.*) FROM " + 
@@ -197,7 +204,6 @@ exports.findCustomerInfoWithYear = (req, res) => {
       client.query(query_count, function(err, result) {
         recordsTotal = result.rows[0].count;
         client.query(query_search_count, function(err, result) {
-          console.log(result);
           recordsFiltered = result.rows[0].count;
           client.query(query_str, function(err, result) {
             if (err) {
