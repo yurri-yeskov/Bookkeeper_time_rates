@@ -179,7 +179,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
                         "SELECT customer_id, primary_email, company_name, bookkeeper_name, bookkeeper_email, " +
                         "calc_timespent_month(customer_id, '" + service_from + "'::date, '" + service_until + "'::date) AS time_spent " +
                         "FROM temp_customer_time) AS aa) AS vv " + searchStr;
-    
+    console.log(query_search_count);
     // add offset and limit//
     let query_str = "SELECT vv.* FROM " +
                 "(SELECT COALESCE(time_spent[1], 0.00) as january_spent, COALESCE(time_spent[2], 0.00) as february_spent, " + 
