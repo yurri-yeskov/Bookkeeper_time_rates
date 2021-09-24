@@ -19,9 +19,9 @@ const client = new Client ({
 // });
 
 client.connect();
-exports.getCurrentYear = (req, res) => {
+const admin_emails = ['tk@ebogholderen.dk', 'tr@ebogholderen.dk', 'thra@c.dk', 'yurii@gmail.com'];
 
-  let admin_emails = ['tk@ebogholderen.dk', 'tr@ebogholderen.dk', 'thra@c.dk', 'yurii@gmail.com'];
+exports.getCurrentYear = (req, res) => {
 
   if (!req.body.user_token) {
     console.log("Oops!");
@@ -59,7 +59,7 @@ exports.getCurrentYear = (req, res) => {
       let month_list = [
         "January", "February", "March",     "April",   "May",      "June",
         "July",    "August",   "September", "October", "November", "December"
-      ]
+      ];
       res.render('time-reporting', {
           page:'Bookkeeper Time Reporting', 
           menuId:'time-reporting', 
@@ -84,103 +84,125 @@ exports.findCustomerInfoWithYear = (req, res) => {
     return;
   }
 
-  let service_from = req.body.this_year + "-01-01";
-  let service_until = req.body.this_year + "-12-31";
-
-  let recordsTotal = 0;
-  let recordsFiltered = 0;
-
-  let init_query = "CALL set_customer_time_into_temp('" + service_from + "', '" + service_until + "');"
-  let query_count = "SELECT COUNT(*) FROM temp_customer_time";
-
-  let order_list = {
-    'january_spent': 1, 'february_spent': 2, 'march_spent': 3, 'april_spent': 4, 'may_spent': 5, 'june_spent': 6, 'july_spent': 7,
-    'august_spent': 8, 'september_spent': 9, 'october_spent': 10, 'november_spent': 11, 'december_spent': 12, 
-    'total_spent': 13, 'customer_id': 14, 'primary_email': 15, 'company_name': 16, 'bookkeeper_name': 17, 'time_spent': 18
-  };
-
-  let o_index = 'customer_id';
-  let o_dir = 'ASC';
-  if (req.body['order[0][column]']) {
-    o_index = 'columns[' + req.body['order[0][column]'] + '][data]';
-    o_index = req.body[o_index];
-    o_dir = req.body['order[0][dir]'];
+  if (!req.body.user_token) {
+    console.log("Oops!");
+    res.redirect(linkConfig.OTHER_LINK);
+    return;             
   }
-  let order_by = " ORDER BY " + order_list[o_index] + " " + o_dir + " ";
 
-  let searchStr = req.body["search[value]"];
-  if(req.body["search[value]"])  {
-    searchStr = "WHERE " +
-                "vv.january_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.february_spent::TEXT ILIKE '%" + searchStr + 
-                "%' OR vv.march_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.april_spent::TEXT ILIKE '%" + searchStr + 
-                "%' OR vv.may_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.june_spent::TEXT ILIKE '%" + searchStr + 
-                "%' OR vv.july_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.august_spent::TEXT ILIKE '%" + searchStr + 
-                "%' OR vv.september_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.october_spent::TEXT ILIKE '%" + searchStr +
-                "%' OR vv.november_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.december_spent::TEXT ILIKE '%" + searchStr +
-                "%' OR vv.total_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.customer_id::TEXT ILIKE '%" + searchStr + 
-                "%' OR vv.primary_email::TEXT ILIKE '%" + searchStr + "%' ";
-  } else searchStr = "";
+  let pre_query_str = "SELECT user_email FROM interfaces.user_tokens WHERE user_token='" + req.body.user_token + "';";
 
-  // change based on Search//
-  let query_search_count = "SELECT COUNT(vv.*) FROM" + 
-                      "(SELECT COALESCE(time_spent[1], 0.00) as january_spent, COALESCE(time_spent[2], 0.00) as february_spent, " + 
-                      "COALESCE(time_spent[3], 0.00) as march_spent, COALESCE(time_spent[4], 0.00) as april_spent, " + 
-                      "COALESCE(time_spent[5], 0.00) as may_spent, COALESCE(time_spent[6], 0.00) as june_spent, " +
-                      "COALESCE(time_spent[7], 0.00) as july_spent, COALESCE(time_spent[8], 0.00) as august_spent, " +
-                      "COALESCE(time_spent[9], 0.00) as september_spent, COALESCE(time_spent[10], 0.00) as october_spent, " +
-                      "COALESCE(time_spent[11], 0.00) as november_spent, COALESCE(time_spent[12], 0.00) as december_spent, " + 
-                      "COALESCE((COALESCE(time_spent[1], 0.00) + COALESCE(time_spent[2], 0.00) + COALESCE(time_spent[3], 0.00) + " + 
-                      "COALESCE(time_spent[4], 0.00) + COALESCE(time_spent[5], 0.00) + COALESCE(time_spent[6], 0.00) + COALESCE(time_spent[7], 0.00) + " + 
-                      "COALESCE(time_spent[8], 0.00) + COALESCE(time_spent[9], 0.00) + COALESCE(time_spent[10], 0.00) + COALESCE(time_spent[11], 0.00) + " + 
-                      "COALESCE(time_spent[12], 0.00)), 0.00) as total_spent, " +
-                      "aa.* FROM (" + 
-                      "SELECT customer_id, primary_email, company_name, bookkeeper_name, " +
-                      "calc_timespent_month(customer_id, '" + service_from + "'::date, '" + service_until + "'::date) AS time_spent " +
-                      "FROM temp_customer_time) AS aa) AS vv " + searchStr;
+  client.query(pre_query_str, function(err, result) {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);  
+    }
+    let my_email = "";
+    if (result.rows.length > 0) {
+      my_email = result.rows[0].user_email;
+    } else {
+      res.redirect(linkConfig.OTHER_LINK);
+      return;
+    } 
+
+    let service_from = req.body.this_year + "-01-01";
+    let service_until = req.body.this_year + "-12-31";
   
-  // add offset and limit//
-  let query_str = "SELECT vv.* FROM" +
-              "(SELECT COALESCE(time_spent[1], 0.00) as january_spent, COALESCE(time_spent[2], 0.00) as february_spent, " + 
-              "COALESCE(time_spent[3], 0.00) as march_spent, COALESCE(time_spent[4], 0.00) as april_spent, " + 
-              "COALESCE(time_spent[5], 0.00) as may_spent, COALESCE(time_spent[6], 0.00) as june_spent, " +
-              "COALESCE(time_spent[7], 0.00) as july_spent, COALESCE(time_spent[8], 0.00) as august_spent, " +
-              "COALESCE(time_spent[9], 0.00) as september_spent, COALESCE(time_spent[10], 0.00) as october_spent, " +
-              "COALESCE(time_spent[11], 0.00) as november_spent, COALESCE(time_spent[12], 0.00) as december_spent, " + 
-              "COALESCE((COALESCE(time_spent[1], 0.00) + COALESCE(time_spent[2], 0.00) + COALESCE(time_spent[3], 0.00) + " + 
-              "COALESCE(time_spent[4], 0.00) + COALESCE(time_spent[5], 0.00) + COALESCE(time_spent[6], 0.00) + COALESCE(time_spent[7], 0.00) + " + 
-              "COALESCE(time_spent[8], 0.00) + COALESCE(time_spent[9], 0.00) + COALESCE(time_spent[10], 0.00) + COALESCE(time_spent[11], 0.00) + " + 
-              "COALESCE(time_spent[12], 0.00)), 0.00) as total_spent, " +
-              "aa.* FROM (" + 
-              "SELECT customer_id, primary_email, company_name, bookkeeper_name, " +
-              "calc_timespent_month(customer_id, '" + service_from + "'::date, '" + service_until + "'::date) AS time_spent " +
-              "FROM temp_customer_time) AS aa) AS vv " + searchStr + order_by;
+    let recordsTotal = 0;
+    let recordsFiltered = 0;
   
-  if (req.body.length != -1)
-    query_str = query_str + " LIMIT " + req.body.length + " OFFSET " + req.body.start;
-
-  client.query(init_query, function() {
-    client.query(query_count, function(err, result) {
-      recordsTotal = result.rows[0].count;
-      client.query(query_search_count, function(err, result) {
-        recordsFiltered = result.rows[0].count;
-        client.query(query_str, function(err, result) {
-          if (err) {
-            console.log(err);
-            res.status(400).send(err);
-          }
-
-          var data = JSON.stringify({
-            "draw": req.body.draw,
-            "recordsFiltered": recordsFiltered,
-            "recordsTotal": recordsTotal,
-            "data": result.rows,
-            "this_year": req.body.this_year
+    let init_query = "CALL set_customer_time_into_temp('" + service_from + "', '" + service_until + "');"
+    let query_count = "SELECT COUNT(*) FROM temp_customer_time";
+  
+    let order_list = {
+      'january_spent': 1, 'february_spent': 2, 'march_spent': 3, 'april_spent': 4, 'may_spent': 5, 'june_spent': 6, 'july_spent': 7,
+      'august_spent': 8, 'september_spent': 9, 'october_spent': 10, 'november_spent': 11, 'december_spent': 12, 
+      'total_spent': 13, 'customer_id': 14, 'primary_email': 15, 'company_name': 16, 'bookkeeper_name': 17, 'time_spent': 19
+    };
+  
+    let o_index = 'customer_id';
+    let o_dir = 'ASC';
+    if (req.body['order[0][column]']) {
+      o_index = 'columns[' + req.body['order[0][column]'] + '][data]';
+      o_index = req.body[o_index];
+      o_dir = req.body['order[0][dir]'];
+    }
+    let order_by = " ORDER BY " + order_list[o_index] + " " + o_dir + " ";
+  
+    let searchStr = req.body["search[value]"];
+    if(req.body["search[value]"])  {
+      searchStr = "WHERE " +
+                  "vv.january_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.february_spent::TEXT ILIKE '%" + searchStr + 
+                  "%' OR vv.march_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.april_spent::TEXT ILIKE '%" + searchStr + 
+                  "%' OR vv.may_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.june_spent::TEXT ILIKE '%" + searchStr + 
+                  "%' OR vv.july_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.august_spent::TEXT ILIKE '%" + searchStr + 
+                  "%' OR vv.september_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.october_spent::TEXT ILIKE '%" + searchStr +
+                  "%' OR vv.november_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.december_spent::TEXT ILIKE '%" + searchStr +
+                  "%' OR vv.total_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.customer_id::TEXT ILIKE '%" + searchStr + 
+                  "%' OR vv.primary_email::TEXT ILIKE '%" + searchStr + "%' ";
+    } else searchStr = "";
+  
+    // change based on Search//
+    let query_search_count = "SELECT COUNT(vv.*) FROM " + 
+                        "(SELECT COALESCE(time_spent[1], 0.00) as january_spent, COALESCE(time_spent[2], 0.00) as february_spent, " + 
+                        "COALESCE(time_spent[3], 0.00) as march_spent, COALESCE(time_spent[4], 0.00) as april_spent, " + 
+                        "COALESCE(time_spent[5], 0.00) as may_spent, COALESCE(time_spent[6], 0.00) as june_spent, " +
+                        "COALESCE(time_spent[7], 0.00) as july_spent, COALESCE(time_spent[8], 0.00) as august_spent, " +
+                        "COALESCE(time_spent[9], 0.00) as september_spent, COALESCE(time_spent[10], 0.00) as october_spent, " +
+                        "COALESCE(time_spent[11], 0.00) as november_spent, COALESCE(time_spent[12], 0.00) as december_spent, " + 
+                        "COALESCE((COALESCE(time_spent[1], 0.00) + COALESCE(time_spent[2], 0.00) + COALESCE(time_spent[3], 0.00) + " + 
+                        "COALESCE(time_spent[4], 0.00) + COALESCE(time_spent[5], 0.00) + COALESCE(time_spent[6], 0.00) + COALESCE(time_spent[7], 0.00) + " + 
+                        "COALESCE(time_spent[8], 0.00) + COALESCE(time_spent[9], 0.00) + COALESCE(time_spent[10], 0.00) + COALESCE(time_spent[11], 0.00) + " + 
+                        "COALESCE(time_spent[12], 0.00)), 0.00) as total_spent, " +
+                        "aa.* FROM (" + 
+                        "SELECT customer_id, primary_email, company_name, bookkeeper_name, bookkeeper_email, " +
+                        "calc_timespent_month(customer_id, '" + service_from + "'::date, '" + service_until + "'::date) AS time_spent " +
+                        "FROM temp_customer_time) AS aa) AS vv WHERE bookkeeper_email = '" + my_email + "' " + searchStr;
+    
+    // add offset and limit//
+    let query_str = "SELECT vv.* FROM " +
+                "(SELECT COALESCE(time_spent[1], 0.00) as january_spent, COALESCE(time_spent[2], 0.00) as february_spent, " + 
+                "COALESCE(time_spent[3], 0.00) as march_spent, COALESCE(time_spent[4], 0.00) as april_spent, " + 
+                "COALESCE(time_spent[5], 0.00) as may_spent, COALESCE(time_spent[6], 0.00) as june_spent, " +
+                "COALESCE(time_spent[7], 0.00) as july_spent, COALESCE(time_spent[8], 0.00) as august_spent, " +
+                "COALESCE(time_spent[9], 0.00) as september_spent, COALESCE(time_spent[10], 0.00) as october_spent, " +
+                "COALESCE(time_spent[11], 0.00) as november_spent, COALESCE(time_spent[12], 0.00) as december_spent, " + 
+                "COALESCE((COALESCE(time_spent[1], 0.00) + COALESCE(time_spent[2], 0.00) + COALESCE(time_spent[3], 0.00) + " + 
+                "COALESCE(time_spent[4], 0.00) + COALESCE(time_spent[5], 0.00) + COALESCE(time_spent[6], 0.00) + COALESCE(time_spent[7], 0.00) + " + 
+                "COALESCE(time_spent[8], 0.00) + COALESCE(time_spent[9], 0.00) + COALESCE(time_spent[10], 0.00) + COALESCE(time_spent[11], 0.00) + " + 
+                "COALESCE(time_spent[12], 0.00)), 0.00) as total_spent, " +
+                "aa.* FROM (" + 
+                "SELECT customer_id, primary_email, company_name, bookkeeper_name, bookkeeper_email, " +
+                "calc_timespent_month(customer_id, '" + service_from + "'::date, '" + service_until + "'::date) AS time_spent " +
+                "FROM temp_customer_time) AS aa) AS vv WHERE bookkeeper_email = '" + my_email + "' " + searchStr + order_by;
+    
+    if (req.body.length != -1)
+      query_str = query_str + " LIMIT " + req.body.length + " OFFSET " + req.body.start;
+  
+    client.query(init_query, function() {
+      client.query(query_count, function(err, result) {
+        recordsTotal = result.rows[0].count;
+        client.query(query_search_count, function(err, result) {
+          recordsFiltered = result.rows[0].count;
+          client.query(query_str, function(err, result) {
+            if (err) {
+              console.log(err);
+              res.status(400).send(err);
+            }
+  
+            var data = JSON.stringify({
+              "draw": req.body.draw,
+              "recordsFiltered": recordsFiltered,
+              "recordsTotal": recordsTotal,
+              "data": result.rows,
+              "this_year": req.body.this_year
+            });
+            res.send(data);
           });
-          res.send(data);
         });
       });
-    });
-  }); 
+    }); 
+  });
 };
 
 exports.insertReportTime = (req, res) => {

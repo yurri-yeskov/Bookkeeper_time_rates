@@ -43,6 +43,7 @@ $(document).ready(function(){
             type: "post",
             data: function(d){
               d.this_year = getSelYear();
+              d.this_token = getSelToken();
             },
             dataType: "json"
         },
@@ -577,6 +578,12 @@ function selectRows() {
 
 function getSelYear() {
   return $('#input-year').val();
+}
+
+function getSelToken() {
+  console.log($('input[name="user_token"]').val());
+  return $('input[name="user_token"]').val();
+  // return $('#input-year').val();
 }
 
 function submitsWithYear(e) {
