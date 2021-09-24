@@ -146,18 +146,18 @@ exports.findCustomerInfoWithYear = (req, res) => {
     }
     let order_by = " ORDER BY " + order_list[o_index] + " " + o_dir + " ";
   
-    let searchStr = req.body["search[value]"];
-    searchStr = "WHERE "
+    let searchStr_r = req.body["search[value]"];
+    let searchStr = "WHERE "
     if(req.body["search[value]"])  {
       if (acl_level != 1) searchStr += "bookkeeper_email = '" + my_email + "' AND ";
-      let sub_searchStr = "(vv.january_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.february_spent::TEXT ILIKE '%" + searchStr + 
-                          "%' OR vv.march_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.april_spent::TEXT ILIKE '%" + searchStr + 
-                          "%' OR vv.may_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.june_spent::TEXT ILIKE '%" + searchStr + 
-                          "%' OR vv.july_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.august_spent::TEXT ILIKE '%" + searchStr + 
-                          "%' OR vv.september_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.october_spent::TEXT ILIKE '%" + searchStr +
-                          "%' OR vv.november_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.december_spent::TEXT ILIKE '%" + searchStr +
-                          "%' OR vv.total_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.customer_id::TEXT ILIKE '%" + searchStr + 
-                          "%' OR vv.primary_email::TEXT ILIKE '%" + searchStr + "%') ";
+      let sub_searchStr = "(vv.january_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.february_spent::TEXT ILIKE '%" + searchStr_r + 
+                          "%' OR vv.march_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.april_spent::TEXT ILIKE '%" + searchStr_r + 
+                          "%' OR vv.may_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.june_spent::TEXT ILIKE '%" + searchStr_r + 
+                          "%' OR vv.july_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.august_spent::TEXT ILIKE '%" + searchStr_r + 
+                          "%' OR vv.september_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.october_spent::TEXT ILIKE '%" + searchStr_r +
+                          "%' OR vv.november_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.december_spent::TEXT ILIKE '%" + searchStr_r +
+                          "%' OR vv.total_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.customer_id::TEXT ILIKE '%" + searchStr_r + 
+                          "%' OR vv.primary_email::TEXT ILIKE '%" + searchStr_r + "%') ";
       searchStr += sub_searchStr;
     } else {
       if (acl_level != 1) searchStr += "bookkeeper_email = '" + my_email + "' ";
