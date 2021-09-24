@@ -150,14 +150,15 @@ exports.findCustomerInfoWithYear = (req, res) => {
     searchStr = "WHERE "
     if(req.body["search[value]"])  {
       if (acl_level != 1) searchStr += "bookkeeper_email = '" + my_email + "' AND ";
-      searchStr += ("(vv.january_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.february_spent::TEXT ILIKE '%" + searchStr + 
-                   "%' OR vv.march_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.april_spent::TEXT ILIKE '%" + searchStr + 
-                   "%' OR vv.may_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.june_spent::TEXT ILIKE '%" + searchStr + 
-                   "%' OR vv.july_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.august_spent::TEXT ILIKE '%" + searchStr + 
-                   "%' OR vv.september_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.october_spent::TEXT ILIKE '%" + searchStr +
-                   "%' OR vv.november_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.december_spent::TEXT ILIKE '%" + searchStr +
-                   "%' OR vv.total_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.customer_id::TEXT ILIKE '%" + searchStr + 
-                   "%' OR vv.primary_email::TEXT ILIKE '%" + searchStr + "%') ");
+      let sub_searchStr = "(vv.january_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.february_spent::TEXT ILIKE '%" + searchStr + 
+                          "%' OR vv.march_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.april_spent::TEXT ILIKE '%" + searchStr + 
+                          "%' OR vv.may_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.june_spent::TEXT ILIKE '%" + searchStr + 
+                          "%' OR vv.july_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.august_spent::TEXT ILIKE '%" + searchStr + 
+                          "%' OR vv.september_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.october_spent::TEXT ILIKE '%" + searchStr +
+                          "%' OR vv.november_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.december_spent::TEXT ILIKE '%" + searchStr +
+                          "%' OR vv.total_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.customer_id::TEXT ILIKE '%" + searchStr + 
+                          "%' OR vv.primary_email::TEXT ILIKE '%" + searchStr + "%') ";
+      searchStr += sub_searchStr;
     } else {
       if (acl_level != 1) searchStr += "bookkeeper_email = '" + my_email + "' ";
       else searchStr = "";
