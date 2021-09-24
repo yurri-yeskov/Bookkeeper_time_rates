@@ -85,7 +85,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
   }
 
   if (!req.body.user_token) {
-    console.log("Oops!");
+    console.log("Oops! You need to log in again");
     res.redirect(linkConfig.OTHER_LINK);
     return;             
   }

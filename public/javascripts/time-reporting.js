@@ -43,7 +43,7 @@ $(document).ready(function(){
             type: "post",
             data: function(d){
               d.this_year = getSelYear();
-              d.this_token = getSelToken();
+              d.user_token = getSelToken();
             },
             dataType: "json"
         },
