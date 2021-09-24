@@ -581,7 +581,6 @@ function getSelYear() {
 }
 
 function getSelToken() {
-  console.log($('input[name="user_token"]').val());
   return $('input[name="user_token"]').val();
   // return $('#input-year').val();
 }
