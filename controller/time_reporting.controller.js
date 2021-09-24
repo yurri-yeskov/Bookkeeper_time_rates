@@ -145,16 +145,16 @@ exports.findCustomerInfoWithYear = (req, res) => {
   
     let searchStr = req.body["search[value]"];
     if(req.body["search[value]"])  {
-      searchStr = "WHERE " +
-                  "vv.january_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.february_spent::TEXT ILIKE '%" + searchStr + 
+      searchStr = "WHERE bookkeeper_email = '" + my_email + "' AND " +
+                  "(vv.january_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.february_spent::TEXT ILIKE '%" + searchStr + 
                   "%' OR vv.march_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.april_spent::TEXT ILIKE '%" + searchStr + 
                   "%' OR vv.may_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.june_spent::TEXT ILIKE '%" + searchStr + 
                   "%' OR vv.july_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.august_spent::TEXT ILIKE '%" + searchStr + 
                   "%' OR vv.september_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.october_spent::TEXT ILIKE '%" + searchStr +
                   "%' OR vv.november_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.december_spent::TEXT ILIKE '%" + searchStr +
                   "%' OR vv.total_spent::TEXT ILIKE '%" + searchStr + "%' OR vv.customer_id::TEXT ILIKE '%" + searchStr + 
-                  "%' OR vv.primary_email::TEXT ILIKE '%" + searchStr + "%' ";
-    } else searchStr = "";
+                  "%' OR vv.primary_email::TEXT ILIKE '%" + searchStr + "%') ";
+    } else searchStr = "WHERE bookkeeper_email = '" + my_email + "' ";
   
     // change based on Search//
     let query_search_count = "SELECT COUNT(vv.*) FROM " + 
@@ -171,7 +171,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
                         "aa.* FROM (" + 
                         "SELECT customer_id, primary_email, company_name, bookkeeper_name, bookkeeper_email, " +
                         "calc_timespent_month(customer_id, '" + service_from + "'::date, '" + service_until + "'::date) AS time_spent " +
-                        "FROM temp_customer_time) AS aa) AS vv WHERE bookkeeper_email = '" + my_email + "' " + searchStr;
+                        "FROM temp_customer_time) AS aa) AS vv " + searchStr;
     
     // add offset and limit//
     let query_str = "SELECT vv.* FROM " +
@@ -188,7 +188,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
                 "aa.* FROM (" + 
                 "SELECT customer_id, primary_email, company_name, bookkeeper_name, bookkeeper_email, " +
                 "calc_timespent_month(customer_id, '" + service_from + "'::date, '" + service_until + "'::date) AS time_spent " +
-                "FROM temp_customer_time) AS aa) AS vv WHERE bookkeeper_email = '" + my_email + "' " + searchStr + order_by;
+                "FROM temp_customer_time) AS aa) AS vv " + searchStr + order_by;
     
     if (req.body.length != -1)
       query_str = query_str + " LIMIT " + req.body.length + " OFFSET " + req.body.start;
