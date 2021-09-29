@@ -30,7 +30,7 @@ exports.index = (req, res) => {
     data:{},
     my_email: "my_email@mail.com",
     acl_level: 1,
-    acl_array: {},
+    acl_array: [],
     user_token: "123456789"
   });
 }
