@@ -11,10 +11,27 @@
     <div class="container-fluid" style="margin-top:20px; width: 85%;">
       <div class="container-customer bg-3">
         <div class="col-sm-12 row">
-          <div class="col-xs-3" style="text-align: right; padding-top: 10px;">
-            <label>Paste url to source file (.png,.jpg,.webp or .PDF): </label>
+          <div class="col-xs-3" style="padding-top: 10px;">
+            <label>Paste url to source file (.png,.jpg, or .PDF): </label>
           </div>
           <div class="col-xs-9" style="text-align: left; padding-left: 0;">
+            <input class="form-control-custom" style="width: 100%;" >
+          </div>
+        </div>
+      </div>
+      <div class="container-customer bg-3">
+        <div class="col-sm-12 row">
+          <div class="col-xs-6" style="padding-top: 10px;">
+            <div id="imagePanel" class="borderspanblue">
+              <div class="imagearea">
+                  <h3>Image Preview</h3>
+              </div>
+              <div class="panel-body">
+                  <img id="previewImage" class="img-responsive" style="float:left; height:80%; width:95%;">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6" style="text-align: left; padding-left: 0;">
             <input class="form-control-custom" style="width: 100%;" >
           </div>
         </div>

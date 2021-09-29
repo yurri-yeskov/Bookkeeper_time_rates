@@ -254,6 +254,24 @@ a.paginate_button {
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
+.borderspanblue {
+  border: solid 1px #053664;
+}
+
+.imagearea {
+  margin: 0 13px 16px 13px;
+  background-color: #053664;
+  border-color: #053664;
+  color: #fff;
+  text-align: center;
+}
+
+.img-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
