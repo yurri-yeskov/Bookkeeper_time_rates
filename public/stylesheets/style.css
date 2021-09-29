@@ -258,10 +258,22 @@ a.paginate_button {
   border: solid 1px #053664;
 }
 
+.borderspangreen {
+  border: solid 1px #037455;
+}
+
 .imagearea {
   margin: 0 13px 16px 13px;
   background-color: #053664;
   border-color: #053664;
+  color: #fff;
+  text-align: center;
+}
+
+.resultarea {
+  margin: 0 13px 16px 13px;
+  background-color: #037455;
+  border-color: #037455;
   color: #fff;
   text-align: center;
 }
