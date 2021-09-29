@@ -196,6 +196,7 @@
                    acl_array.includes('time-overview') || 
                    acl_array.includes('time-reporting') || 
                    acl_array.includes('report-overview') || 
+                   acl_array.includes('receipt-recog') ||
                    acl_level == 1) { %>
               <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Time Registration <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -234,7 +235,9 @@
                       <input name="user_token" type="hidden" value="<%= user_token %>">
                       <li><a style="cursor: pointer;" onclick="document.getElementById('form_report-overview').submit();">Time Entry Overview</a></li>
                     </form>
-                    <li><a href="/report-overview"></a></li>
+                  <% } %>
+                  <% if (acl_array.includes('receipt-recog') || acl_level == 1) { %>
+                    <li><a href="/receipt-recog"></a></li>
                   <% } %>
                 </ul>
               </li>

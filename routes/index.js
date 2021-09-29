@@ -6,7 +6,8 @@ const timeElementCtrl = require('../controller/time_element.controller');
 const timeCalcCtrl = require('../controller/time_calculation.controller');
 const timeOvvwCtrl = require('../controller/time_overview.controller');
 const timeReptCtrl = require('../controller/time_reporting.controller');
-const reptOvvWCtrl = require('../controller/report_overview.controller');
+const reptOvvwCtrl = require('../controller/report_overview.controller');
+const rcptRecoCtrl = require('../controller/receipt_recog.controller');
 const linkConfig = require("../config/links.config");
 
 /* GET HOURLY-RATES page. */
@@ -69,9 +70,13 @@ router.post('/get_total_times', timeReptCtrl.findTotalTimes);
 router.post('/get_ex_customer_info', timeReptCtrl.findExCustomerInfo);
 
 /* GET REPORT OVERVIEW page */
-router.post('/report-overview', reptOvvWCtrl.getCurrentYear);
+router.post('/report-overview', reptOvvwCtrl.getCurrentYear);
 router.get('/report-overview', function(req, res) { res.redirect(linkConfig.OTHER_LINK); });
-router.post('/get_all_time_entry', reptOvvWCtrl.findAllTimeEntry);
-router.get('/get_bookkeeper_name_list', reptOvvWCtrl.findBookkeeperNames);
-router.post('/update_areport_time', reptOvvWCtrl.updateReportTimes);
+router.post('/get_all_time_entry', reptOvvwCtrl.findAllTimeEntry);
+router.get('/get_bookkeeper_name_list', reptOvvwCtrl.findBookkeeperNames);
+router.post('/update_areport_time', reptOvvwCtrl.updateReportTimes);
+
+/* GET RECEIPT RECOG page */
+router.get('/receipt-recog', rcptRecoCtrl.index);
+
 module.exports = router;
