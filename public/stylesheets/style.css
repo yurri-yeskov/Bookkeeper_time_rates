@@ -256,14 +256,16 @@ a.paginate_button {
 
 .borderspanblue {
   border: solid 1px #053664;
+  height: 60vh;
 }
 
 .borderspangreen {
   border: solid 1px #037455;
+  height: 60vh;
 }
 
 .imagearea {
-  margin: 0 13px 16px 13px;
+  margin: 0 13px 5px 13px;
   background-color: #053664;
   border-color: #053664;
   color: #fff;
@@ -271,7 +273,7 @@ a.paginate_button {
 }
 
 .resultarea {
-  margin: 0 13px 16px 13px;
+  margin: 0 13px 5px 13px;
   background-color: #037455;
   border-color: #037455;
   color: #fff;
