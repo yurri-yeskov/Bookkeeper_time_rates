@@ -54,7 +54,7 @@ const ocrFunc = async (image_path, res) => {
     console.log("okokokokokokokokokookokookokokokokokokok");
     const result = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'dan', isTable: true });
     console.log("okokokokokokokokokookokookokokokokokokok--------------------------");
-    res.send({ data: result });
+    res.send({ data: result.ParsedResults });
   } catch (error) {
     console.log(error);
     res.status(400).send(error);

@@ -38,6 +38,10 @@ function loadImage() {
 function startRecognition() {
     var image_path = $('#imagePath').val();
 
+    $('#resultViewer').css('display', 'none');
+    $('.resultarea').css('display', 'none');
+    $('.loader').css('display', 'block');
+
     $.ajax({
         type: "post",
         url: 'get_recog_result',
@@ -47,7 +51,27 @@ function startRecognition() {
         dataType: "json",
         success: function(data) {
             // alert success
-            console.log(data.data);
+            $('#resultViewer').css('display', 'block');
+            $('.resultarea').css('display', 'inline-block');
+            $('.loader').css('display', 'none');
+            result_arr = data.data;
+            var result_str = ""
+            for (var i = 0; i < result_arr.length; i++) {
+                var page_num = i + 1;
+                result_str = result_arr + "///////" + " PAGE " + page_num + "///////\n";
+                var lines = result_arr[i].TextOverlay.Lines;
+                for (var j = 0; j < lines.length; j++) {
+                    var words = lines[j].Words;
+                    for (var k = 0; k < words.length; k++) {
+                        var word_text = words[k].WordText;
+                        result_str = result_str + word_text + " ";
+                        //////command/////
+                    }
+                    result_str = result_str + "\n";
+                }
+            }
+            $('#resultViewer').val(result_str);
+            console.log(result_str);
         }
     });
 }
