@@ -56,8 +56,8 @@ function startRecognition() {
         dataType: "json",
         success: function(data) {
             // alert success
-            $('#resultViewer').css('display', 'block');
-            $('.resultarea').css('display', 'inline-block');
+            $('#resultViewer').css('display', 'inline-block');
+            $('.resultarea').css('display', 'block');
             $('.loader').css('display', 'none');
             result_arr = data.data;
             var result_str = ""
