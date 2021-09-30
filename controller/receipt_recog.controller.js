@@ -49,15 +49,14 @@ exports.getRecogResult = (req, res) => {
   ocrFunc(req.body.image_path);
 }
 
-async function ocrFunc (image_path) {
+const ocrFunc = async (image_path) => {
   try {
     const res = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'dan', isTable: true });
-    console.log("res---------------", res);
+    console.log("res---------------", res['TextOverlay']);
   } catch (error) {
     console.log(error)
   }
 }
-
 ///////////////////////////////////////////////////////
 
 exports.getCurrentYear = (req, res) => {
