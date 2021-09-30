@@ -21,6 +21,7 @@ function loadImage() {
         $('#previewImage').attr('src','./images/no-image.png');
       else {
         $('#previewImage').attr('src','./images/pdf-file.png');
+        clearTimeout($this.data('timer'));
         return;
       }
   
