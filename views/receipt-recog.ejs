@@ -15,7 +15,7 @@
             <label>Paste url to source file (.png,.jpg, or .PDF): </label>
           </div>
           <div class="col-xs-9" style="text-align: left; padding-left: 0;">
-            <input class="form-control-custom" style="width: 100%;" >
+            <input class="form-control-custom" id="imagePath" style="width: 100%;" >
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@
                   <h3 style="margin-top: 1px;">Preview</h3>
               </div>
               <div style="padding: 15px;">
-                  <img src="./images/no-image.png" id="previewImage" class="img-responsive">
+                  <img src="./images/no-image.png" onerror="javascript:this.src='./images/no-image.png'" id="previewImage" class="img-responsive">
               </div>
             </div>
           </div>
