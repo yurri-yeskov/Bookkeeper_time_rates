@@ -57,6 +57,7 @@ async function main () {
 
 exports.getRecogResult = (req, res) => {
 
+  console.log("//////////////////////////////////testtestetsts");
   if (!req.body.image_path) {
     console.log("Oops!");
     res.redirect(linkConfig.OTHER_LINK);
