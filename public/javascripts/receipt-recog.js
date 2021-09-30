@@ -38,6 +38,11 @@ function loadImage() {
 function startRecognition() {
     var image_path = $('#imagePath').val();
 
+    if (image_path == '') {
+        alert('Please paste url to source file!');
+        return;
+    }
+
     $('#resultViewer').css('display', 'none');
     $('.resultarea').css('display', 'none');
     $('.loader').css('display', 'block');
@@ -58,7 +63,7 @@ function startRecognition() {
             var result_str = ""
             for (var i = 0; i < result_arr.length; i++) {
                 var page_num = i + 1;
-                result_str = result_arr + "///////" + " PAGE " + page_num + "///////\n";
+                result_str = result_str + "///////" + " PAGE " + page_num + "///////\n";
                 var lines = result_arr[i].TextOverlay.Lines;
                 for (var j = 0; j < lines.length; j++) {
                     var words = lines[j].Words;
