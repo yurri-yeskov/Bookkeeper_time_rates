@@ -3,3 +3,9 @@ $(document).ready(function(){
     $('#previewImage').css('height', h + 'px');
     $('#resultViewer').css('height', h + 'px');
 });
+
+function resize() {
+    console.log("tyesfsdfasdfadsf");
+}
+  
+window.onresize = resize;
