@@ -47,7 +47,7 @@ function startRecognition() {
         dataType: "json",
         success: function(data) {
             // alert success
-            console.log("asdf");
+            console.log(data.data);
         }
     });
 }
