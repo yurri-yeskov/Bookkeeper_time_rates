@@ -78,5 +78,6 @@ router.post('/update_areport_time', reptOvvwCtrl.updateReportTimes);
 
 /* GET RECEIPT RECOG page */
 router.get('/receipt-recog', rcptRecoCtrl.index);
+router.post('/get_recog_result', rcptRecoCtrl.getRecogResult);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const dbConfig = require("../config/db.config");
 const linkConfig = require("../config/links.config");
 const {Client} = require('pg');
+const ocrSpace = require('ocr-space-api-wrapper');
 
 const client = new Client ({
     user: dbConfig.USER,
@@ -20,6 +21,8 @@ const client = new Client ({
 
 client.connect();
 
+const OCR_API_KEY = '8163d9aa9b88957';
+
 exports.index = (req, res) => {
 
   res.render('receipt-recog', {
@@ -32,6 +35,40 @@ exports.index = (req, res) => {
     acl_level: 1,
     acl_array: [],
     user_token: "123456789"
+  });
+}
+
+
+
+async function main () {
+  try {
+    // Using the OCR.space default free token + remote file
+    const res1 = await ocrSpace('http://dl.a9t9.com/ocrbenchmark/eng.png')
+
+    // Using your personal token + local file
+    const res2 = await ocrSpace('/path/to/file.pdf', { apiKey: '<API_KEY_HERE>' })
+    
+    // Using your personal token + base64 image + custom language
+    const res3 = await ocrSpace('data:image/png;base64...', { apiKey: '<API_KEY_HERE>', language: 'danish' })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+exports.getRecogResult = (req, res) => {
+
+  if (!req.body.image_path) {
+    console.log("Oops!");
+    res.redirect(linkConfig.OTHER_LINK);
+    return;     
+  }
+  ocrSpace(req.body.image_path, {apiKey: OCR_API_KEY, language: 'danish', isTable: true}, function(err, result){
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+
+    console.log("////////////////////////", result);
   });
 }
 
