@@ -38,17 +38,6 @@ exports.index = (req, res) => {
   });
 }
 
-
-
-async function ocrFunc (image_path) {
-  try {
-    const res = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'danish', isTable: true });
-    console.log("res---------------", res);
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 exports.getRecogResult = (req, res) => {
 
   console.log("//////////////////////////////////testtestetsts");
@@ -59,6 +48,17 @@ exports.getRecogResult = (req, res) => {
   }
   ocrFunc(req.body.image_path);
 }
+
+async function ocrFunc (image_path) {
+  try {
+    const res = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'dan', isTable: true });
+    console.log("res---------------", res);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+///////////////////////////////////////////////////////
 
 exports.getCurrentYear = (req, res) => {
 
