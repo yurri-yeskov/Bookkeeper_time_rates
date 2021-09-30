@@ -1,3 +1,5 @@
 $(document).ready(function(){
-    console.log($('#imagePanel').height());
+    var h = $('#imagePanel').height() - 75;
+    $('#previewImage').css('height', h + 'px');
+    $('#resultViewer').css('height', h + 'px');
 });
