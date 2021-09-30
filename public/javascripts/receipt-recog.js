@@ -19,8 +19,10 @@ function loadImage() {
   
       if (path_split[path_split.length - 1] != 'pdf' && path_split[path_split.length - 1] != 'PDF')
         $('#previewImage').attr('src','./images/no-image.png');
-      else 
+      else {
         $('#previewImage').attr('src','./images/pdf-file.png');
+        return;
+      }
   
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function(){
