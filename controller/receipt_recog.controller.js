@@ -49,10 +49,10 @@ exports.getRecogResult = (req, res) => {
   ocrFunc(req.body.image_path);
 }
 
-const ocrFunc = async (image_path) => {
+const ocrFunc = async (image_path, res) => {
   try {
-    const res = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'dan', isTable: true });
-    res.send({ data: res });
+    const result = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'dan', isTable: true });
+    res.send({ data: result });
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
