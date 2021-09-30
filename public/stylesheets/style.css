@@ -282,8 +282,11 @@ a.paginate_button {
 
 .img-responsive {
   display: block;
-  max-width: 100%;
-  height: auto;
+  float:left; 
+  height:100%; 
+  width:100%; 
+  background-color: #eee; 
+  object-fit: contain;
 }
 
 @keyframes spin {

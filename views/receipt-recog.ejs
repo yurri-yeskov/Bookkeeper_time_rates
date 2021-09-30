@@ -24,10 +24,10 @@
           <div class="col-xs-6" style="padding-top: 50px;">
             <div id="imagePanel" class="borderspanblue">
               <div class="imagearea">
-                  <h3 style="margin-top: 1px;">Image Preview</h3>
+                  <h3 style="margin-top: 1px;">Preview</h3>
               </div>
               <div style="padding: 15px;">
-                  <img src="./images/no-image.png" id="previewImage" class="img-responsive" style="float:left; height:100%; width:100%;">
+                  <img src="./images/no-image.png" id="previewImage" class="img-responsive">
               </div>
             </div>
           </div>
@@ -38,7 +38,6 @@
               </div>
               <div style="padding: 15px;">
                 <textarea type="text" style="resize: vertical; width: 100%; height: 100%;" class="form-control-custom" id="resultViewer" ></textarea>
-                  <!-- <img id="previewImage" class="img-responsive" style="float:left; height:80%; width:95%;"> -->
               </div>
             </div>
           </div>
@@ -49,16 +48,5 @@
 </div>
 </body>
 <% include partials/script %>
-<script>
-var changeBookkeeperTable = new BSTable("bookkeeper-table", {
-  editableColumns:"1,2",
-  onEdit:function() {
-    // console.log("EDITED");
-  },
-  advanced: {
-    columnLabel: ''
-  }
-});
-changeBookkeeperTable.init();
-</script>
+<script src="./javascripts/receipt-recog.js"></script>
 </html>
