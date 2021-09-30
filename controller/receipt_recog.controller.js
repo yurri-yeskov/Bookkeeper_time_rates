@@ -46,7 +46,7 @@ exports.getRecogResult = (req, res) => {
     res.redirect(linkConfig.OTHER_LINK);
     return;     
   }
-  ocrFunc(req.body.image_path);
+  ocrFunc(req.body.image_path, res);
 }
 
 const ocrFunc = async (image_path, res) => {
