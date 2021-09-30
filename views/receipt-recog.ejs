@@ -17,10 +17,9 @@
           <div class="col-xs-8" style="text-align: left; padding-left: 0;">
             <input class="form-control-custom" id="imagePath" style="width: 100%;" >
           </div>
-          <div class="col-xs-1">
-            <button id="recog-button" class="btn btn-default" ><b>recognize</b></button>
+          <div class="col-xs-1" style="padding-left: 0;">
+            <button id="recog-button" class="btn btn-default" onclick="startRecognition()"><b>recognize</b></button>
           </div>
-          
         </div>
       </div>
       <div class="container-customer bg-3">
@@ -37,6 +36,7 @@
           </div>
           <div class="col-xs-6" style="padding-top: 50px;">
             <div id="resultPanel" class="borderspangreen">
+              <div class="loader" style="display: none;"></div>
               <div class="resultarea">
                 <h3 style="margin-top: 1px;">Result</h3>
               </div>

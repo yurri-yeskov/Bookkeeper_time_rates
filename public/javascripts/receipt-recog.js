@@ -6,8 +6,10 @@ window.onresize = resize;
 
 function resize() {
     var h = $('#imagePanel').height() - 75;
+    var lh = $('#imagePanel').height() - 365;
     $('#previewImage').css('height', h + 'px');
     $('#resultViewer').css('height', h + 'px');
+    $('.loader').css('margin-top', lh + 'px');
 }
 
 function loadImage() {
@@ -30,6 +32,23 @@ function loadImage() {
         $this.removeData('timer');
         $('#previewImage').attr('src', image_path);
       }, delay));
+    });
+}
+
+function startRecognition() {
+    var image_path = $('#imagePath').val();
+
+    $.ajax({
+        type: "post",
+        url: 'get_recog_result',
+        data: {
+            image_path: image_path
+        },
+        dataType: "json",
+        success: function(data) {
+            // alert success
+            console.log("asdf");
+        }
     });
 }
 
