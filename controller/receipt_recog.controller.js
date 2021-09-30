@@ -40,16 +40,10 @@ exports.index = (req, res) => {
 
 
 
-async function main () {
+async function ocrFunc (image_path) {
   try {
-    // Using the OCR.space default free token + remote file
-    const res1 = await ocrSpace('http://dl.a9t9.com/ocrbenchmark/eng.png')
-
-    // Using your personal token + local file
-    const res2 = await ocrSpace('/path/to/file.pdf', { apiKey: '<API_KEY_HERE>' })
-    
-    // Using your personal token + base64 image + custom language
-    const res3 = await ocrSpace('data:image/png;base64...', { apiKey: '<API_KEY_HERE>', language: 'danish' })
+    const res = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'danish', isTable: true });
+    console.log("res---------------", res);
   } catch (error) {
     console.log(error)
   }
@@ -63,14 +57,7 @@ exports.getRecogResult = (req, res) => {
     res.redirect(linkConfig.OTHER_LINK);
     return;     
   }
-  ocrSpace(req.body.image_path, {apiKey: OCR_API_KEY, language: 'danish', isTable: true}, function(err, result){
-    if (err) {
-      console.log(err);
-      res.status(400).send(err);
-    }
-
-    console.log("////////////////////////", result);
-  });
+  ocrFunc(req.body.image_path);
 }
 
 exports.getCurrentYear = (req, res) => {
