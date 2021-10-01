@@ -78,11 +78,12 @@ function startRecognition() {
             $('#resultViewer').val(result_str);
             // console.log(result_str);
         },
-        fail: function(xhr, textStatus, errorThrown){
-            console.log(xhr);
-            console.log(textStatus);
-            console.log(errorThrown);
-         }
+        error: function(e) {
+            $('#resultViewer').css('display', 'inline-block');
+            $('.resultarea').css('display', 'block');
+            $('.loader').css('display', 'none');
+            $('#resultViewer').val(e);
+        }
     });
 }
 
