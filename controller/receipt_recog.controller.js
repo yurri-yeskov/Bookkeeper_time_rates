@@ -52,7 +52,6 @@ exports.getRecogResult = (req, res) => {
 const ocrFunc = async (image_path, res) => {
   try {
     console.log("okokokokokokokokokookokookokokokokokokok");
-    let image_path = $('#imagePath').val();
     let path_split = image_path.split('.');
     let filetype = path_split[path_split.length - 1].toUpperCase();
     if (filetype == 'PDF') filetype = 'PDF';
