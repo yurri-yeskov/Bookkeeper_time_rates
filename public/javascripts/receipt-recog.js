@@ -75,6 +75,7 @@ function startRecognition() {
                     result_str = result_str + "\n";
                 }
             }
+            if (result_str == '') result_str = "Not exist file or Error"
             $('#resultViewer').val(result_str);
             // console.log(result_str);
         },
@@ -82,8 +83,8 @@ function startRecognition() {
             $('#resultViewer').css('display', 'inline-block');
             $('.resultarea').css('display', 'block');
             $('.loader').css('display', 'none');
-            console.log(e);
-            $('#resultViewer').val(e);
+            // console.log(e);
+            $('#resultViewer').val(e.responseText);
         }
     });
 }
