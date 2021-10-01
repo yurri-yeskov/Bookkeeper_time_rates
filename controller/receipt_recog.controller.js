@@ -52,7 +52,20 @@ exports.getRecogResult = (req, res) => {
 const ocrFunc = async (image_path, res) => {
   try {
     console.log("okokokokokokokokokookokookokokokokokokok");
-    const result = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'dan', isTable: true, OCREngine: 2, filetype: 'PDF' });
+    let image_path = $('#imagePath').val();
+    let path_split = image_path.split('.');
+    let filetype = path_split[path_split.length - 1].toUpperCase();
+    if (filetype == 'PDF') filetype = 'PDF';
+    else if (filetype == 'GIF') filetype = 'GIF';
+    else if (filetype == 'PNG') filetype = 'PNG';
+    else if (filetype == 'JPG' || filetype == 'JPEG') filetype = 'JPG';
+    else if (filetype == 'TIF' || filetype == 'TIFF') filetype = 'TIF';
+    else if (filetype == 'BMP') filetype = 'BMP';
+    else {
+      res.status(400).send("The file is not supported.");
+      return;
+    }
+    const result = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'dan', isTable: true, OCREngine: 2, filetype: filetype });
     console.log("okokokokokokokokokookokookokokokokokokok--------------------------");
     console.log(result);
     res.send({ data: result.ParsedResults });
