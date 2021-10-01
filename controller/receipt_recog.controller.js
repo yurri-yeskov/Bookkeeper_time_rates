@@ -52,7 +52,7 @@ exports.getRecogResult = (req, res) => {
 const ocrFunc = async (image_path, res) => {
   try {
     console.log("okokokokokokokokokookokookokokokokokokok");
-    const result = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'dan', isTable: true, OCREngine: 2 });
+    const result = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'dan', isTable: true, OCREngine: 2, filetype: 'PDF' });
     console.log("okokokokokokokokokookokookokokokokokokok--------------------------");
     console.log(result);
     res.send({ data: result.ParsedResults });
