@@ -6,10 +6,10 @@ window.onresize = resize;
 
 function resize() {
     var h = $('#imagePanel').height() - 75;
-    var lh = $('#imagePanel').height() - 365;
+    var mt = $('#imagePanel').height() / 2 - $('.loader').height() / 2;
     $('#previewImage').css('height', h + 'px');
     $('#resultViewer').css('height', h + 'px');
-    $('.loader').css('margin-top', lh + 'px');
+    $('.loader').css('margin-top', mt + 'px');
 }
 
 function loadImage() {
@@ -75,7 +75,7 @@ function startRecognition() {
                     result_str = result_str + "\n";
                 }
             }
-            if (result_str == '') result_str = "Not exist file or Error"
+            if (result_str == '') result_str = "Not exist file or Error";
             $('#resultViewer').val(result_str);
             // console.log(result_str);
         },
