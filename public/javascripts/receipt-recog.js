@@ -82,6 +82,7 @@ function startRecognition() {
             $('#resultViewer').css('display', 'inline-block');
             $('.resultarea').css('display', 'block');
             $('.loader').css('display', 'none');
+            console.log(e);
             $('#resultViewer').val(e);
         }
     });
