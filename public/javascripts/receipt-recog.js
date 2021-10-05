@@ -13,7 +13,7 @@ function resize() {
 }
 
 function loadImage() {
-    $('#imagePath').bind('input keyup', function(){
+    $('#imagePath').bind('input keyup', function() {
       var $this = $(this);
       var delay = 500; // 0.5 seconds delay after last input
       var image_path = $('#imagePath').val();
@@ -90,4 +90,20 @@ function startRecognition() {
     });
 }
 
+function convertString(phrase) {
+
+    var returnString = phrase.toLowerCase();
+    //Convert Characters
+    returnString = returnString.replace(/ö/g, 'o');
+    returnString = returnString.replace(/ø/g, 'o');
+    returnString = returnString.replace(/ç/g, 'c');
+    returnString = returnString.replace(/ş/g, 's');
+    returnString = returnString.replace(/ı/g, 'i');
+    returnString = returnString.replace(/ğ/g, 'g');
+    returnString = returnString.replace(/ü/g, 'u');  
+    returnString = returnString.replace(/å/g, 'a');  
+    returnString = returnString.replace(/ă/g, 'a');  
+
+    return returnString;
+}
 
