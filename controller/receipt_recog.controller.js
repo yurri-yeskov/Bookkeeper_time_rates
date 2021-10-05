@@ -96,7 +96,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
               match_rate = match_count / num_amount_str.length;
               if (match_rate > limit_rate) {
                 console.log("word_text_______________________", word_text, num_word_text, num_amount_str);
-                console.log("Rate_____________________________", match_count, match_rate, delta_count);
+                console.log("Rate_____________________________", match_count, match_rate, delta_count, delta);
                 for (let idx = delta_count; idx >= 0; idx--) {
                   words_index_arr[words_index_arr.length] = words_index - idx;
                 }
@@ -104,7 +104,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
             }
           }
 
-          if (num_word_text.length + delta < num_amount_str.length) {
+          if (num_word_text.length + delta <= num_amount_str.length) {
             delta = num_word_text.length + delta;
             delta_count++;
           }
