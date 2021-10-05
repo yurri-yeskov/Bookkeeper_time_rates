@@ -46,18 +46,8 @@ exports.getRecogResult = (req, res) => {
     res.redirect(linkConfig.OTHER_LINK);
     return;     
   }
-  let date_str = ""; let amount_str = ""; let word_str = "";
-  if (!req.body.date_str) {
-    date_str = req.body.date_str;
-  }
-  if (!req.body.amount_str) {
-    amount_str = req.body.amount_str;
-  }
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA", req.body.amount_str, amount_str);
-  if (!req.body.word_str) {
-    word_str = req.body.word_str;
-  }
-  ocrFunc(req.body.image_path, date_str, amount_str, word_str, res);
+  
+  ocrFunc(req.body.image_path, req.body.date_str, req.body.amount_str, req.body.word_str, res);
 }
 
 const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
