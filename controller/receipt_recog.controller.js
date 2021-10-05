@@ -53,6 +53,7 @@ exports.getRecogResult = (req, res) => {
   if (!req.body.amount_str) {
     amount_str = req.body.amount_str;
   }
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA", amount_str);
   if (!req.body.word_str) {
     word_str = req.body.word_str;
   }
@@ -61,7 +62,7 @@ exports.getRecogResult = (req, res) => {
 
 const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
   try {
-    console.log("okokokokokokokokokookokookokokokokokokok");
+    console.log("okokokokokokokokokookokookokokokokokokok", amount_str);
     let path_split = image_path.split('.');
     let filetype = path_split[path_split.length - 1].toUpperCase();
     if (filetype == 'PDF') filetype = 'PDF';
@@ -85,13 +86,9 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
           for (let k = 0; k < words.length; k++) {
             let word_text = words[k].WordText;
 
-            let num_word_text = word_text.match(/(\d+)/);
-            let num_amount_str = amount_str.match(/(\d+)/);
-            console.log(num_amount_str);
-            if (num_word_text) num_word_text = num_word_text[0];
-            else num_word_text = "";
-            if (num_amount_str) num_amount_str = num_amount_str[0];
-            else num_amount_str = "";
+            let num_word_text = word_text.replace( /^\D+/g, '');
+            let num_amount_str = amount_str.replace( /^\D+/g, '');
+            console.log("BBBBBBBBBBBBBBBBBBBB", num_amount_str);
 
             let match_count = 0;
             for (let ii = 0; ii < num_word_text.length; ii++) {

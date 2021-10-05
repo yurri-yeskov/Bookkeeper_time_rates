@@ -40,6 +40,7 @@ function startRecognition() {
     var date_str = $('#input-date').val();
     var amount_str = $('#input-amount').val();
     var word_str = $('#input-wordstring').val();
+    console.log("aaaaasdsadfasdf", amount_str);
 
     if (image_path == '') {
         alert('Please paste url to source file!');
