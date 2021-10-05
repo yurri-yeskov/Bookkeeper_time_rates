@@ -86,14 +86,18 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
             let word_text = words[k].WordText;
             let num_word_text = word_text.match(/(\d+)/);
             let num_amount_str = amount_str.match(/(\d+)/);
+            if (num_word_text == null) num_word_text = "";
+            if (num_amount_str == null) num_amount_str = "";
             let match_count = 0;
             for (let ii = 0; ii < num_word_text.length; ii++) {
               if (num_word_text.substr(ii, ii+1) == num_amount_str.substr(ii, ii+1)) match_count++;
             }
-            console.log("word_text_______________________", word_text);
-            let match_rate = 0;
-            if (num_amount_str.length > 0) match_rate = match_count / num_amount_str.length;
-            console.log("Rate_____________________________", match_count, match_rate);
+            if (num_word_text.length > 0) {
+              console.log("word_text_______________________", word_text);
+              let match_rate = 0;
+              if (num_amount_str.length > 0) match_rate = match_count / num_amount_str.length;
+              console.log("Rate_____________________________", match_count, match_rate);
+            }
             // result_str = result_str + word_text + " ";
           }
       }
