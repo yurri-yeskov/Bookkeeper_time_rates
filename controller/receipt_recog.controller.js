@@ -46,10 +46,20 @@ exports.getRecogResult = (req, res) => {
     res.redirect(linkConfig.OTHER_LINK);
     return;     
   }
-  ocrFunc(req.body.image_path, res);
+  let date_str = "", amount_str = "", word_str = "";
+  if (!req.body.date_str) {
+    date_str = req.body.date_str;
+  }
+  if (!req.body.amount_str) {
+    amount_str = req.body.amount_str;
+  }
+  if (!req.body.word_str) {
+    word_str = req.body.word_str;
+  }
+  ocrFunc(req.body.image_path, date_str, amount_str, word_str, res);
 }
 
-const ocrFunc = async (image_path, res) => {
+const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
   try {
     console.log("okokokokokokokokokookokookokokokokokokok");
     let path_split = image_path.split('.');
@@ -67,6 +77,17 @@ const ocrFunc = async (image_path, res) => {
     const result = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'dan', isTable: true, OCREngine: 2, filetype: filetype });
     console.log("okokokokokokokokokookokookokokokokokokok--------------------------");
     console.log(result);
+    let parse_result = result.ParsedResults;
+    for (var i = 0; i < parse_result.length; i++) {
+      var lines = parse_result[i].TextOverlay.Lines;
+      for (var j = 0; j < lines.length; j++) {
+          var words = lines[j].Words;
+          for (var k = 0; k < words.length; k++) {
+              var word_text = words[k].WordText;
+              result_str = result_str + word_text + " ";
+          }
+      }
+  }
     res.send({ data: result.ParsedResults });
   } catch (error) {
     console.log(error);

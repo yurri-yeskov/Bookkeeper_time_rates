@@ -37,6 +37,9 @@ function loadImage() {
 
 function startRecognition() {
     var image_path = $('#imagePath').val();
+    var date_str = $('#input-date').val();
+    var amount_str = $('#input-amount').val();
+    var word_str = $('#input-wordstring').val();
 
     if (image_path == '') {
         alert('Please paste url to source file!');
@@ -51,7 +54,10 @@ function startRecognition() {
         type: "post",
         url: 'get_recog_result',
         data: {
-            image_path: image_path
+            image_path: image_path,
+            date_str: date_str,
+            amount_str: amount_str,
+            word_str: word_str
         },
         dataType: "json",
         success: function(data) {
