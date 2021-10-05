@@ -78,13 +78,23 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
     console.log("okokokokokokokokokookokookokokokokokokok--------------------------");
     console.log(result);
     let parse_result = result.ParsedResults;
-    for (var i = 0; i < parse_result.length; i++) {
-      var lines = parse_result[i].TextOverlay.Lines;
-      for (var j = 0; j < lines.length; j++) {
-          var words = lines[j].Words;
-          for (var k = 0; k < words.length; k++) {
-              var word_text = words[k].WordText;
-              result_str = result_str + word_text + " ";
+    for (let i = 0; i < parse_result.length; i++) {
+      let lines = parse_result[i].TextOverlay.Lines;
+      for (let j = 0; j < lines.length; j++) {
+          let words = lines[j].Words;
+          for (let k = 0; k < words.length; k++) {
+            let word_text = words[k].WordText;
+            let num_word_text = word_text.match(/(\d+)/);
+            let num_amount_str = amount_str.match(/(\d+)/);
+            let match_count = 0;
+            for (let ii = 0; ii < num_word_text.length; ii++) {
+              if (num_word_text.substr(ii, ii+1) == num_amount_str.substr(ii, ii+1)) match_count++;
+            }
+            console.log("word_text_______________________", word_text);
+            let match_rate = 0;
+            if (num_amount_str.length > 0) match_rate = match_count / num_amount_str.length;
+            console.log("Rate_____________________________", match_count, match_rate);
+            // result_str = result_str + word_text + " ";
           }
       }
   }
@@ -93,6 +103,10 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
     console.log(error);
     res.status(400).send(error);
   }
+}
+
+function compareAmount(num_word_text, num_amount_str) {
+
 }
 ///////////////////////////////////////////////////////
 
@@ -297,7 +311,7 @@ exports.findAllTimeEntry = (req, res) => {
           else if (result.rows[i].november_spent != null) result.rows[i].sel_month = 'November';
           else if (result.rows[i].december_spent != null) result.rows[i].sel_month = 'December';
         }
-        var data = JSON.stringify({
+        let data = JSON.stringify({
           "draw": req.body.draw,
           "recordsFiltered": recordsFiltered,
           "recordsTotal": recordsTotal,
