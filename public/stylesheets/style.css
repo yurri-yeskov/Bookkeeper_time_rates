@@ -288,6 +288,16 @@ a.paginate_button {
   background-color: #eee; 
   object-fit: contain;
 }
+#resultViewerDiv {
+  width: 100%;
+  white-space: pre-wrap;
+  text-align: left;
+  overflow: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 15px;
+  line-height: 1.5;
+}
 
 @keyframes spin {
   0% { transform: rotate(0deg); }

@@ -71,6 +71,7 @@ function startRecognition() {
                     for (var k = 0; k < words.length; k++) {
                         var word_text = words[k].WordText;
                         result_str = result_str + word_text + " ";
+                        result_str = "<strong>" + result_str + "</strong>";
                         //////command/////
                     }
                     result_str = result_str + "\n";
@@ -90,5 +91,23 @@ function startRecognition() {
         }
     });
 }
+
+// $.fn.wrapInTag = function(opts) {
+
+//     var tag = opts.tag || 'strong'
+//       , words = opts.words || []
+//       , regex = RegExp(words.join('|'), 'gi') // case insensitive
+//       , replacement = '<'+ tag +'>$&</'+ tag +'>';
+  
+//     return this.html(function() {
+//       return $(this).text().replace(regex, replacement);
+//     });
+// };
+  
+// // Usage
+// $('#resultViewerDiv').wrapInTag({
+//     tag: 'strong',
+//     words: ['world', 'red']
+// });
 
 
