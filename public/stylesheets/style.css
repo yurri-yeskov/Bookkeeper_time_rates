@@ -288,7 +288,7 @@ a.paginate_button {
   background-color: #eee; 
   object-fit: contain;
 }
-#resultViewerDiv {
+#resultViewer {
   width: 100%;
   white-space: pre-wrap;
   text-align: left;

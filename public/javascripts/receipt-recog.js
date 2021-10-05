@@ -9,7 +9,6 @@ function resize() {
     var mt = $('#imagePanel').height() / 2 - $('.loader').height() / 2;
     $('#previewImage').css('height', h + 'px');
     $('#resultViewer').css('height', h + 'px');
-    $('#resultViewerDiv').css('height', h + 'px');
     $('.loader').css('margin-top', mt + 'px');
 }
 
@@ -71,15 +70,14 @@ function startRecognition() {
                     for (var k = 0; k < words.length; k++) {
                         var word_text = words[k].WordText;
                         result_str = result_str + word_text + " ";
-                        result_str = "<strong>" + result_str + "</strong>";
+                        // result_str = "<strong>" + result_str + "</strong>";
                         //////command/////
                     }
                     result_str = result_str + "\n";
                 }
             }
             if (result_str == '') result_str = "Not exist file or Error";
-            $('#resultViewer').val(result_str);
-            $('#resultViewerDiv').html(result_str);
+            $('#resultViewer').html(result_str);
             // console.log(result_str);
         },
         error: function(e) {
@@ -87,27 +85,9 @@ function startRecognition() {
             $('.resultarea').css('display', 'block');
             $('.loader').css('display', 'none');
             // console.log(e);
-            $('#resultViewer').val(e.responseText);
+            $('#resultViewer').html(e.responseText);
         }
     });
 }
-
-// $.fn.wrapInTag = function(opts) {
-
-//     var tag = opts.tag || 'strong'
-//       , words = opts.words || []
-//       , regex = RegExp(words.join('|'), 'gi') // case insensitive
-//       , replacement = '<'+ tag +'>$&</'+ tag +'>';
-  
-//     return this.html(function() {
-//       return $(this).text().replace(regex, replacement);
-//     });
-// };
-  
-// // Usage
-// $('#resultViewerDiv').wrapInTag({
-//     tag: 'strong',
-//     words: ['world', 'red']
-// });
 
 
