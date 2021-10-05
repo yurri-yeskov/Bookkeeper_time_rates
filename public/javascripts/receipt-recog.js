@@ -9,6 +9,7 @@ function resize() {
     var mt = $('#imagePanel').height() / 2 - $('.loader').height() / 2;
     $('#previewImage').css('height', h + 'px');
     $('#resultViewer').css('height', h + 'px');
+    $('#resultViewerDiv').css('height', h + 'px');
     $('.loader').css('margin-top', mt + 'px');
 }
 
@@ -60,10 +61,10 @@ function startRecognition() {
             $('.resultarea').css('display', 'block');
             $('.loader').css('display', 'none');
             result_arr = data.data;
-            var result_str = ""
+            var result_str = "";
             for (var i = 0; i < result_arr.length; i++) {
                 var page_num = i + 1;
-                result_str = result_str + "///////" + " PAGE " + page_num + "///////\n";
+                result_str = result_str + "///////" + " PAGE " + page_num + " ///////\n";
                 var lines = result_arr[i].TextOverlay.Lines;
                 for (var j = 0; j < lines.length; j++) {
                     var words = lines[j].Words;
@@ -77,6 +78,7 @@ function startRecognition() {
             }
             if (result_str == '') result_str = "Not exist file or Error";
             $('#resultViewer').val(result_str);
+            $('#resultViewerDiv').html(result_str);
             // console.log(result_str);
         },
         error: function(e) {
