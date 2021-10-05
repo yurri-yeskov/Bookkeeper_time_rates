@@ -53,7 +53,7 @@ exports.getRecogResult = (req, res) => {
   if (!req.body.amount_str) {
     amount_str = req.body.amount_str;
   }
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA", amount_str);
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA", req.body.amount_str, amount_str);
   if (!req.body.word_str) {
     word_str = req.body.word_str;
   }
