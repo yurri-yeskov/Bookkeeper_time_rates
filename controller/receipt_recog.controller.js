@@ -40,13 +40,15 @@ exports.index = (req, res) => {
 
 exports.getRecogResult = (req, res) => {
 
-  console.log("//////////////////////////////////testtestetsts");
+  console.log("////////////////////////////////////////////////////////////////////");
   if (!req.body.image_path) {
     console.log("Oops!");
     res.redirect(linkConfig.OTHER_LINK);
     return;     
   }
-  let date_str = "", amount_str = "", word_str = "";
+  let date_str = ""; 
+  let amount_str = ""; 
+  let word_str = "";
   if (!req.body.date_str) {
     date_str = req.body.date_str;
   }
