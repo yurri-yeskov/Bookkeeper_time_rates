@@ -70,45 +70,53 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
     console.log(result);
     let parse_result = result.ParsedResults;
     let limit_rate = 0.6;
+    let words_index = 0;
+    let words_index_arr = [];
     for (let i = 0; i < parse_result.length; i++) {
       let lines = parse_result[i].TextOverlay.Lines;
       for (let j = 0; j < lines.length; j++) {
-          let words = lines[j].Words;
-          let delta = 0;
-          let match_count = 0;
-          for (let k = 0; k < words.length; k++) {
-            let word_text = words[k].WordText;
+        let words = lines[j].Words;
+        let delta = 0;
+        let match_count = 0;
+        for (let k = 0; k < words.length; k++) {
+          let word_text = words[k].WordText;
 
-            let num_word_text = word_text.replace(/[^0-9]/g,'');
-            let num_amount_str = amount_str.replace(/[^0-9]/g,'');
+          let num_word_text = word_text.replace(/[^0-9]/g,'');
+          let num_amount_str = amount_str.replace(/[^0-9]/g,'');
 
-            for (let ii = 0; ii < num_word_text.length; ii++) {
-              if (num_word_text.substring(ii, ii+1) == num_amount_str.substring(delta+ii, delta+ii+1)) match_count++;
-            }
+          for (let ii = 0; ii < num_word_text.length; ii++) {
+            if (num_word_text.substring(ii, ii+1) == num_amount_str.substring(delta+ii, delta+ii+1)) match_count++;
+          }
+          
+          if (num_word_text.length > 0) {
             
-            if (num_word_text.length > 0) {
-              
-              let match_rate = 0;
-              if (num_amount_str.length > 0) {
-                match_rate = match_count / num_amount_str.length;
-                if (match_rate > limit_rate) {
-                  console.log("word_text_______________________", word_text, num_word_text, num_amount_str);
-                  console.log("Rate_____________________________", match_count, match_rate);
+            let match_rate = 0;
+            if (num_amount_str.length > 0) {
+              match_rate = match_count / num_amount_str.length;
+              if (match_rate > limit_rate) {
+                console.log("word_text_______________________", word_text, num_word_text, num_amount_str);
+                console.log("Rate_____________________________", match_count, match_rate);
+                let words_count = Math.floor(num_amount_str.length / num_word_text.length);
+                for (let idx = words_count; idx >= 0; idx--) {
+                  words_index_arr[words_index_arr.length] = words_index - idx;
                 }
               }
             }
-
-            if (num_word_text.length < num_amount_str.length) {
-              delta = num_word_text.length;
-            }
-            else {
-              match_count = 0;
-              delta = 0;
-            }
-            // result_str = result_str + word_text + " ";
           }
+
+          if (num_word_text.length < num_amount_str.length) {
+            delta = num_word_text.length;
+          }
+          else {
+            match_count = 0;
+            delta = 0;
+          }
+          // result_str = result_str + word_text + " ";
+          words_index++;
+        }
       }
-  }
+    }
+    console.log(words_index_arr);
     res.send({ data: result.ParsedResults });
   } catch (error) {
     console.log(error);
