@@ -78,14 +78,10 @@ function startRecognition() {
                         var word_text = words[k].WordText;
                         if (data.amount_indexes.includes(words_index))
                             result_str = result_str + "<strong class='highlight_amount'>" + word_text + "</strong> ";
+                        else if (data.str_indexes.includes(words_index))
+                            result_str = result_str + "<strong class='highlight_string'>" + word_text + "</strong> ";
                         else
                             result_str = result_str + word_text + " ";
-
-                        if (data.str_indexes.includes(words_index))
-                            result_str = result_str + "<strong class='highlight_amount'>" + word_text + "</strong> ";
-                        else
-                            result_str = result_str + word_text + " ";
-                        words_index++;
                         words_index++;
                     }
                     result_str = result_str + "\n";
