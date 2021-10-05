@@ -95,11 +95,12 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
 
             let match_count = 0;
             for (let ii = 0; ii < num_word_text.length; ii++) {
+              console.log("-----------------------------");
               if (num_word_text.substring(ii, ii+1) == num_amount_str.substring(ii, ii+1)) match_count++;
             }
 
             if (num_word_text.length > 0) {
-              console.log("word_text_______________________", word_text);
+              console.log("word_text_______________________", word_text, num_word_text, num_amount_str);
               let match_rate = 0;
               if (num_amount_str.length > 0) match_rate = match_count / num_amount_str.length;
               console.log("Rate_____________________________", match_count, match_rate);
