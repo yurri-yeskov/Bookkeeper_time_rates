@@ -76,9 +76,10 @@ function startRecognition() {
                     var words = lines[j].Words;
                     for (var k = 0; k < words.length; k++) {
                         var word_text = words[k].WordText;
-                        result_str = result_str + word_text + " ";
                         if (data.words_indexs.includes(words_index))
-                            result_str = "<strong>" + result_str + "</strong>";
+                            result_str = result_str + "<strong>" + word_text + "</strong> ";
+                        else
+                            result_str = result_str + word_text + " ";
                     }
                     result_str = result_str + "\n";
                     words_index++;
