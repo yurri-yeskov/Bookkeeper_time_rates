@@ -77,6 +77,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
       for (let j = 0; j < lines.length; j++) {
         let words = lines[j].Words;
         let delta = 0;
+        let delta_count = 0;
         let match_count = 0;
         for (let k = 0; k < words.length; k++) {
           let word_text = words[k].WordText;
@@ -96,8 +97,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
               if (match_rate > limit_rate) {
                 console.log("word_text_______________________", word_text, num_word_text, num_amount_str);
                 console.log("Rate_____________________________", match_count, match_rate);
-                let words_count = Math.floor(num_amount_str.length / num_word_text.length);
-                for (let idx = words_count; idx >= 0; idx--) {
+                for (let idx = delta_count; idx >= 0; idx--) {
                   words_index_arr[words_index_arr.length] = words_index - idx;
                 }
               }
@@ -106,17 +106,19 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
 
           if (num_word_text.length < num_amount_str.length) {
             delta = num_word_text.length;
+            delta_count++;
           }
           else {
             match_count = 0;
             delta = 0;
+            delta_count = 0;
           }
           // result_str = result_str + word_text + " ";
           words_index++;
         }
       }
     }
-    console.log(words_index_arr);
+    console.log("words_index_arr-------------------------------", words_index_arr);
     res.send({ data: result.ParsedResults });
   } catch (error) {
     console.log(error);
