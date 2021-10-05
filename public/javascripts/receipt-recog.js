@@ -80,9 +80,9 @@ function startRecognition() {
                             result_str = result_str + "<strong>" + word_text + "</strong> ";
                         else
                             result_str = result_str + word_text + " ";
+                        words_index++;
                     }
                     result_str = result_str + "\n";
-                    words_index++;
                 }
             }
             if (result_str == '') result_str = "Not exist file or Error";
