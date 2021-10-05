@@ -52,7 +52,7 @@ exports.getRecogResult = (req, res) => {
 
 const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
   try {
-    console.log("okokokokokokokokokookokookokokokokokokok", amount_str);
+    console.log("okokokokokokokokokookokookokokokokokokok");
     let path_split = image_path.split('.');
     let filetype = path_split[path_split.length - 1].toUpperCase();
     if (filetype == 'PDF') filetype = 'PDF';
@@ -69,28 +69,41 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
     console.log("okokokokokokokokokookokookokokokokokokok--------------------------");
     console.log(result);
     let parse_result = result.ParsedResults;
+    let limit_rate = 0.6;
     for (let i = 0; i < parse_result.length; i++) {
       let lines = parse_result[i].TextOverlay.Lines;
       for (let j = 0; j < lines.length; j++) {
           let words = lines[j].Words;
+          let delta = 0;
+          let match_count = 0;
           for (let k = 0; k < words.length; k++) {
             let word_text = words[k].WordText;
 
             let num_word_text = word_text.replace(/[^0-9]/g,'');
             let num_amount_str = amount_str.replace(/[^0-9]/g,'');
-            console.log("BBBBBBBBBBBBBBBBBBBB", num_amount_str);
 
-            let match_count = 0;
             for (let ii = 0; ii < num_word_text.length; ii++) {
-              console.log("-----------------------------");
-              if (num_word_text.substring(ii, ii+1) == num_amount_str.substring(ii, ii+1)) match_count++;
+              if (num_word_text.substring(ii, ii+1) == num_amount_str.substring(delta+ii, delta+ii+1)) match_count++;
+            }
+            
+            if (num_word_text.length > 0) {
+              
+              let match_rate = 0;
+              if (num_amount_str.length > 0) {
+                match_rate = match_count / num_amount_str.length;
+                if (match_rate > limit_rate) {
+                  console.log("word_text_______________________", word_text, num_word_text, num_amount_str);
+                  console.log("Rate_____________________________", match_count, match_rate);
+                }
+              }
             }
 
-            if (num_word_text.length > 0) {
-              console.log("word_text_______________________", word_text, num_word_text, num_amount_str);
-              let match_rate = 0;
-              if (num_amount_str.length > 0) match_rate = match_count / num_amount_str.length;
-              console.log("Rate_____________________________", match_count, match_rate);
+            if (num_word_text.length < num_amount_str.length) {
+              delta = num_word_text.length;
+            }
+            else {
+              match_count = 0;
+              delta = 0;
             }
             // result_str = result_str + word_text + " ";
           }
