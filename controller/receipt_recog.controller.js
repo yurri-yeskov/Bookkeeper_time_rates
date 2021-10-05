@@ -72,13 +72,14 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
     let limit_rate = 0.6;
     let words_index = 0;
     let amount_index_arr = []; let str_index_arr = [];
-    let lowercase_word_text = ""; let lowercase_word_str = word_str.toLowerCase().replace(/\s+/g, '');
+    let lowercase_word_str = word_str.toLowerCase().replace(/\s+/g, '');
     for (let i = 0; i < parse_result.length; i++) {
       let lines = parse_result[i].TextOverlay.Lines;
       for (let j = 0; j < lines.length; j++) {
         let words = lines[j].Words;
         let delta = 0; let delta_count = 0; let match_count = 0;
         let w_delta_count = 0;
+        let lowercase_word_text = ""; 
         for (let k = 0; k < words.length; k++) {
           let word_text = words[k].WordText;
 
