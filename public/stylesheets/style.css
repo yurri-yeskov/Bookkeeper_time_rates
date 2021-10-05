@@ -299,6 +299,11 @@ a.paginate_button {
   line-height: 1.5;
 }
 
+.highlight_amount {
+  color: white;
+  background-color: #052506;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
