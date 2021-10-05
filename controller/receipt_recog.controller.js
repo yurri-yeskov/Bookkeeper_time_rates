@@ -40,7 +40,7 @@ exports.index = (req, res) => {
 
 exports.getRecogResult = (req, res) => {
 
-  console.log("////////////////////////////////////////////////////////////////////");
+  console.log("//////////////////////////////////START//////////////////////////////////");
   if (!req.body.image_path) {
     console.log("Oops!");
     res.redirect(linkConfig.OTHER_LINK);
@@ -52,7 +52,6 @@ exports.getRecogResult = (req, res) => {
 
 const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
   try {
-    console.log("okokokokokokokokokookokookokokokokokokok");
     let path_split = image_path.split('.');
     let filetype = path_split[path_split.length - 1].toUpperCase();
     if (filetype == 'PDF') filetype = 'PDF';
@@ -66,7 +65,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
       return;
     }
     const result = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'dan', isTable: true, OCREngine: 2, filetype: filetype });
-    console.log("okokokokokokokokokookokookokokokokokokok--------------------------");
+    console.log("//////////////////////////////////END//////////////////////////////////");
     console.log(result);
     let parse_result = result.ParsedResults;
     let limit_rate = 0.6;
@@ -119,7 +118,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
       }
     }
     console.log("words_index_arr-------------------------------", words_index_arr);
-    res.send({ data: result.ParsedResults });
+    res.send({ data: result.ParsedResults, words_indexs: words_index_arr });
   } catch (error) {
     console.log(error);
     res.status(400).send(error);

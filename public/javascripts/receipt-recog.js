@@ -67,6 +67,7 @@ function startRecognition() {
             $('.loader').css('display', 'none');
             result_arr = data.data;
             var result_str = "";
+            var words_index = 0;
             for (var i = 0; i < result_arr.length; i++) {
                 var page_num = i + 1;
                 result_str = result_str + "///////" + " PAGE " + page_num + " ///////\n";
@@ -76,10 +77,11 @@ function startRecognition() {
                     for (var k = 0; k < words.length; k++) {
                         var word_text = words[k].WordText;
                         result_str = result_str + word_text + " ";
-                        // result_str = "<strong>" + result_str + "</strong>";
-                        //////command/////
+                        if (data.words_indexs.includes(words_index))
+                            result_str = "<strong>" + result_str + "</strong>";
                     }
                     result_str = result_str + "\n";
+                    words_index++;
                 }
             }
             if (result_str == '') result_str = "Not exist file or Error";
