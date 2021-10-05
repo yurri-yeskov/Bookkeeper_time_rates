@@ -79,7 +79,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
             let num_word_text = word_text.replace( /^\D+/g, '');
             let num_amount_str = amount_str.replace( /^\D+/g, '');
             console.log("BBBBBBBBBBBBBBBBBBBB", num_amount_str);
-            let testtester = "123.456,54()asdf   asdf";
+            let testtester = "123.456,54()asdf   asdf(,1325454";
             testtester = testtester.replace( /^\D+/g, '');
             console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", testtester);
 
