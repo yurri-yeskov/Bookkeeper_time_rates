@@ -76,7 +76,7 @@ function startRecognition() {
                     var words = lines[j].Words;
                     for (var k = 0; k < words.length; k++) {
                         var word_text = words[k].WordText;
-                        if (data.words_indexs.includes(words_index))
+                        if (data.amount_indexes.includes(words_index))
                             result_str = result_str + "<strong class='highlight_amount'>" + word_text + "</strong> ";
                         else
                             result_str = result_str + word_text + " ";
@@ -98,21 +98,3 @@ function startRecognition() {
         }
     });
 }
-
-function convertString(phrase) {
-
-    var returnString = phrase.toLowerCase();
-    //Convert Characters
-    returnString = returnString.replace(/ö/g, 'o');
-    returnString = returnString.replace(/ø/g, 'o');
-    returnString = returnString.replace(/ç/g, 'c');
-    returnString = returnString.replace(/ş/g, 's');
-    returnString = returnString.replace(/ı/g, 'i');
-    returnString = returnString.replace(/ğ/g, 'g');
-    returnString = returnString.replace(/ü/g, 'u');  
-    returnString = returnString.replace(/å/g, 'a');  
-    returnString = returnString.replace(/ă/g, 'a');  
-
-    return returnString;
-}
-
