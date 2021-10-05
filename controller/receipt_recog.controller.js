@@ -128,6 +128,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
                 str_index_arr[str_index_arr.length] = words_index - idx;
               }         
             }
+            lowercase_word_text = "";
           } else w_delta_count++;
 
           /* let lowercase_word_text = word_text.toLowerCase();
