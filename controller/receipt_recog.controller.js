@@ -76,12 +76,9 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
           for (let k = 0; k < words.length; k++) {
             let word_text = words[k].WordText;
 
-            let num_word_text = word_text.replace( /^\D+/g, '');
-            let num_amount_str = amount_str.replace( /^\D+/g, '');
+            let num_word_text = word_text.replace(/[^0-9]/g,'');
+            let num_amount_str = amount_str.replace(/[^0-9]/g,'');
             console.log("BBBBBBBBBBBBBBBBBBBB", num_amount_str);
-            let testtester = "123.456,54()asdf   asdf(,1325454";
-            testtester = testtester.replace( /^\D+/g, '');
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", testtester);
 
             let match_count = 0;
             for (let ii = 0; ii < num_word_text.length; ii++) {
