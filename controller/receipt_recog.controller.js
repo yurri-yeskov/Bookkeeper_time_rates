@@ -87,8 +87,11 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
 
             let num_word_text = word_text.match(/(\d+)/);
             let num_amount_str = amount_str.match(/(\d+)/);
-            if (num_word_text == null) num_word_text = "";
-            if (num_amount_str == null) num_amount_str = "";
+            console.log(num_amount_str);
+            if (num_word_text) num_word_text = num_word_text[0];
+            else num_word_text = "";
+            if (num_amount_str) num_amount_str = num_amount_str[0];
+            else num_amount_str = "";
 
             let match_count = 0;
             for (let ii = 0; ii < num_word_text.length; ii++) {
