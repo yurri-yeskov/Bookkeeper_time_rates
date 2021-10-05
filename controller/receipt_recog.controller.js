@@ -46,9 +46,7 @@ exports.getRecogResult = (req, res) => {
     res.redirect(linkConfig.OTHER_LINK);
     return;     
   }
-  let date_str = ""; 
-  let amount_str = ""; 
-  let word_str = "";
+  let date_str = ""; let amount_str = ""; let word_str = "";
   if (!req.body.date_str) {
     date_str = req.body.date_str;
   }
