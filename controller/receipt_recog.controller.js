@@ -104,8 +104,8 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
             }
           }
 
-          if (num_word_text.length < num_amount_str.length) {
-            delta = num_word_text.length;
+          if (num_word_text.length + delta < num_amount_str.length) {
+            delta = num_word_text.length + delta;
             delta_count++;
           }
           else {
