@@ -85,7 +85,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
 
           ////////////////////////////////Amount START/////////////////////////////////////
           let format = /[,.]/; let ch_amount_str = amount_str;
-          if (!format.test(num_amount_str)) ch_amount_str = ch_amount_str + "00";
+          if (!format.test(ch_amount_str)) ch_amount_str = ch_amount_str + "00";
           let num_word_text = word_text.replace(/[^0-9]/g,'');
           let num_amount_str = ch_amount_str.replace(/[^0-9]/g,'');
           
