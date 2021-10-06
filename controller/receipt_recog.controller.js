@@ -65,7 +65,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
       res.status(400).send("The file is not supported.");
       return;
     }
-    const result = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'dan', isTable: true, OCREngine: 1, filetype: filetype });
+    const result = await ocrSpace(image_path, { apiKey: OCR_API_KEY, language: 'dan', isTable: true, OCREngine: 2, filetype: filetype });
     console.log("//////////////////////////////////END//////////////////////////////////");
     console.log(result);
     let parse_result = result.ParsedResults;
