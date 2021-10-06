@@ -85,11 +85,9 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
 
           ////////////////////////////////Amount START/////////////////////////////////////
           let format = /[,.]/; let ch_amount_str = amount_str;
-          if (!format.test(ch_amount_str)) ch_amount_str = ch_amount_str + "00";
+          if (!format.test(ch_amount_str) && ch_amount_str.length > 0) ch_amount_str = ch_amount_str + "00";
           let num_word_text = word_text.replace(/[^0-9]/g,'');
           let num_amount_str = ch_amount_str.replace(/[^0-9]/g,'');
-          
-          console.log("delete----------------------", num_amount_str);
 
           for (let ii = 0; ii < num_word_text.length; ii++) {
             if (num_word_text.substring(ii, ii+1) == num_amount_str.substring(delta+ii, delta+ii+1)) match_count++;
