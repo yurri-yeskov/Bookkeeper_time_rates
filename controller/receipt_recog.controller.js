@@ -89,9 +89,8 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
           let num_word_text = word_text.replace(/[^0-9]/g,'');
           let num_amount_str = ch_amount_str.replace(/[^0-9]/g,'');
 
-          for (let ii = 0; ii < num_word_text.length; ii++) {
+          for (let ii = 0; ii < num_word_text.length; ii++) 
             if (num_word_text.substring(ii, ii+1) == num_amount_str.substring(delta+ii, delta+ii+1)) match_count++;
-          }
           
           if (num_word_text.length > 0) {
             
@@ -100,7 +99,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
               match_rate = match_count / num_amount_str.length;
               if (match_rate > limit_rate) {
                 console.log("Amount word_text_______________________", word_text, num_word_text, num_amount_str);
-                console.log("Amount Rate_____________________________", match_count, match_rate, delta_count, delta);
+                console.log("Amount Rate____________________________", match_count, match_rate, delta_count, delta);
                 for (let idx = delta_count; idx >= 0; idx--) {
                   amount_index_arr[amount_index_arr.length] = words_index - idx;
                 }
@@ -117,7 +116,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
             delta = 0;
             delta_count = 0;
           }
-          ////////////////////////////////Amount END/////////////////////////////////////
+          ////////////////////////////////Amount END/////////////////////////////////////////
           
           ////////////////////////////////WordString START///////////////////////////////////
           lowercase_word_text = lowercase_word_text + word_text.toLowerCase().replace(/\s+/g, '');
@@ -125,52 +124,20 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
             let match_rate = similarity(lowercase_word_text, lowercase_word_str);
             if (match_rate > limit_rate) {
               console.log("STR word_text_______________________", word_text, lowercase_word_text, lowercase_word_str);
-              console.log("STR Rate_____________________________", match_rate, w_delta_count);
+              console.log("STR Rate____________________________", match_rate, w_delta_count);
               for (let idx = w_delta_count; idx >= 0; idx--) {
                 str_index_arr[str_index_arr.length] = words_index - idx;
               }         
             }
             lowercase_word_text = "";
           } else w_delta_count++;
-
-          /* let lowercase_word_text = word_text.toLowerCase();
-          let lowercase_word_str = word_str.toLowerCase();
-
-          for (let ii = 0; ii < lowercase_word_text.length; ii++) {
-            if (lowercase_word_text.substring(ii, ii+1) == lowercase_word_str.substring(w_delta+ii, w_delta+ii+1)) w_match_count++;
-          }
-
-          if (lowercase_word_text.length > 0) {
-            
-            let match_rate = 0;
-            if (lowercase_word_str.length > 0) {
-              match_rate = w_match_count / lowercase_word_str.length;
-              if (match_rate > limit_rate) {
-                console.log("STR word_text_______________________", word_text, lowercase_word_text, lowercase_word_str);
-                console.log("STR Rate_____________________________", w_match_count, match_rate, w_delta_count, w_delta);
-                for (let idx = w_delta_count; idx >= 0; idx--) {
-                  str_index_arr[str_index_arr.length] = words_index - idx;
-                }
-              }
-            }
-          }
-
-          if (lowercase_word_text.length + w_delta < lowercase_word_str.length && lowercase_word_text.length > 0) {
-            w_delta = lowercase_word_text.length + w_delta;
-            w_delta_count++;
-          }
-          else {
-            w_match_count = 0;
-            w_delta = 0;
-            w_delta_count = 0;
-          } */
           ////////////////////////////////WordString END/////////////////////////////////////
           
           words_index++;
         }
       }
     }
-    console.log("amount_index_arr-------------------------------", amount_index_arr);
+    console.log("amount_index_arr----------------------------", amount_index_arr);
     console.log("str_index_arr-------------------------------", str_index_arr);
     res.send({ data: result.ParsedResults, amount_indexes: amount_index_arr, str_indexes: str_index_arr });
   } catch (error) {
