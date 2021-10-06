@@ -302,11 +302,13 @@ a.paginate_button {
 .highlight_amount {
   color: white;
   background-color: #052506;
+  padding: 3px;
 }
 
 .highlight_string {
   color: white;
   background-color: #040547;
+  padding: 3px;
 }
 
 @keyframes spin {
