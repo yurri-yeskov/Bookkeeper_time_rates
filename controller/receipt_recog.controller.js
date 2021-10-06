@@ -86,6 +86,9 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
           ////////////////////////////////Amount START/////////////////////////////////////
           let num_word_text = word_text.replace(/[^0-9]/g,'');
           let num_amount_str = amount_str.replace(/[^0-9]/g,'');
+          let format = /[,.]/;
+          if (!format.test(num_amount_str)) num_amount_str = num_amount_str + "00";
+          console.log("delete----------------------", num_amount_str);
 
           for (let ii = 0; ii < num_word_text.length; ii++) {
             if (num_word_text.substring(ii, ii+1) == num_amount_str.substring(delta+ii, delta+ii+1)) match_count++;
@@ -118,7 +121,6 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
           ////////////////////////////////Amount END/////////////////////////////////////
           
           ////////////////////////////////WordString START///////////////////////////////////
-
           lowercase_word_text = lowercase_word_text + word_text.toLowerCase().replace(/\s+/g, '');
           if (lowercase_word_text.length >= lowercase_word_str.length) {
             let match_rate = similarity(lowercase_word_text, lowercase_word_str);
