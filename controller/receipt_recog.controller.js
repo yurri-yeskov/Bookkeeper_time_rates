@@ -174,7 +174,9 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
             w_delta_count++;
           }
           ////////////////////////////////WordString END/////////////////////////////////////
+          console.log("out----------------", pos_date_arr.length);
           if (pos_date_arr.length > 0) {
+            console.log("in----------------", lowercase_date_text.length);
             for (let kk = k; kk < words.length; kk++) {
               let flg = 0;
               if (lowercase_date_text.length >= 4) flg = flg + 4;
