@@ -54,11 +54,17 @@ exports.getRecogResult = (req, res) => {
 
 const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
   try {
-    let date_format_arr = ['YYYYMMDD', 'YYYYDDMM'];
+    let date_format_arr = ['YYYYMMDD',   'YYYYDDMM',   'DDYYYYMM',   'MMYYYYDD',   'MMDDYYYY',   'DDMMYYYY',
+                           'YYMMDD',     'YYDDMM',     'DDYYMM',     'MMYYDD',     'MMDDYY',     'DDMMYY',
+                           'YYYYMMMDD',  'YYYYDDMMM',  'DDYYYYMMM',  'MMMYYYYDD',  'MMMDDYYYY',  'DDMMMYYYY',
+                           'YYMMMDD',    'YYDDMMM',    'DDYYMMM',    'MMMYYDD',    'MMMDDYY',    'DDMMMYY',
+                           'YYYYMMMMDD', 'YYYYDDMMMM', 'DDYYYYMMMM', 'MMMMYYYYDD', 'MMMMDDYYYY', 'DDMMMMYYYY',
+                           'YYMMMMDD',   'YYDDMMMM',   'DDYYMMMM',   'MMMMYYDD',   'MMMMDDYY',   'DDMMMMYY'];
+    let pos_date_arr = [];
     for (let i = 0; i < date_format_arr.length; i++) {
-      let date_format = moment(date_str, 'YYYY-MM-DD').format(date_format_arr[i]);
-      console.log(date_format, "////////////////////////////////////////////");
+      pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').format(date_format_arr[i]);
     }
+    console.log(pos_date_arr, "////////////////////////////////////////////");
     let path_split = image_path.split('.');
     let filetype = path_split[path_split.length - 1].toUpperCase();
     if (filetype == 'PDF') filetype = 'PDF';
