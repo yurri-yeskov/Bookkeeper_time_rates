@@ -4,6 +4,7 @@ $(document).ready(function(){
 
     $('#input-date').datepicker({
         format: "yyyy-mm-dd",
+        todayHighlight: true,
         clearBtn: true
     });
 });
