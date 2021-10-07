@@ -62,7 +62,12 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
                            'YYMMMMDD',   'YYDDMMMM',   'DDYYMMMM',   'MMMMYYDD',   'MMMMDDYY',   'DDMMMMYY'];
     let pos_date_arr = [];
     for (let i = 0; i < date_format_arr.length; i++) {
-      pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').format(date_format_arr[i]);
+      if (i < 12) // MM
+        pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').format(date_format_arr[i]);
+      else { // MMM or MMMM
+        pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').format(date_format_arr[i], 'en');
+        pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').format(date_format_arr[i], 'da');
+      }
     }
     console.log(pos_date_arr, "////////////////////////////////////////////");
     let path_split = image_path.split('.');
