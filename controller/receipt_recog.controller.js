@@ -182,10 +182,12 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
               if (lowercase_date_text.length <= 20) flg = flg + 20;
               else flg = flg + 21;
               if (flg == 24) { // OK
-                console.log(lowercase_date_text, "Date------------////////////////////");
+                console.log(lowercase_date_text, "Date24------------////////////////////");
               } else if (flg == 3) { // increase
+                console.log(lowercase_date_text, "Date3------------////////////////////");
                 lowercase_word_text = lowercase_word_text + words[kk].WordText.toLowerCase().replace(/\s+|.|,|\\|\/|-|_/g, '');
               } else if (flg == 25) { // initial
+                console.log(lowercase_date_text, "Date25------------////////////////////");
                 lowercase_date_text = "";
                 break;
               }
