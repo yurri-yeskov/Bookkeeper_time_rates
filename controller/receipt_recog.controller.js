@@ -181,7 +181,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
               console.log("inin----------------", lowercase_date_text.length);
               let flg = 0;
               if (lowercase_date_text.length >= 4) flg = flg + 4;
-              else flg = flg + 3
+              else flg = flg + 3;
               if (lowercase_date_text.length <= 20) flg = flg + 20;
               else flg = flg + 21;
               console.log("inin----flg------------", flg);
