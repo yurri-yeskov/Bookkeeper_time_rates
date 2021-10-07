@@ -2,6 +2,7 @@ const dbConfig = require("../config/db.config");
 const linkConfig = require("../config/links.config");
 const {Client} = require('pg');
 const ocrSpace = require('ocr-space-api-wrapper');
+const moment = require('moment');  
 
 const client = new Client ({
     user: dbConfig.USER,
@@ -53,6 +54,11 @@ exports.getRecogResult = (req, res) => {
 
 const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
   try {
+    let date_format_arr = ['YYYYMMDD', 'YYYYDDMM'];
+    for (let i = 0; i < date_format_arr.length; i++) {
+      let date_format = moment(date_str, 'YYYY-MM-DD').format(date_format_arr[i]);
+      console.log(date_format, "////////////////////////////////////////////");
+    }
     let path_split = image_path.split('.');
     let filetype = path_split[path_split.length - 1].toUpperCase();
     if (filetype == 'PDF') filetype = 'PDF';
