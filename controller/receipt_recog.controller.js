@@ -91,6 +91,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
         }
       }
     }
+    console.log("asdfasdf////////////////////////////////", pos_date_arr);
     for (let i = 0; i < parse_result.length; i++) {
       let lines = parse_result[i].TextOverlay.Lines;
       for (let j = 0; j < lines.length; j++) {
@@ -191,7 +192,6 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
             }
           }
 
-          
           words_index++;
         }
       }
