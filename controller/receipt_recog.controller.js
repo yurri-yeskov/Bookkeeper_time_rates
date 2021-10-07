@@ -65,8 +65,8 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
       if (i < 12) // MM
         pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').format(date_format_arr[i]);
       else { // MMM or MMMM
-        pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').format(date_format_arr[i], 'en');
-        pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').format(date_format_arr[i], 'da');
+        pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').locale('en').format(date_format_arr[i]);
+        pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').locale('da').format(date_format_arr[i]);
       }
     }
     console.log(pos_date_arr, "////////////////////////////////////////////");
