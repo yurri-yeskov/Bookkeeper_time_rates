@@ -1,6 +1,11 @@
 $(document).ready(function(){
     resize();
     loadImage();
+
+    $('#input-date').datepicker({
+        format: "yyyy-mm-dd",
+        clearBtn: true
+    });
 });
 window.onresize = resize;
 
