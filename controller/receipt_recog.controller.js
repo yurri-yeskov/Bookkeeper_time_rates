@@ -155,7 +155,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
           //     }
           //   }
           // }
-          lowercase_word_text = lowercase_word_text + words[kk].WordText.toLowerCase().replace(/\s+/g, '');
+          lowercase_word_text = lowercase_word_text + word_text.toLowerCase().replace(/\s+/g, '');
           if (lowercase_word_text.length >= lowercase_word_str.length) {
             let match_rate = similarity(lowercase_word_text, lowercase_word_str);
             if (match_rate > limit_rate) {
