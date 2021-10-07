@@ -91,7 +91,6 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
         }
       }
     }
-    console.log("asdfasdf////////////////////////////////", pos_date_arr, date_str);
     for (let i = 0; i < parse_result.length; i++) {
       let lines = parse_result[i].TextOverlay.Lines;
       for (let j = 0; j < lines.length; j++) {
@@ -174,24 +173,18 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
             w_delta_count++;
           }
           ////////////////////////////////WordString END/////////////////////////////////////
-          console.log("out----------------", pos_date_arr.length, k);
           if (pos_date_arr.length > 0) {
-            console.log("in----------------", lowercase_date_text.length);
             for (let kk = k; kk < words.length; kk++) {
-              console.log("inin----------------", lowercase_date_text.length);
               let flg = 0;
               if (lowercase_date_text.length >= 4) flg = flg + 4;
               else flg = flg + 3;
               if (lowercase_date_text.length <= 20) flg = flg + 20;
               else flg = flg + 21;
-              console.log("inin----flg------------", flg);
               if (flg == 24) { // OK
                 console.log(lowercase_date_text, "Date24------------////////////////////");
               } else if (flg == 23) { // increase
-                console.log(lowercase_date_text, "Date23------------////////////////////");
                 lowercase_word_text = lowercase_word_text + words[kk].WordText.toLowerCase().replace(/[\s+._/,-]/g, '');
               } else if (flg == 25) { // initial
-                console.log(lowercase_date_text, "Date25------------////////////////////");
                 lowercase_date_text = "";
                 break;
               }
