@@ -184,7 +184,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
                   if (match_rate > limit_rate) {
                     console.log("DATE word_text_______________________", word_text, lowercase_date_text, pos_date_arr[pidx]);
                     console.log("DATE Rate____________________________", match_rate, d_delta_count);
-                    for (let idx = d_delta_count; idx >= 0; idx--) {
+                    for (let idx = d_delta_count-1; idx >= 0; idx--) {
                       date_index_arr[date_index_arr.length] = words_index - idx;
                     }
                     is_matching = true;
