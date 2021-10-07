@@ -54,22 +54,6 @@ exports.getRecogResult = (req, res) => {
 
 const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
   try {
-    let date_format_arr = ['YYYYMMDD',   'YYYYDDMM',   'DDYYYYMM',   'MMYYYYDD',   'MMDDYYYY',   'DDMMYYYY',
-                           'YYMMDD',     'YYDDMM',     'DDYYMM',     'MMYYDD',     'MMDDYY',     'DDMMYY',
-                           'YYYYMMMDD',  'YYYYDDMMM',  'DDYYYYMMM',  'MMMYYYYDD',  'MMMDDYYYY',  'DDMMMYYYY',
-                           'YYMMMDD',    'YYDDMMM',    'DDYYMMM',    'MMMYYDD',    'MMMDDYY',    'DDMMMYY',
-                           'YYYYMMMMDD', 'YYYYDDMMMM', 'DDYYYYMMMM', 'MMMMYYYYDD', 'MMMMDDYYYY', 'DDMMMMYYYY',
-                           'YYMMMMDD',   'YYDDMMMM',   'DDYYMMMM',   'MMMMYYDD',   'MMMMDDYY',   'DDMMMMYY'];
-    let pos_date_arr = [];
-    for (let i = 0; i < date_format_arr.length; i++) {
-      if (i < 12) // MM
-        pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').format(date_format_arr[i]);
-      else { // MMM or MMMM
-        pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').locale('en').format(date_format_arr[i]);
-        pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').locale('da').format(date_format_arr[i]);
-      }
-    }
-    console.log(pos_date_arr, "////////////////////////////////////////////");
     let path_split = image_path.split('.');
     let filetype = path_split[path_split.length - 1].toUpperCase();
     if (filetype == 'PDF') filetype = 'PDF';
@@ -86,10 +70,27 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
     console.log("//////////////////////////////////END//////////////////////////////////");
     console.log(result);
     let parse_result = result.ParsedResults;
-    let limit_rate = 0.6;
-    let words_index = 0;
+    let limit_rate = 0.6; let words_index = 0;
     let amount_index_arr = []; let str_index_arr = [];
     let lowercase_word_str = word_str.toLowerCase().replace(/\s+/g, '');
+
+    let date_format_arr = ['YYYYMMDD',   'YYYYDDMM',   'DDYYYYMM',   'MMYYYYDD',   'MMDDYYYY',   'DDMMYYYY',
+                           'YYMMDD',     'YYDDMM',     'DDYYMM',     'MMYYDD',     'MMDDYY',     'DDMMYY',
+                           'YYYYMMMDD',  'YYYYDDMMM',  'DDYYYYMMM',  'MMMYYYYDD',  'MMMDDYYYY',  'DDMMMYYYY',
+                           'YYMMMDD',    'YYDDMMM',    'DDYYMMM',    'MMMYYDD',    'MMMDDYY',    'DDMMMYY',
+                           'YYYYMMMMDD', 'YYYYDDMMMM', 'DDYYYYMMMM', 'MMMMYYYYDD', 'MMMMDDYYYY', 'DDMMMMYYYY',
+                           'YYMMMMDD',   'YYDDMMMM',   'DDYYMMMM',   'MMMMYYDD',   'MMMMDDYY',   'DDMMMMYY'];
+    let pos_date_arr = [];
+    if (date_str.length > 0) {
+      for (let i = 0; i < date_format_arr.length; i++) {
+        if (i < 12) // MM
+          pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').format(date_format_arr[i]);
+        else { // MMM or MMMM
+          pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').locale('en').format(date_format_arr[i]);
+          pos_date_arr[pos_date_arr.length] = moment(date_str, 'YYYY-MM-DD').locale('da').format(date_format_arr[i]);
+        }
+      }
+    }
     for (let i = 0; i < parse_result.length; i++) {
       let lines = parse_result[i].TextOverlay.Lines;
       for (let j = 0; j < lines.length; j++) {
@@ -97,6 +98,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
         let delta = 0; let delta_count = 0; let match_count = 0;
         let w_delta_count = 0;
         let lowercase_word_text = ""; 
+        let lowercase_date_text = "";
         for (let k = 0; k < words.length; k++) {
           let word_text = words[k].WordText;
 
@@ -171,6 +173,24 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
             w_delta_count++;
           }
           ////////////////////////////////WordString END/////////////////////////////////////
+          if (pos_date_arr.length > 0) {
+            for (let kk = k; kk < words.length; kk++) {
+              let flg = 0;
+              if (lowercase_date_text.length >= 4) flg = flg + 4;
+              else flg = flg + 3
+              if (lowercase_date_text.length <= 20) flg = flg + 20;
+              else flg = flg + 21;
+              if (flg == 24) { // OK
+                console.log(lowercase_date_text, "Date------------////////////////////");
+              } else if (flg == 3) { // increase
+                lowercase_word_text = lowercase_word_text + words[kk].WordText.toLowerCase().replace(/\s+|.|,|\\|\/|-|_/g, '');
+              } else if (flg == 25) { // initial
+                lowercase_date_text = "";
+                break;
+              }
+            }
+          }
+
           
           words_index++;
         }
