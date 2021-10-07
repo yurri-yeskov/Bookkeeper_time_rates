@@ -176,15 +176,15 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
           if (pos_date_arr.length > 0) {
             for (let kk = k; kk < words.length; kk++) {
               let flg = 0;
-              console.log("flag---------------------------------", flg)
               if (lowercase_date_text.length >= 4) flg = flg + 4;
               else flg = flg + 3;
               if (lowercase_date_text.length <= 20) flg = flg + 20;
               else flg = flg + 21;
+              console.log("flag---------------------------------", flg)
               if (flg == 24) { // OK
                 console.log(lowercase_date_text, "Date24------------////////////////////");
               } else if (flg == 23) { // increase
-                console.log(words[kk].WordText);
+                console.log(words[kk].WordText,"  11111111111  ", words[kk].WordText.toLowerCase().replace(/[\s+._/,-]/g, ''));
                 lowercase_word_text = lowercase_word_text + words[kk].WordText.toLowerCase().replace(/[\s+._/,-]/g, '');
                 console.log("lower-----------------", lowercase_date_text);
               } else if (flg == 25) { // initial
