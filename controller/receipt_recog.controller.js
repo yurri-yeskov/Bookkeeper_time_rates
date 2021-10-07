@@ -136,18 +136,36 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
           ////////////////////////////////Amount END/////////////////////////////////////////
           
           ////////////////////////////////WordString START///////////////////////////////////
-          lowercase_word_text = lowercase_word_text + word_text.toLowerCase().replace(/\s+/g, '');
-          if (lowercase_word_text.length >= lowercase_word_str.length) {
-            let match_rate = similarity(lowercase_word_text, lowercase_word_str);
-            if (match_rate > limit_rate) {
-              console.log("STR word_text_______________________", word_text, lowercase_word_text, lowercase_word_str);
-              console.log("STR Rate____________________________", match_rate, w_delta_count);
-              for (let idx = w_delta_count; idx >= 0; idx--) {
-                str_index_arr[str_index_arr.length] = words_index - idx;
-              }         
+          for (let kk=k; kk < words.length; kk++) {
+            if (lowercase_word_text.length >= lowercase_word_str.length) {
+              let match_rate = similarity(lowercase_word_text, lowercase_word_str);
+              if (match_rate > limit_rate) {
+                console.log("STR word_text_______________________", word_text, lowercase_word_text, lowercase_word_str);
+                console.log("STR Rate____________________________", match_rate, w_delta_count);
+                for (let idx = w_delta_count; idx >= 0; idx--) {
+                  str_index_arr[str_index_arr.length] = words_index - idx;
+                }         
+              }
+              lowercase_word_text = "";
+              break;
+            } else {
+              w_delta_count++;
+              lowercase_word_text = lowercase_word_text + words[kk].WordText.toLowerCase().replace(/\s+/g, '');
             }
-            lowercase_word_text = "";
-          } else w_delta_count++;
+          }
+          // if (lowercase_word_text.length >= lowercase_word_str.length) {
+          //   let match_rate = similarity(lowercase_word_text, lowercase_word_str);
+          //   if (match_rate > limit_rate) {
+          //     console.log("STR word_text_______________________", word_text, lowercase_word_text, lowercase_word_str);
+          //     console.log("STR Rate____________________________", match_rate, w_delta_count);
+          //     for (let idx = w_delta_count; idx >= 0; idx--) {
+          //       str_index_arr[str_index_arr.length] = words_index - idx;
+          //     }         
+          //   }
+          //   lowercase_word_text = "";
+          // } else {
+          //   w_delta_count++;
+          // }
           ////////////////////////////////WordString END/////////////////////////////////////
           
           words_index++;
