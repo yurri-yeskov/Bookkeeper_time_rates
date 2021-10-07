@@ -180,6 +180,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
               if (lowercase_date_text.length >= 4 && lowercase_date_text.length <= 20) {
                 for (let pidx = 0; pidx < pos_date_arr.length; pidx++) {
                   let match_rate = similarity(lowercase_date_text, pos_date_arr[pidx]);
+                  console.log("XXXXXXXXXXXXXXXXXXXX", match_rate, lowercase_date_text, pos_date_arr[pidx]);
                   if (match_rate > limit_rate) {
                     console.log("STR word_text_______________________", word_text, lowercase_date_text, pos_date_arr[pidx]);
                     console.log("STR Rate____________________________", match_rate, d_delta_count);
