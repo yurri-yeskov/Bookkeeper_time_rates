@@ -70,7 +70,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
     console.log("//////////////////////////////////END//////////////////////////////////");
     console.log(result);
     let parse_result = result.ParsedResults;
-    let limit_rate = 0.6; let words_index = 0;
+    let limit_rate = 0.65; let words_index = 0;
     let amount_index_arr = []; let str_index_arr = []; let date_index_arr = [];
     let lowercase_word_str = word_str.toLowerCase().replace(/\s+/g, '');
 
