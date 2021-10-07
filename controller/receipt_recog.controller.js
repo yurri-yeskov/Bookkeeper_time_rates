@@ -178,11 +178,13 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
           if (pos_date_arr.length > 0) {
             console.log("in----------------", lowercase_date_text.length);
             for (let kk = k; kk < words.length; kk++) {
+              console.log("inin----------------", lowercase_date_text.length);
               let flg = 0;
               if (lowercase_date_text.length >= 4) flg = flg + 4;
               else flg = flg + 3
               if (lowercase_date_text.length <= 20) flg = flg + 20;
               else flg = flg + 21;
+              console.log("inin----flg------------", flg);
               if (flg == 24) { // OK
                 console.log(lowercase_date_text, "Date24------------////////////////////");
               } else if (flg == 3) { // increase
