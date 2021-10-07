@@ -213,7 +213,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
     console.log("amount_index_arr----------------------------", amount_index_arr);
     console.log("str_index_arr-------------------------------", str_index_arr);
     console.log("date_index_arr------------------------------", date_index_arr);
-    res.send({ data: result.ParsedResults, amount_indexes: amount_index_arr, str_indexes: str_index_arr });
+    res.send({ data: result.ParsedResults, amount_indexes: amount_index_arr, str_indexes: str_index_arr, date_indexes: date_index_arr });
   } catch (error) {
     console.log(error);
     res.status(400).send(error);

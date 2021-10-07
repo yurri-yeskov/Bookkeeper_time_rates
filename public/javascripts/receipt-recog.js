@@ -119,6 +119,8 @@ function startRecognition() {
                             result_str = result_str + "<strong class='highlight_amount'>" + word_text + "</strong> ";
                         else if (data.str_indexes.includes(words_index))
                             result_str = result_str + "<strong class='highlight_string'>" + word_text + "</strong> ";
+                        else if (data.date_indexes.includes(words_index))
+                            result_str = result_str + "<strong class='highlight_date'>" + word_text + "</strong> ";
                         else
                             result_str = result_str + word_text + " ";
                         words_index++;

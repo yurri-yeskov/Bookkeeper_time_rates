@@ -311,6 +311,12 @@ a.paginate_button {
   padding: 3px;
 }
 
+.highlight_date {
+  color: white;
+  background-color: #290215;
+  padding: 3px;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
