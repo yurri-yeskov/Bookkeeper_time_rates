@@ -71,7 +71,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
     console.log(result);
     let parse_result = result.ParsedResults;
     let limit_rate = 0.6; let words_index = 0;
-    let amount_index_arr = []; let str_index_arr = [];
+    let amount_index_arr = []; let str_index_arr = []; let date_index_arr = [];
     let lowercase_word_str = word_str.toLowerCase().replace(/\s+/g, '');
 
     let date_format_arr = ['YYYYMMDD',   'YYYYDDMM',   'DDYYYYMM',   'MMYYYYDD',   'MMDDYYYY',   'DDMMYYYY',
@@ -174,14 +174,29 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
           }
           ////////////////////////////////WordString END/////////////////////////////////////
           if (pos_date_arr.length > 0) {
+            let d_delta_count = 0;
+            let is_matching = false;
             for (let kk = k; kk < words.length + 1; kk++) {
               if (lowercase_date_text.length >= 4 && lowercase_date_text.length <= 20) {
-                console.log(lowercase_date_text, "Date24------------////////////////////");
-                if (kk >= words.length) break;
+                for (let pidx = 0; pidx < pos_date_arr.length; pidx++) {
+                  let match_rate = similarity(lowercase_date_text, pos_date_arr[pidx]);
+                  if (match_rate > limit_rate) {
+                    console.log("STR word_text_______________________", word_text, lowercase_date_text, pos_date_arr[pidx]);
+                    console.log("STR Rate____________________________", match_rate, d_delta_count);
+                    for (let idx = d_delta_count; idx >= 0; idx--) {
+                      date_index_arr[date_index_arr.length] = words_index - idx;
+                    }
+                    is_matching = true;
+                    break;
+                  }
+                }
+                if (kk >= words.length || is_matching) break;
                 lowercase_date_text = lowercase_date_text + words[kk].WordText.toLowerCase().replace(/[\s+._/,-]/g, '');
+                d_delta_count++;
               } else if (lowercase_date_text.length < 4) {
                 if (kk >= words.length) break;
                 lowercase_date_text = lowercase_date_text + words[kk].WordText.toLowerCase().replace(/[\s+._/,-]/g, '');
+                d_delta_count++;
               } else if (lowercase_date_text.length > 20) {
                 lowercase_date_text = "";
                 break;
@@ -196,6 +211,7 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
     }
     console.log("amount_index_arr----------------------------", amount_index_arr);
     console.log("str_index_arr-------------------------------", str_index_arr);
+    console.log("date_index_arr------------------------------", date_index_arr);
     res.send({ data: result.ParsedResults, amount_indexes: amount_index_arr, str_indexes: str_index_arr });
   } catch (error) {
     console.log(error);
