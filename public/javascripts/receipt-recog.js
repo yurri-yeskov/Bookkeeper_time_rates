@@ -127,6 +127,12 @@ function startRecognition() {
                     }
                     result_str = result_str + "\n";
                 }
+                if (data.amount_indexes.length <= 0)
+                    alert("Can't find the amount matching. Please enter the other value."); 
+                if (data.date_indexes.length <= 0)
+                    alert("Can't find the date matching. Please enter the other value.");
+                if (data.str_indexes.length <= 0)
+                    alert("Can't find the Wordstring matching. Please enter the other value.");
             }
             if (result_str == '') result_str = "Not exist file or Error";
             $('#resultViewer').html(result_str);
