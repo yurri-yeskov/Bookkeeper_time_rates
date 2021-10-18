@@ -150,7 +150,7 @@ function startRecognition() {
 
 function showDownloadPDFModal() {
     alert("Download PDF!!!");
-    var doc = new jsPDF('l')
+    var doc = new jsPDF('l', 'mm', 'a3')
 
     doc.setFontSize(18)
     doc.text('With content', 14, 22)
