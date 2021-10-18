@@ -673,6 +673,92 @@ function searchWithCustomerId() {
   });
 }
 
+function searchWithTimePeriod() {
+  $('#input-date_interval').bind('input keyup', function(){
+    var $this = $(this);
+    var delay = 1000; // 1 seconds delay after last input
+
+    // $('.bookkeeper-name').html("");
+    $('.time-period').html("");
+    $('.total-time').html("");
+    $('.total-cost').html("");
+    $('.dot-loaders').css('display', 'inline-block');
+    if ($('#input-date_interval').val() == '') {
+      $('.time-period').html("N/A");
+      $('.total-time').html("N/A");
+      $('.total-cost').html("N/A");
+      $('.dot-loaders').css('display', 'none');
+    }
+
+    clearTimeout($this.data('timer'));
+    $this.data('timer', setTimeout(function(){
+      $this.removeData('timer');
+      var selected_month = $('#input-date_interval').val();
+      var day_by_month = isValidDate(selected_month);
+      if (day_by_month) {
+        $('.time-period').html(selected_month + "-01 ~ " + selected_month + "-" + day_by_month);
+        $('.dot-loaders').css('display', 'none');
+      } else {
+        $('.time-period').html("N/A");
+        $('.total-time').html("N/A");
+        $('.total-cost').html("N/A");
+        $('.dot-loaders').css('display', 'none');
+      }
+      
+      // $.ajax({
+      //   type: "post",
+      //   url: base_url + "/get_ex_customer_info",
+      //   data: {
+      //     sel_id: $('#input-customer_id').val()
+      //   },
+      //   dataType: "json",
+      //   success: function(data) {
+    
+      //     if (data.data.length > 0) {
+      //       $('.bookkeeper-name').html(data.data[0].bookkeeper_name);
+      //       $('.company-name').html(data.data[0].company_name);
+      //       $('.email-addr').html(data.data[0].primary_email);
+      //       $('.customer-id').html(data.data[0].customer_id);
+      //     } else {
+      //       $('.bookkeeper-name').html("N/A");
+      //       $('.company-name').html("N/A");
+      //       $('.email-addr').html("N/A");
+      //       $('.customer-id').html("N/A");
+      //     }
+      //     $('.dot-loaders').css('display', 'none');
+      //   }
+      // }); 
+    }, delay));
+  });
+}
+
+function isValidDate(dateString)
+{
+  if (!dateString) return false;
+
+  // First check for the pattern
+  if(!/^\d{1,4}\-\d{1,2}\$/.test(dateString)) 
+    return false;
+
+  // Parse the date parts to integers
+  var parts = dateString.split("-");
+  var month = parseInt(parts[1], 10);
+  var year = parseInt(parts[0], 10);
+
+  // Check the ranges of month and year
+  if(year < 1000 || year > 3000 || month == 0 || month > 12)
+    return false;
+
+  var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+  // Adjust for leap years
+  if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+    monthLength[1] = 29;
+
+  // Check the range of the day
+  return monthLength[month - 1];
+};
+
 function renderSelect(data, type, full, meta) {
   var select_str = "<button class='btn btn-default link-btn' id='" + data +"' style='font-size: 12px; padding: 3px 12px;'>Links</button>"
   return select_str;
