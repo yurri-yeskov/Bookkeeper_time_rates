@@ -1,4 +1,5 @@
 var time_spent_table;
+var bookkeeper_fname = 'N/A';
 
 $(document).ready(function(){
 
@@ -49,7 +50,9 @@ $(document).ready(function(){
             "dataSrc": function ( data ) {
               //Make your callback here.
               alert("Done!");
+              bookkeeper_fname = data.bookkeeper_fname
               console.log(data.bookkeeper_fname);
+              console.log(bookkeeper_fname);
               console.log(data);
             }
         },
