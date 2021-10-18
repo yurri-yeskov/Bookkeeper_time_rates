@@ -96,7 +96,7 @@ $(document).ready(function(){
     searchWithCustomerId();
 
     $('#input-date_interval').datepicker({
-      format: "mm/yyyy",
+      format: "yyyy-mm",
       minViewMode: 1
     });
 });
@@ -179,9 +179,10 @@ function showDownloadPDFModal() {
   var delivery_year = today.getFullYear();
   $('#delivery-year').val(delivery_year);
   $(".selectpicker").selectpicker("refresh");
-  $('.bookkeeper-name').html('N/A');
-  $('.company-name').html('N/A');
-  $('.email-addr').html('N/A');
+  $('.bookkeeper-name').html('GETTING');
+  $('.time-period').html('N/A');
+  $('.total-time').html('N/A');
+  $('.total-cost').html('N/A');
   $('#pdfModal').modal();
 }
 

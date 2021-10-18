@@ -205,7 +205,7 @@
                 </div>
               </div>
               <div class="col-12 modal-margin">
-                <b>Company Name: </b> <label class="company-name" style="font-weight:normal">company test</label> <!--change when showing-->
+                <b>Time Period: </b> <label class="time-period" style="font-weight:normal">company test</label> <!--change when showing-->
                 <div class="dot-loaders" style="display: none; margin-bottom: 5px;">
                   <div class="dot-loader"></div>
                   <div class="dot-loader dot-loader--2"></div>
@@ -213,7 +213,7 @@
                 </div>
               </div>
               <div class="col-12 modal-margin">
-                <b>Email Address: </b> <label class="email-addr" style="font-weight:normal">email@addr.com</label> <!--change when showing-->
+                <b>Total Time: </b> <label class="total-time" style="font-weight:normal">email@addr.com</label> <!--change when showing-->
                 <div class="dot-loaders" style="display: none; margin-bottom: 5px;">
                   <div class="dot-loader"></div>
                   <div class="dot-loader dot-loader--2"></div>
@@ -221,44 +221,14 @@
                 </div>
               </div>
               <div class="col-12 modal-margin">
-                <label for="input-task" class="form-label">Primary Task Type:</label>
-                <select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-task">
-                  <option value="1">Almindelig kontering</option>
-                  <option value="2">Årsafslutningspakke - Selskaber 1. År</option>
-                  <option value="3">Årsafslutningspakke - Selskaber eksisterende kunde</option>
-                  <option value="4">Årsafslutningspakke - Enkeltmands 1. År</option>
-                  <option value="5">Årsafslutningspakke - Enkeltmands eksisterende kunde</option>
-                  <option value="6">VSO - beregning ny kunde</option>
-                  <option value="7">VSO - beregning eksisterende kunde</option>
-                  <option value="8">Samtale/Rådgivning af kunde</option>
-                  <option value="9">Intern kommunikation og møder</option>
-                  <option value="10">Primo ny kunde</option>
-                  <option value="11">Primo eksisterende</option>
-                  <option value="12">kundeCatchup/kontering</option>
-                </select>
+                <b>Total Cost: </b> <label class="total-cost" style="font-weight:normal">email@addr.com</label> <!--change when showing-->
+                <div class="dot-loaders" style="display: none; margin-bottom: 5px;">
+                  <div class="dot-loader"></div>
+                  <div class="dot-loader dot-loader--2"></div>
+                  <div class="dot-loader dot-loader--3"></div>
+                </div>
               </div>
-              <div class="col-12 modal-margin">
-                <label for="input-period" class="form-label">Period:</label>
-                <select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-period">
-                  <option value="Q1">Q1</option>
-                  <option value="Q2">Q2</option>
-                  <option value="Q3">Q3</option>
-                  <option value="Q4">Q4</option>
-                  <option value="Year-end">Year-end</option>
-                </select>
-              </div>
-              <div class="col-12 modal-margin">
-                <label for="delivery-year" class="form-label">Delivery Year: </label>
-                <input type="number" class="form-control" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" id="delivery-year" value="<%= this_year %>">
-              </div>
-              <div class="col-12 modal-margin">
-                <label for="input-time" class="form-label">Time Spent (in min): </label>
-                <input type="number" class="form-control" id="input-time">
-              </div>
-              <div class="col-12 modal-margin">
-                <label for="input-note" class="form-label">Note:</label>
-                <textarea style="resize:none; height: 80px;" class="form-control" id="input-note"></textarea>
-              </div>
+              
             </form>
           </div>
           <div class="modal-footer">
