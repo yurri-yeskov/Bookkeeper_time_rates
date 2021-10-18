@@ -46,15 +46,15 @@ $(document).ready(function(){
               d.this_year = getSelYear();
               d.user_token = getSelToken();
             },
-            dataType: "json"
-            // "dataSrc": function ( data ) {
-            //   //Make your callback here.
+            dataType: "json",
+            dataSrc: function ( jdata ) {
+              //Make your callback here.
               
-            //   bookkeeper_fname = data.bookkeeper_fname
-            //   console.log(data.bookkeeper_fname);
-            //   console.log(bookkeeper_fname);
-            //   console.log(data);
-            // }
+              bookkeeper_fname = jdata.bookkeeper_fname
+              // console.log(data.bookkeeper_fname);
+              // console.log(bookkeeper_fname);
+              // console.log(data);
+            }
         },
         "columns": [
             {data:'customer_id', render: renderSelect},
