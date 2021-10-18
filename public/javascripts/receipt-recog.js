@@ -161,7 +161,7 @@ function showDownloadPDFModal() {
     // var pageSize = doc.internal.pageSize
     // var pageWidth = pageSize.width ? pageSize.width : pageSize.getWidth()
     // var text = doc.splitTextToSize(faker.lorem.sentence(45), pageWidth - 35, {})
-    doc.text("text", 14, 30)
+    doc.text("<b>text</b>", 14, 30)
 
     doc.autoTable({
         head: headRows(),
@@ -177,40 +177,40 @@ function showDownloadPDFModal() {
 
 function headRows() {
     return [{ 
-        cutomer_id:    { content: 'Customer ID', valign: 'middle', halign: 'center' }, 
-        email:         { content: 'Email',       valign: 'middle', halign: 'center' }, 
-        first:         { content: "12-01",       valign: 'middle', halign: 'center' },
-        second:        { content: "12-02",       valign: 'middle', halign: 'center' },
-        third:         { content: "12-03",       valign: 'middle', halign: 'center' },
-        fourth:        { content: "12-04",       valign: 'middle', halign: 'center' },
-        fifth:         { content: "12-05",       valign: 'middle', halign: 'center' },
-        sixth:         { content: "12-06",       valign: 'middle', halign: 'center' },
-        seventh:       { content: "12-07",       valign: 'middle', halign: 'center' },
-        eighth:        { content: "12-08",       valign: 'middle', halign: 'center' },
-        ninth:         { content: "12-09",       valign: 'middle', halign: 'center' },
-        tenth:         { content: "12-10",       valign: 'middle', halign: 'center' },
-        eleventh:      { content: "12-11",       valign: 'middle', halign: 'center' },
-        twelfth:       { content: "12-12",       valign: 'middle', halign: 'center' },
-        thirteenth:    { content: "12-13",       valign: 'middle', halign: 'center' },
-        fourteenth:    { content: "12-14",       valign: 'middle', halign: 'center' },
-        fifteenth:     { content: "12-15",       valign: 'middle', halign: 'center' }, 
-        sixteenth:     { content: "12-16",       valign: 'middle', halign: 'center' }, 
-        seventeenth:   { content: "12-17",       valign: 'middle', halign: 'center' }, 
-        eighteenth:    { content: "12-18",       valign: 'middle', halign: 'center' }, 
-        ninteenth:     { content: "12-19",       valign: 'middle', halign: 'center' }, 
-        twentieth:     { content: "12-20",       valign: 'middle', halign: 'center' }, 
-        twentyfirst:   { content: "12-21",       valign: 'middle', halign: 'center' }, 
-        twentysecond:  { content: "12-22",       valign: 'middle', halign: 'center' }, 
-        twentythird:   { content: "12-23",       valign: 'middle', halign: 'center' }, 
-        twentyfourth:  { content: "12-24",       valign: 'middle', halign: 'center' }, 
-        twentyfifth:   { content: "12-25",       valign: 'middle', halign: 'center' }, 
-        twentysixth:   { content: "12-26",       valign: 'middle', halign: 'center' }, 
-        twentyseventh: { content: "12-27",       valign: 'middle', halign: 'center' }, 
-        twentyeighth:  { content: "12-28",       valign: 'middle', halign: 'center' }, 
-        twentyninth:   { content: "12-29",       valign: 'middle', halign: 'center' }, 
-        thirtieth:     { content: "12-30",       valign: 'middle', halign: 'center' }, 
-        thirtyfirst:   { content: "12-31",       valign: 'middle', halign: 'center' }, }
-    ]
+        cutomer_id:    'Customer ID', 
+        email:         'Email', 
+        first:         "12-01",
+        second:        "12-02",
+        third:         "12-03",
+        fourth:        "12-04",
+        fifth:         "12-05",
+        sixth:         "12-06",
+        seventh:       "12-07",
+        eighth:        "12-08",
+        ninth:         "12-09",
+        tenth:         "12-10",
+        eleventh:      "12-11",
+        twelfth:       "12-12",
+        thirteenth:    "12-13",
+        fourteenth:    "12-14",
+        fifteenth:     "12-15", 
+        sixteenth:     "12-16", 
+        seventeenth:   "12-17", 
+        eighteenth:    "12-18", 
+        ninteenth:     "12-19", 
+        twentieth:     "12-20", 
+        twentyfirst:   "12-21", 
+        twentysecond:  "12-22", 
+        twentythird:   "12-23", 
+        twentyfourth:  "12-24", 
+        twentyfifth:   "12-25", 
+        twentysixth:   "12-26", 
+        twentyseventh: "12-27", 
+        twentyeighth:  "12-28", 
+        twentyninth:   "12-29", 
+        thirtieth:     "12-30", 
+        thirtyfirst:   "12-31", 
+    }]
 }
 
 function bodyRows(rowCount) {
