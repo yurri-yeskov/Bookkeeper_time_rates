@@ -739,7 +739,7 @@ function isValidDate(dateString)
   if (!dateString) return false;
   console.log("1111111111111111111111111");
   // First check for the pattern
-  if(!/^\d{1,4}\-\d{1,2}\$/.test(dateString)) 
+  if(!/^\d{4}\-\d{2}\$/.test(dateString)) 
     return false;
   console.log("2222222222222222222222222222");
 
@@ -751,6 +751,7 @@ function isValidDate(dateString)
   // Check the ranges of month and year
   if(year < 1000 || year > 3000 || month == 0 || month > 12)
     return false;
+    console.log("3333333333333333333333333333");
 
   var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
 
