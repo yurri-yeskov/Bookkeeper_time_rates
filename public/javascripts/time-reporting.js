@@ -165,6 +165,24 @@ function showAddModalForExternal() {
   $('#basicModal').modal();
 }
 
+function showDownloadPDFModal() {
+  $('.form-control').val('');
+  $('.customer-id').css('display', 'none');
+  $('#input-customer_id').css('display', 'inline');
+  $('.small-loader').css('display', 'none');
+
+  var today = new Date();
+  var delivery_year = today.getFullYear();
+  $('#delivery-year').val(delivery_year);
+  $(".selectpicker").selectpicker("refresh");
+  $('.customer-id').html("");
+  $('.bookkeeper-name').html('N/A');
+  $('.company-name').html('N/A');
+  $('.email-addr').html('N/A');
+  $('.customer-id').html('N/A');
+  $('#pdfModal').modal();
+}
+
 function showEditModal(e) {
 
   var cur_row = $('#time-spent').find('#' + e.name).parents('tr');

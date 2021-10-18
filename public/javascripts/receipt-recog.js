@@ -148,6 +148,7 @@ function startRecognition() {
     });
 }
 
+///////////////////////////////////////////////////////////////////
 function showDownloadPDFModal() {
     alert("Download PDF!!!");
     var doc = new jsPDF('l', 'mm', 'a4')
@@ -155,7 +156,7 @@ function showDownloadPDFModal() {
     doc.setFontSize(18)
     doc.text('With content', 14, 22)
 
-    doc.setFontSize(18)
+    doc.setFontSize(12)
     doc.setFontStyle('bold')
     doc.text("text", 14, 30)
 
@@ -181,9 +182,9 @@ function headRows() {
         sixth:         "12-06\n12-16\n12-26",
         seventh:       "12-07\n12-17\n12-27",
         eighth:        "12-08\n12-18\n12-28",
-        ninth:         "12-09\n12-19",
-        tenth:         "12-10\n12-20",
-        // eleventh:      "\n\n12-31",
+        ninth:         "12-09\n12-19\n12-29",
+        tenth:         "12-10\n12-20\n12-30",
+        eleventh:      "\n\n12-31",
         // twelfth:       "12-12\n12-27",
         // thirteenth:    "12-13\n12-28",
         // fourteenth:    "12-14\n12-29",
@@ -249,3 +250,4 @@ function bodyRows(rowCount) {
     }
     return body
   }
+  /////////////////////////////////////////////////////////////
