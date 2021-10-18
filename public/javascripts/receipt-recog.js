@@ -176,9 +176,9 @@ function headRows() {
     //     content: i / 5 + 1,
     //     styles: { valign: 'middle', halign: 'center' },
     return [{ 
-        cutomer_id:    {content: 'Customer ID', rowSpan:2}, 
-        email:         {content: 'Email', rowSpan: 2}, 
-        first:         "12-01",
+        cutomer_id:    {content: 'Customer ID', rowSpan:2, styles: { valign: 'middle', halign: 'center' }}, 
+        email:         {content: 'Email', rowSpan: 2, styles: { valign: 'middle', halign: 'center' }}, 
+        first:         ["12-01", "12-17"],
         second:        "12-02",
         third:         "12-03",
         fourth:        "12-04",
