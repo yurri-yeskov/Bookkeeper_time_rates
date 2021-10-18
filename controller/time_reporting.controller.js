@@ -223,8 +223,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
               "recordsFiltered": recordsFiltered,
               "recordsTotal": recordsTotal,
               "data": result.rows,
-              "this_year": req.body.this_year,
-              "bookkeeper_fname": bookkeeper_fullname
+              "this_year": req.body.this_year
             });
             res.send(data);
           });
