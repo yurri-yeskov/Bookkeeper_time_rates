@@ -163,12 +163,10 @@ function showDownloadPDFModal() {
         head: headRows(),
         body: bodyRows(400),
         startY: 50,
-        showHead: 'firstpage',
+        showHead: 'firstPage',
     })
 
     doc.save("test.pdf");
-
-    // doc.text(text, 14, doc.lastAutoTable.finalY + 10)
 }
 
 function headRows() {
