@@ -94,6 +94,11 @@ $(document).ready(function(){
 
     getTotalTimes($('#input-year').val());
     searchWithCustomerId();
+
+    $('#input-date_interval').datepicker({
+      format: "mm/yyyy",
+      minViewMode: 1
+    });
 });
 
 function getTotalTimes(sel_year) {
