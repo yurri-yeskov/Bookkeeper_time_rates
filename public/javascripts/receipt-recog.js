@@ -150,7 +150,7 @@ function startRecognition() {
 
 function showDownloadPDFModal() {
     alert("Download PDF!!!");
-    var doc = new jsPDF()
+    var doc = new jsPDF('l')
 
     doc.setFontSize(18)
     doc.text('With content', 14, 22)
@@ -170,7 +170,7 @@ function showDownloadPDFModal() {
         showHead: 'firstPage',
     })
 
-    doc.save("test");
+    doc.save("test.pdf");
 
     // doc.text(text, 14, doc.lastAutoTable.finalY + 10)
 }
