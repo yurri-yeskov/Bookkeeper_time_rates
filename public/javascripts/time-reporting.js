@@ -675,7 +675,7 @@ function searchWithCustomerId() {
 }
 
 function searchWithTimePeriod() {
-  $('#input-date_interval').bind('input keyup', function(){
+  $('#input-date_interval').bind('input change', function(){
     var $this = $(this);
     var delay = 1000; // 1 seconds delay after last input
 
@@ -696,6 +696,7 @@ function searchWithTimePeriod() {
       $this.removeData('timer');
       var selected_month = $('#input-date_interval').val();
       var day_by_month = isValidDate(selected_month);
+      console.log(day_by_month);
       if (day_by_month) {
         $('.time-period').html(selected_month + "-01 ~ " + selected_month + "-" + day_by_month);
         $('.dot-loaders').css('display', 'none');
