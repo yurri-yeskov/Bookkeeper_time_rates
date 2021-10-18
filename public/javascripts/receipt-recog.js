@@ -150,4 +150,187 @@ function startRecognition() {
 
 function showDownloadPDFModal() {
     alert("Download PDF!!!");
+    var doc = new jsPDF()
+
+    doc.setFontSize(18)
+    doc.text('With content', 14, 22)
+    doc.setFontSize(11)
+    doc.setTextColor(100)
+
+    // jsPDF 1.4+ uses getWidth, <1.4 uses .width
+    // var pageSize = doc.internal.pageSize
+    // var pageWidth = pageSize.width ? pageSize.width : pageSize.getWidth()
+    // var text = doc.splitTextToSize(faker.lorem.sentence(45), pageWidth - 35, {})
+    doc.text("text", 14, 30)
+
+    doc.autoTable({
+        head: headRows(),
+        body: bodyRows(400),
+        startY: 50,
+        showHead: 'firstPage',
+    })
+
+    doc.text(text, 14, doc.lastAutoTable.finalY + 10)
 }
+
+function headRows() {
+    return [
+      { cutomer_id: 'Customer ID', email: 'Email', 
+      first: "12-01",
+      second: "12-02",
+      third: "12-03",
+      fourth: "12-04",
+      fifth: "12-05",
+      sixth: "12-06",
+      seventh: "12-07",
+      eighth: "12-08",
+      ninth: "12-09",
+      tenth: "12-10",
+      eleventh: "12-11",
+      twelfth: "12-12",
+      thirteenth: "12-13",
+      fourteenth: "12-14",
+      fifteenth: "12-15", 
+      sixteenth: "12-16", 
+      seventeenth: "12-17", 
+      eighteenth: "12-18", 
+      ninteenth: "12-19", 
+      twentieth: "12-20", 
+      twentyfirst: "12-21", 
+      twentysecond: "12-22", 
+      twentythird: "12-23", 
+      twentyfourth: "12-24", 
+      twentyfifth: "12-25", 
+      twentysixth: "12-26", 
+      twentyseventh: "12-27", 
+      twentyeighth: "12-28", 
+      twentyninth: "12-29", 
+      thirtieth: "12-30", 
+      thirtyfirst: "12-31" }
+    ]
+}
+
+function bodyRows(rowCount) {
+    rowCount = rowCount || 10
+    var body = []
+    for (var j = 1; j <= rowCount; j++) {
+      body.push({
+        cutomer_id: "12345678",
+        email: "testtest@gmail.com",
+        first: "20.00",
+        second: "12.02",
+        third: "12.03",
+        fourth: "12.04",
+        fifth: "12.05",
+        sixth: "12.06",
+        seventh: "12.07",
+        eighth: "12.08",
+        ninth: "12.09",
+        tenth: "12.10",
+        eleventh: "12.11",
+        twelfth: "12.12",
+        thirteenth: "12.13",
+        fourteenth: "12.14",
+        fifteenth: "12.15", 
+        sixteenth: "12.16", 
+        seventeenth: "12.17",
+        eighteenth: "12.18", 
+        ninteenth: "12.19", 
+        twentieth: "12.20", 
+        twentyfirst: "12.21",
+        twentysecond: "12.22",
+        twentythird: "12.23",
+        twentyfourth: "12.24",
+        twentyfifth: "12.25",
+        twentysixth: "12.26",
+        twentyseventh: "12.27",
+        twentyeighth: "12.28",
+        twentyninth: "12.29",
+        thirtieth: "12.30", 
+        thirtyfirst: "12.31" 
+      })
+    }
+    return body
+  }
+
+////////////////////////////////////////
+
+var generateData = function(amount) {
+    var result = [];
+    var data = {
+      coin: "100",
+      cutomer_id: "12345678",
+      email_address: "testtest@gmail.com",
+      game_group: "GameGroup",
+      game_name: "XPTO2",
+      game_version: "25",
+      machine: "20485861",
+      vlt: "0",
+      "12-31": "1.20"
+    };
+    for (var i = 0; i < amount; i += 1) {
+      data.id = (i + 1).toString();
+      result.push(Object.assign({}, data));
+    }
+    return result;
+  };
+  
+  function createHeaders(keys) {
+    var result = [];
+    for (var i = 0; i < keys.length; i += 1) {
+      result.push({
+        id: keys[i],
+        name: keys[i],
+        prompt: keys[i],
+        width: 65,
+        align: "center",
+        padding: 0
+      });
+    }
+    return result;
+  }
+  
+  var headers = createHeaders([
+    "cutomer_id",
+    "email_address",
+    "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  "12-31",
+  ]);
+  
+  //var doc = new jsPDF({ putOnlyUsedFonts: true, orientation: "landscape",  });
+  var doc = new jsPDF('l', 'mm', 'a2');
+  doc.table(10, 10, generateData(100), headers, { autoSize: true, fontSize:11.5 });
+  
+  
+  verticalOffset = 0.5
+  
+////////////////////////////////////////
