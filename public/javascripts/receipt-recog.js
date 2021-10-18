@@ -214,8 +214,8 @@ function bodyRows(rowCount) {
     var body = []
     for (var j = 1; j <= rowCount; j++) {
       body.push({
-        cutomer_id: "12345678",
-        email: "testtest@gmail.com",
+        cutomer_id: {content: "12345678", styles: { valign: 'middle', halign: 'center' }}, 
+        email: {content: "testtest@gmail.com", styles: { valign: 'middle', halign: 'center' }}, 
         first: "20.00\n12.16",
         second: "12.02\n12.16",
         third: "12.03\n12.16",
