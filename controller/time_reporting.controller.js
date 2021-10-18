@@ -217,7 +217,6 @@ exports.findCustomerInfoWithYear = (req, res) => {
               if (result.rows.length < 0) bookkeeper_fullname = "None";
               else bookkeeper_fullname = result.rows[0].bookkeeper_name;
             }
-            console.log("1111111111111111111111111", bookkeeper_fullname);
   
             var data = JSON.stringify({
               "draw": req.body.draw,
