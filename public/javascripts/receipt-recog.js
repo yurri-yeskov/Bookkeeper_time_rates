@@ -161,7 +161,8 @@ function showDownloadPDFModal() {
     // var pageSize = doc.internal.pageSize
     // var pageWidth = pageSize.width ? pageSize.width : pageSize.getWidth()
     // var text = doc.splitTextToSize(faker.lorem.sentence(45), pageWidth - 35, {})
-    doc.text("<b>text</b>", 14, 30)
+    doc.setFontStyle('bold')
+    doc.text("text", 14, 30)
 
     doc.autoTable({
         head: headRows(),
