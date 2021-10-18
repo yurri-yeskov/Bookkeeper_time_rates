@@ -160,6 +160,19 @@ function showDownloadPDFModal() {
     doc.text("text", 14, 30)
 
     doc.autoTable({
+        // columns:[{header: 'ID', dataKey: 'id'}, 
+        //         {header: 'Name', dataKey: 'name'}
+        //         {header: 'Name', dataKey: 'name'}
+        //         {header: 'Name', dataKey: 'name'}
+        //         {header: 'Name', dataKey: 'name'}
+        //         {header: 'Name', dataKey: 'name'}
+        //         {header: 'Name', dataKey: 'name'}
+        //         {header: 'Name', dataKey: 'name'}
+        //         {header: 'Name', dataKey: 'name'}   
+        //         {header: 'Name', dataKey: 'name'}   
+        //         {header: 'Name', dataKey: 'name'}   
+        //         {header: 'Name', dataKey: 'name'}   
+        //         {header: 'Name', dataKey: 'name'}],
         head: headRows(),
         body: bodyRows(400),
         startY: 50,
@@ -178,7 +191,7 @@ function headRows() {
     return [{ 
         cutomer_id:    {content: 'Customer ID', rowSpan:2, styles: { valign: 'middle', halign: 'center' }}, 
         email:         {content: 'Email', rowSpan: 2, styles: { valign: 'middle', halign: 'center' }}, 
-        first:         ["12-01", "12-17"],
+        first:         [{content:"12-01"},{content:"12-01"}],
         second:        "12-02",
         third:         "12-03",
         fourth:        "12-04",
