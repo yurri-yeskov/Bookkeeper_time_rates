@@ -97,6 +97,7 @@ $(document).ready(function(){
 
     getTotalTimes($('#input-year').val());
     searchWithCustomerId();
+    searchWithTimePeriod();
 
     $('#input-date_interval').datepicker({
       format: "yyyy-mm",
