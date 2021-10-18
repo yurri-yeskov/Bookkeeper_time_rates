@@ -174,11 +174,9 @@ function showDownloadPDFModal() {
   var delivery_year = today.getFullYear();
   $('#delivery-year').val(delivery_year);
   $(".selectpicker").selectpicker("refresh");
-  $('.customer-id').html("");
   $('.bookkeeper-name').html('N/A');
   $('.company-name').html('N/A');
   $('.email-addr').html('N/A');
-  $('.customer-id').html('N/A');
   $('#pdfModal').modal();
 }
 
