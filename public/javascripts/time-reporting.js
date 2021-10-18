@@ -161,13 +161,6 @@ function showAddModalForExternal() {
   $('#input-customer_id').css('display', 'inline');
   $('.small-loader').css('display', 'none');
 
-  var cur_row_data = time_spent_table.row(1).data();
-  if (acl_level != 1) {
-    bookkeeper_fname = cur_row_data.bookkeeper_name;
-  } else {
-    bookkeeper_fname = "Admin";
-  }
-
   var today = new Date();
   var delivery_year = today.getFullYear();
   $('#delivery-year').val(delivery_year);
@@ -185,11 +178,18 @@ function showDownloadPDFModal() {
   $('#input-date_interval').css('display', 'inline');
   $('.small-loader').css('display', 'none');
 
+  var cur_row_data = time_spent_table.row(1).data();
+  if (acl_level != 1) {
+    bookkeeper_fname = cur_row_data.bookkeeper_name;
+  } else {
+    bookkeeper_fname = "Admin";
+  }
+
   var today = new Date();
   var delivery_year = today.getFullYear();
   $('#delivery-year').val(delivery_year);
   $(".selectpicker").selectpicker("refresh");
-  $('.bookkeeper-name').html('GETTING');
+  $('.bookkeeper-name').html(bookkeeper_fname);
   $('.time-period').html('N/A');
   $('.total-time').html('N/A');
   $('.total-cost').html('N/A');
