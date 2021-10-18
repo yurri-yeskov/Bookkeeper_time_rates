@@ -167,7 +167,7 @@ function showDownloadPDFModal() {
         head: headRows(),
         body: bodyRows(400),
         startY: 50,
-        showHead: 'firstPage',
+        showHead: true,
     })
 
     doc.save("test.pdf");
