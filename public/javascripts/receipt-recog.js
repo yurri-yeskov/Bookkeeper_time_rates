@@ -172,9 +172,12 @@ function showDownloadPDFModal() {
 }
 
 function headRows() {
+    // rowSpan: 5,
+    //     content: i / 5 + 1,
+    //     styles: { valign: 'middle', halign: 'center' },
     return [{ 
-        cutomer_id:    'Customer ID', 
-        email:         'Email', 
+        cutomer_id:    {content: 'Customer ID', rowSpan:2}, 
+        email:         {content: 'Email', rowSpan: 2}, 
         first:         "12-01",
         second:        "12-02",
         third:         "12-03",
