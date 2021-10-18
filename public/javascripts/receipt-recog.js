@@ -160,19 +160,6 @@ function showDownloadPDFModal() {
     doc.text("text", 14, 30)
 
     doc.autoTable({
-        // columns:[{header: 'ID', dataKey: 'id'}, 
-        //         {header: 'Name', dataKey: 'name'}
-        //         {header: 'Name', dataKey: 'name'}
-        //         {header: 'Name', dataKey: 'name'}
-        //         {header: 'Name', dataKey: 'name'}
-        //         {header: 'Name', dataKey: 'name'}
-        //         {header: 'Name', dataKey: 'name'}
-        //         {header: 'Name', dataKey: 'name'}
-        //         {header: 'Name', dataKey: 'name'}   
-        //         {header: 'Name', dataKey: 'name'}   
-        //         {header: 'Name', dataKey: 'name'}   
-        //         {header: 'Name', dataKey: 'name'}   
-        //         {header: 'Name', dataKey: 'name'}],
         head: headRows(),
         body: bodyRows(400),
         startY: 50,
@@ -185,13 +172,10 @@ function showDownloadPDFModal() {
 }
 
 function headRows() {
-    // rowSpan: 5,
-    //     content: i / 5 + 1,
-    //     styles: { valign: 'middle', halign: 'center' },
     return [{ 
-        cutomer_id:    {content: 'Customer ID', rowSpan:2, styles: { valign: 'middle', halign: 'center' }}, 
-        email:         {content: 'Email', rowSpan: 2, styles: { valign: 'middle', halign: 'center' }}, 
-        first:         "12-01",
+        cutomer_id:    'Customer ID', 
+        email:         'Email', 
+        first:         "12-01\n12-016",
         second:        "12-02",
         third:         "12-03",
         fourth:        "12-04",
@@ -206,7 +190,7 @@ function headRows() {
         thirteenth:    "12-13",
         fourteenth:    "12-14",
         fifteenth:     "12-15", 
-        // sixteenth:     "12-16", 
+        sixteenth:     "12-16", 
         // seventeenth:   "12-17", 
         // eighteenth:    "12-18", 
         // ninteenth:     "12-19", 
