@@ -1,8 +1,10 @@
 var time_spent_table;
 var bookkeeper_fname = 'N/A';
+var acl_level = 500;
 
 $(document).ready(function(){
 
+    acl_level = $('#acl_level_hidden').val();
     time_spent_table = $("#time-spent-table").DataTable({
         "scrollCollapse": true,
         "ScrollInfinite": true,
@@ -46,15 +48,7 @@ $(document).ready(function(){
               d.this_year = getSelYear();
               d.user_token = getSelToken();
             },
-            dataType: "json",
-            dataSrc: function ( jdata ) {
-              //Make your callback here.
-              
-              bookkeeper_fname = jdata.bookkeeper_fname
-              // console.log(data.bookkeeper_fname);
-              // console.log(bookkeeper_fname);
-              // console.log(data);
-            }
+            dataType: "json"
         },
         "columns": [
             {data:'customer_id', render: renderSelect},
@@ -166,6 +160,13 @@ function showAddModalForExternal() {
   $('.customer-id').css('display', 'none');
   $('#input-customer_id').css('display', 'inline');
   $('.small-loader').css('display', 'none');
+
+  var cur_row_data = time_spent_table.row(1).data();
+  if (acl_level != 1) {
+    bookkeeper_fname = cur_row_data.bookkeeper_name;
+  } else {
+    bookkeeper_fname = "Admin";
+  }
 
   var today = new Date();
   var delivery_year = today.getFullYear();
