@@ -696,7 +696,7 @@ function searchWithTimePeriod() {
       $this.removeData('timer');
       var selected_month = $('#input-date_interval').val();
       var day_by_month = isValidDate(selected_month);
-      console.log(day_by_month);
+      console.log(day_by_month, selected_month);
       if (day_by_month) {
         $('.time-period').html(selected_month + "-01 ~ " + selected_month + "-" + day_by_month);
         $('.dot-loaders').css('display', 'none');
@@ -737,10 +737,11 @@ function searchWithTimePeriod() {
 function isValidDate(dateString)
 {
   if (!dateString) return false;
-
+  console.log("1111111111111111111111111");
   // First check for the pattern
   if(!/^\d{1,4}\-\d{1,2}\$/.test(dateString)) 
     return false;
+  console.log("2222222222222222222222222222");
 
   // Parse the date parts to integers
   var parts = dateString.split("-");
