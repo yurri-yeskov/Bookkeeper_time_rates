@@ -154,13 +154,8 @@ function showDownloadPDFModal() {
 
     doc.setFontSize(18)
     doc.text('With content', 14, 22)
-    doc.setFontSize(11)
-    doc.setTextColor(100)
-
-    // jsPDF 1.4+ uses getWidth, <1.4 uses .width
-    // var pageSize = doc.internal.pageSize
-    // var pageWidth = pageSize.width ? pageSize.width : pageSize.getWidth()
-    // var text = doc.splitTextToSize(faker.lorem.sentence(45), pageWidth - 35, {})
+    
+    doc.setFontSize(18)
     doc.setFontStyle('bold')
     doc.text("text", 14, 30)
 
