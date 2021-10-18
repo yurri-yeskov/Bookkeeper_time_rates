@@ -147,3 +147,7 @@ function startRecognition() {
         }
     });
 }
+
+function showDownloadPDFModal() {
+    alert("Download PDF!!!");
+}
