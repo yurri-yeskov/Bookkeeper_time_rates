@@ -211,13 +211,21 @@ exports.findCustomerInfoWithYear = (req, res) => {
               console.log(err);
               res.status(400).send(err);
             }
+
+            let bookkeeper_fullname = 'Admin';
+            if (acl_level != 1) {
+              if (result.rows.length < 0) bookkeeper_fullname = "None";
+              else bookkeeper_fullname = result.rows[0].bookkeeper_name;
+            }
+            console.log("1111111111111111111111111", bookkeeper_fullname);
   
             var data = JSON.stringify({
               "draw": req.body.draw,
               "recordsFiltered": recordsFiltered,
               "recordsTotal": recordsTotal,
               "data": result.rows,
-              "this_year": req.body.this_year
+              "this_year": req.body.this_year,
+              "bookkeeper_fname": bookkeeper_fullname
             });
             res.send(data);
           });
