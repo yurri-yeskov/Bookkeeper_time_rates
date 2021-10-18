@@ -167,8 +167,7 @@ function showAddModalForExternal() {
 
 function showDownloadPDFModal() {
   $('.form-control').val('');
-  $('.customer-id').css('display', 'none');
-  $('#input-customer_id').css('display', 'inline');
+  $('#input-date_interval').css('display', 'inline');
   $('.small-loader').css('display', 'none');
 
   var today = new Date();
