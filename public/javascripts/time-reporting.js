@@ -712,7 +712,7 @@ function searchWithTimePeriod() {
             console.log(data);
             $('.time-period').html(selected_month + "-01 ~ " + selected_month + "-" + day_by_month);
             $('.total-time').html(data.time_spent);
-            $('.total-cost').html(data.houly);
+            $('.total-cost').html(data.cost_spent);
             $('.dot-loaders').css('display', 'none');
             return;
             if (data.data.length > 0) {

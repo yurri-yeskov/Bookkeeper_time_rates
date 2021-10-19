@@ -122,7 +122,9 @@ exports.getDayCustomerInfo = (req, res) => {
       }
       let price_per_hour = 0.00;
       if (result.rows.length > 0) price_per_hour = result.rows[0].hourly;
-      res.send({ data: arr_time_spt, time_spent:time_spent, hourly:price_per_hour });
+      let cost_spent = time_spent * parseFloat(price_per_hour);
+      cost_spent = cost_spent.toFixed(2);
+      res.send({ data: arr_time_spt, time_spent:time_spent, cost_spent:cost_spent });
     });
   });
 };
