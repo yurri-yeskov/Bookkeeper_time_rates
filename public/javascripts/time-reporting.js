@@ -866,7 +866,7 @@ function bodyRows(data, latest_day) {
       for (var i = 0; i < data.length; i++) {
         var flg = false
         for (var j = 0; j < body.length; j++) {
-          if (body[j].customer_id.content == data[i].customer_id) {
+          if (body[j].customer_id.content == "" + data[i].customer_id) {
             flg = true; 
             var date_split = data[i].reg_date.split("-");
             var day = date_split[2].substring(0,2);
@@ -878,9 +878,8 @@ function bodyRows(data, latest_day) {
           }
         }
         if (!flg) {
-          console.log("date------------------", data[i], data[i].customer_id);
           body.push({
-            customer_id: {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
+            customer_id: {content: "" + data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
             email: {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }},
             first: "00.00\n00.00\n00.00",
             second: "00.00\n00.00\n00.00",
@@ -908,7 +907,7 @@ function bodyRows(data, latest_day) {
       for (var i = 0; i < data.length; i++) {
         var flg = false
         for (var j = 0; j < body.length; j++) {
-          if (body[j].customer_id.content == data[i].customer_id) {
+          if (body[j].customer_id.content == "" + data[i].customer_id) {
             flg = true; 
             var date_split = data[i].reg_date.split("-");
             var day = date_split[2].substring(0,2);
@@ -921,7 +920,7 @@ function bodyRows(data, latest_day) {
         }
         if (!flg) {
           body.push({
-            customer_id: {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
+            customer_id: {content: "" + data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
             email: {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }},
             first: "00.00\n00.00\n00.00",
             second: "00.00\n00.00\n00.00",
@@ -947,7 +946,7 @@ function bodyRows(data, latest_day) {
       for (var i = 0; i < data.length; i++) {
         var flg = false
         for (var j = 0; j < body.length; j++) {
-          if (body[j].customer_id.content == data[i].customer_id) {
+          if (body[j].customer_id.content == "" + data[i].customer_id) {
             flg = true; 
             var date_split = data[i].reg_date.split("-");
             var day = date_split[2].substring(0,2);
@@ -960,7 +959,7 @@ function bodyRows(data, latest_day) {
         }
         if (!flg) {
           body.push({
-            customer_id: {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
+            customer_id: {content: "" + data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
             email: {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }},
             first: "00.00\n00.00\n00.00",
             second: "00.00\n00.00\n00.00",
@@ -986,7 +985,7 @@ function bodyRows(data, latest_day) {
       for (var i = 0; i < data.length; i++) {
         var flg = false
         for (var j = 0; j < body.length; j++) {
-          if (body[j].customer_id.content == data[i].customer_id) {
+          if (body[j].customer_id.content == "" + data[i].customer_id) {
             flg = true; 
             var date_split = data[i].reg_date.split("-");
             var day = date_split[2].substring(0,2);
@@ -999,7 +998,7 @@ function bodyRows(data, latest_day) {
         }
         if (!flg) {
           body.push({
-            customer_id: {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
+            customer_id: {content: "" + data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
             email: {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }},
             first: "00.00\n00.00\n00.00",
             second: "00.00\n00.00\n00.00",
