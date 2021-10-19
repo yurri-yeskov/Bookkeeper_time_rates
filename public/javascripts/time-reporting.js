@@ -710,6 +710,10 @@ function searchWithTimePeriod() {
           success: function(data) {
       
             console.log(data);
+            $('.time-period').html(selected_month + "-01 ~ " + selected_month + "-" + day_by_month);
+            $('.total-time').html(data.time_spent);
+            $('.total-cost').html(data.houly);
+            $('.dot-loaders').css('display', 'none');
             return;
             if (data.data.length > 0) {
               $('.bookkeeper-name').html(data.data[0].bookkeeper_name);
@@ -725,10 +729,7 @@ function searchWithTimePeriod() {
             $('.dot-loaders').css('display', 'none');
           }
         }); 
-        // $('.time-period').html(selected_month + "-01 ~ " + selected_month + "-" + day_by_month);
-        // $('.total-time').html("N/A");
-        // $('.total-cost').html("N/A");
-        // $('.dot-loaders').css('display', 'none');
+        
       } else {
         $('.time-period').html("N/A");
         $('.total-time').html("N/A");

@@ -96,7 +96,6 @@ exports.getDayCustomerInfo = (req, res) => {
                   "COALESCE(october_spent, 0.00) + COALESCE(november_spent, 0.00) + COALESCE(december_spent, 0.00)) as time_spent " +
                   "FROM task_manager.time_entries WHERE bookkeeper_name='" + req.body.bookkeeper_fname + "' AND " +
                   "deleted = false AND reg_date >= '" + req.body.sel_start_date + "'::date AND reg_date <= '" + req.body.sel_end_date + "'::date";
-  console.log(query_str);
 
   client.query(query_str, function(err, result) {
     if (err) {
