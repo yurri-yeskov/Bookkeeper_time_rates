@@ -757,7 +757,12 @@ function isValidDate(dateString)
 };
 
 ///////////////////////////////////////////////////////////////////
-function showDownloadPDFModals() {
+function showDownloadPDFModal() {
+
+  var selected_month = $('#input-date_interval').val();
+  var day_by_month = isValidDate(selected_month);
+  selected_month = selected_month.split("-")[1]; selected_month = parseInt(selected_month);
+
   alert("Download PDF!!!");
   var doc = new jsPDF('l', 'mm', 'a4')
 
@@ -769,10 +774,10 @@ function showDownloadPDFModals() {
   doc.text("text", 14, 30)
 
   doc.autoTable({
-      head: headRows(),
-      body: bodyRows(400),
+      head: headRows(selected_month, day_by_month),
+      body: bodyRows(pdf_data, day_by_month),
       startY: 50,
-      showHead: 'firstPage',
+      showHead: true,
   })
 
   doc.save("test.pdf");
@@ -1018,49 +1023,6 @@ function bodyRows(data, latest_day) {
     default:
       break;
   }
-  
-  
-  rowCount = rowCount || 10
-  var body = []
-  for (var j = 1; j <= rowCount; j++) {
-    
-    body.push({
-      cutomer_id: {content: "123456", styles: { valign: 'middle', halign: 'center' }}, 
-      email: {content: "kropcentrum@hotmail.com", styles: { valign: 'middle', halign: 'center' }}, 
-      first: "200.00\n120.16\n120.16",
-      second: "12.02\n120.16\n120.16",
-      third: "102.03\n12.16\n120.16",
-      fourth: "102.04\n12.16\n120.16",
-      fifth: "120.05\n12.16\n120.16",
-      sixth: "120.06\n12.16\n120.16",
-      seventh: "102.07\n12.16\n120.16",
-      eighth: "120.08\n102.16\n120.16",
-      ninth: "102.09\n102.16\n120.16",
-      tenth: "120.10\n102.16\n120.16",
-      eleventh: "\n\n102.16",
-      // twelfth: "120.12\n102.16",
-      // thirteenth: "012.13\n120.16",
-      // fourteenth: "102.14\n102.16",
-      // fifteenth: "120.15\n102.16", 
-      // sixteenth: "\n102.16", 
-      // seventeenth: "12.17",
-      // eighteenth: "12.18", 
-      // ninteenth: "12.19", 
-      // twentieth: "12.20", 
-      // twentyfirst: "12.21",
-      // twentysecond: "12.22",
-      // twentythird: "12.23",
-      // twentyfourth: "12.24",
-      // twentyfifth: "12.25",
-      // twentysixth: "12.26",
-      // twentyseventh: "12.27",
-      // twentyeighth: "12.28",
-      // twentyninth: "12.29",
-      // thirtieth: "12.30", 
-      // thirtyfirst: "12.31" 
-    })
-  }
-  return body
 }
 /////////////////////////////////////////////////////////////
 
