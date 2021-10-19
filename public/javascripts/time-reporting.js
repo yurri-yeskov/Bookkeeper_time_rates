@@ -767,18 +767,19 @@ function downloadPDFFile() {
   var doc = new jsPDF('l', 'mm', 'a4')
 
   doc.setFontSize(18)
+  doc.setFontStyle('bold')
   doc.text('Report', 14, 22)
 
   doc.setFontSize(15)
   doc.setFontStyle('normal')
   doc.text("Bookkeeper Name: ", 14, 35)
   doc.setFontStyle('bold')
-  doc.text($('.bookkeeper-name').html(), 50, 35)
+  doc.text($('.bookkeeper-name').html(), 55, 35)
 
   doc.setFontStyle('normal')
-  doc.text("Time Period: ", 150, 35)
+  doc.text("Time Period: ", 130, 35)
   doc.setFontStyle('bold')
-  doc.text($('.time-period').html(), 200, 35)
+  doc.text($('.time-period').html(), 160, 35)
   
   doc.setFontSize(15)
   doc.text("Total Time (hour): ", 14, 45)
