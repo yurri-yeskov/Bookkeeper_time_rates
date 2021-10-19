@@ -871,16 +871,17 @@ function bodyRows(data, latest_day) {
             var date_split = data[i].reg_date.split("-");
             var day = date_split[2].substring(0,2);
             var body_split = body[j][day_to_body_lab[day]].split("\n");
-            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + parseFloat(data[i].time_spent);
-            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
+            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
             body[j][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
             break;
           }
         }
         if (!flg) {
+          console.log("date------------------", data[i], data[i].customer_id);
           body.push({
             customer_id: {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
-            email: {content: data[i].email, styles: { valign: 'middle', halign: 'center' }},
+            email: {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }},
             first: "00.00\n00.00\n00.00",
             second: "00.00\n00.00\n00.00",
             third: "00.00\n00.00\n00.00",
@@ -895,10 +896,9 @@ function bodyRows(data, latest_day) {
           })
           var date_split = data[i].reg_date.split("-");
           var day = date_split[2].substring(0,2);
-          console.log("-------------------", day, day_to_body_lab[day]);
           var body_split = body[body.length - 1][day_to_body_lab[day]].split("\n");
-          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + parseFloat(data[i].time_spent);
-          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
+          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
           body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
         }
       }
@@ -913,8 +913,8 @@ function bodyRows(data, latest_day) {
             var date_split = data[i].reg_date.split("-");
             var day = date_split[2].substring(0,2);
             var body_split = body[j][day_to_body_lab[day]].split("\n");
-            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + parseFloat(data[i].time_spent);
-            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
+            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
             body[j][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
             break;
           }
@@ -922,7 +922,7 @@ function bodyRows(data, latest_day) {
         if (!flg) {
           body.push({
             customer_id: {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
-            email: {content: data[i].email, styles: { valign: 'middle', halign: 'center' }},
+            email: {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }},
             first: "00.00\n00.00\n00.00",
             second: "00.00\n00.00\n00.00",
             third: "00.00\n00.00\n00.00",
@@ -937,8 +937,8 @@ function bodyRows(data, latest_day) {
           var date_split = data[i].reg_date.split("-");
           var day = date_split[2].substring(0,2);
           var body_split = body[body.length - 1][day_to_body_lab[day]].split("\n");
-          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + parseFloat(data[i].time_spent);
-          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
+          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
           body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
         }
       }
@@ -952,8 +952,8 @@ function bodyRows(data, latest_day) {
             var date_split = data[i].reg_date.split("-");
             var day = date_split[2].substring(0,2);
             var body_split = body[j][day_to_body_lab[day]].split("\n");
-            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + parseFloat(data[i].time_spent);
-            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
+            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
             body[j][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
             break;
           }
@@ -961,7 +961,7 @@ function bodyRows(data, latest_day) {
         if (!flg) {
           body.push({
             customer_id: {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
-            email: {content: data[i].email, styles: { valign: 'middle', halign: 'center' }},
+            email: {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }},
             first: "00.00\n00.00\n00.00",
             second: "00.00\n00.00\n00.00",
             third: "00.00\n00.00\n00.00",
@@ -976,8 +976,8 @@ function bodyRows(data, latest_day) {
           var date_split = data[i].reg_date.split("-");
           var day = date_split[2].substring(0,2);
           var body_split = body[body.length - 1][day_to_body_lab[day]].split("\n");
-          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + parseFloat(data[i].time_spent);
-          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
+          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
           body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
         }
       }
@@ -991,8 +991,8 @@ function bodyRows(data, latest_day) {
             var date_split = data[i].reg_date.split("-");
             var day = date_split[2].substring(0,2);
             var body_split = body[j][day_to_body_lab[day]].split("\n");
-            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + parseFloat(data[i].time_spent);
-            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
+            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
             body[j][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
             break;
           }
@@ -1000,7 +1000,7 @@ function bodyRows(data, latest_day) {
         if (!flg) {
           body.push({
             customer_id: {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
-            email: {content: data[i].email, styles: { valign: 'middle', halign: 'center' }},
+            email: {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }},
             first: "00.00\n00.00\n00.00",
             second: "00.00\n00.00\n00.00",
             third: "00.00\n00.00\n00.00",
@@ -1015,8 +1015,8 @@ function bodyRows(data, latest_day) {
           var date_split = data[i].reg_date.split("-");
           var day = date_split[2].substring(0,2);
           var body_split = body[body.length - 1][day_to_body_lab[day]].split("\n");
-          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + parseFloat(data[i].time_spent);
-          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
+          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
           body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
         }
       }
