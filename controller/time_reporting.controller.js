@@ -103,7 +103,28 @@ exports.getDayCustomerInfo = (req, res) => {
       console.log(err);
       res.status(400).send(err);  
     }
-    res.send({ data: result.rows });
+    let time_spent = 0.00;
+    for (let i = 0; i < result.rows.length; i++) {
+      time_spent += parseFloat(result.rows[i].time_spent);
+    }
+    time_spent = (time_spent / 60).toFixed(2);
+    let arr_time_spt = result.rows;
+
+    let name_split = req.body.bookkeeper_fname.split(' ');
+    let bookkeeper_first_name = name_split[0];
+    let bookkeeper_last_name = name_split[1];
+    let hour_query_str = "SELECT COALESCE(price_per_hour, 0.00) as hourly FROM task_manager.freelancers WHERE first_name='" + bookkeeper_first_name + "' AND " + 
+                        "last_name='" + bookkeeper_last_name + "'";
+
+    client.query(hour_query_str, function(err, result){
+      if (err) {
+        console.log(err);
+        res.status(400).send(err);  
+      }
+      let price_per_hour = 0.00;
+      if (result.rows.length > 0) price_per_hour = result.rows[0].hourly;
+      res.send({ data: arr_time_spt, time_spent:time_spent, hourly:price_per_hour });
+    });
   });
 };
 
