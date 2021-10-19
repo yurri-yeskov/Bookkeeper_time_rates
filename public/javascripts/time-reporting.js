@@ -757,7 +757,7 @@ function isValidDate(dateString)
 };
 
 ///////////////////////////////////////////////////////////////////
-function showDownloadPDFModal() {
+function downloadPDFFile() {
 
   var selected_month = $('#input-date_interval').val();
   var day_by_month = isValidDate(selected_month);
