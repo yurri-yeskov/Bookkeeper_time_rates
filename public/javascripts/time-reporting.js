@@ -787,7 +787,7 @@ function headRows(month, latest_day) {
   switch (latest_day) {
     case 31:
       return [{ 
-        cutomer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
+        customer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
         email:         {content: 'Email', styles: { valign: 'middle', halign: 'center' }}, 
         first:         month + "-01\n" + month + "-11\n" + month + "-21",
         second:        month + "-02\n" + month + "-12\n" + month + "-22",
@@ -803,7 +803,7 @@ function headRows(month, latest_day) {
       }]
     case 30:
       return [{ 
-        cutomer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
+        customer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
         email:         {content: 'Email', styles: { valign: 'middle', halign: 'center' }}, 
         first:         month + "-01\n" + month + "-11\n" + month + "-21",
         second:        month + "-02\n" + month + "-12\n" + month + "-22",
@@ -818,7 +818,7 @@ function headRows(month, latest_day) {
       }]
     case 29:
       return [{ 
-        cutomer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
+        customer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
         email:         {content: 'Email', styles: { valign: 'middle', halign: 'center' }}, 
         first:         month + "-01\n" + month + "-11\n" + month + "-21",
         second:        month + "-02\n" + month + "-12\n" + month + "-22",
@@ -833,7 +833,7 @@ function headRows(month, latest_day) {
       }]
     case 28:
       return [{ 
-        cutomer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
+        customer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
         email:         {content: 'Email', styles: { valign: 'middle', halign: 'center' }}, 
         first:         month + "-01\n" + month + "-11\n" + month + "-21",
         second:        month + "-02\n" + month + "-12\n" + month + "-22",
