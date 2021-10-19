@@ -859,76 +859,160 @@ function bodyRows(data, latest_day) {
   switch (latest_day) {
     case 31:
       for (var i = 0; i < data.length; i++) {
-        body.push({
-          customer_id: {content: data.customer_id, styles: { valign: 'middle', halign: 'center' }},
-          email: {content: data.email, styles: { valign: 'middle', halign: 'center' }},
-          first: "00.00\n00.00\n00.00",
-          second: "00.00\n00.00\n00.00",
-          third: "00.00\n00.00\n00.00",
-          fourth: "00.00\n00.00\n00.00",
-          fifth: "00.00\n00.00\n00.00",
-          sixth: "00.00\n00.00\n00.00",
-          seventh: "00.00\n00.00\n00.00",
-          eighth: "00.00\n00.00\n00.00",
-          ninth: "00.00\n00.00\n00.00",
-          tenth: "00.00\n00.00\n00.00",
-          eleventh: "\n\n00.00",
-        })
-
+        var flg = false
+        for (var j = 0; j < body.length; j++) {
+          if (body[j].customer_id.content == data[i].customer_id) {
+            flg = true; 
+            var date_split = data[i].reg_date.split("-");
+            var day = date_split[2];
+            var body_split = body[j][day_to_body_lab[day]].split("\n");
+            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + data[i].time_spent;
+            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+            body[j][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
+            break;
+          }
+        }
+        if (!flg) {
+          body.push({
+            customer_id: {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
+            email: {content: data[i].email, styles: { valign: 'middle', halign: 'center' }},
+            first: "00.00\n00.00\n00.00",
+            second: "00.00\n00.00\n00.00",
+            third: "00.00\n00.00\n00.00",
+            fourth: "00.00\n00.00\n00.00",
+            fifth: "00.00\n00.00\n00.00",
+            sixth: "00.00\n00.00\n00.00",
+            seventh: "00.00\n00.00\n00.00",
+            eighth: "00.00\n00.00\n00.00",
+            ninth: "00.00\n00.00\n00.00",
+            tenth: "00.00\n00.00\n00.00",
+            eleventh: "\n\n00.00",
+          })
+          var date_split = data[i].reg_date.split("-");
+          var day = date_split[2];
+          var body_split = body[body.length - 1][day_to_body_lab[day]].split("\n");
+          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + data[i].time_spent;
+          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+          body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
+        }
       }
+      console.log(body);
       return body
     case 30:
       for (var i = 0; i < data.length; i++) {
-        body.push({
-          customer_id: {content: data.customer_id, styles: { valign: 'middle', halign: 'center' }},
-          email: {content: data.email, styles: { valign: 'middle', halign: 'center' }},
-          first: "00.00\n00.00\n00.00",
-          second: "00.00\n00.00\n00.00",
-          third: "00.00\n00.00\n00.00",
-          fourth: "00.00\n00.00\n00.00",
-          fifth: "00.00\n00.00\n00.00",
-          sixth: "00.00\n00.00\n00.00",
-          seventh: "00.00\n00.00\n00.00",
-          eighth: "00.00\n00.00\n00.00",
-          ninth: "00.00\n00.00\n00.00",
-          tenth: "00.00\n00.00\n00.00"
-        })
+        var flg = false
+        for (var j = 0; j < body.length; j++) {
+          if (body[j].customer_id.content == data[i].customer_id) {
+            flg = true; 
+            var date_split = data[i].reg_date.split("-");
+            var day = date_split[2];
+            var body_split = body[j][day_to_body_lab[day]].split("\n");
+            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + data[i].time_spent;
+            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+            body[j][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
+            break;
+          }
+        }
+        if (!flg) {
+          body.push({
+            customer_id: {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
+            email: {content: data[i].email, styles: { valign: 'middle', halign: 'center' }},
+            first: "00.00\n00.00\n00.00",
+            second: "00.00\n00.00\n00.00",
+            third: "00.00\n00.00\n00.00",
+            fourth: "00.00\n00.00\n00.00",
+            fifth: "00.00\n00.00\n00.00",
+            sixth: "00.00\n00.00\n00.00",
+            seventh: "00.00\n00.00\n00.00",
+            eighth: "00.00\n00.00\n00.00",
+            ninth: "00.00\n00.00\n00.00",
+            tenth: "00.00\n00.00\n00.00"
+          })
+          var date_split = data[i].reg_date.split("-");
+          var day = date_split[2];
+          var body_split = body[body.length - 1][day_to_body_lab[day]].split("\n");
+          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + data[i].time_spent;
+          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+          body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
+        }
       }
       return body
     case 29:
       for (var i = 0; i < data.length; i++) {
-        body.push({
-          customer_id: {content: data.customer_id, styles: { valign: 'middle', halign: 'center' }},
-          email: {content: data.email, styles: { valign: 'middle', halign: 'center' }},
-          first: "00.00\n00.00\n00.00",
-          second: "00.00\n00.00\n00.00",
-          third: "00.00\n00.00\n00.00",
-          fourth: "00.00\n00.00\n00.00",
-          fifth: "00.00\n00.00\n00.00",
-          sixth: "00.00\n00.00\n00.00",
-          seventh: "00.00\n00.00\n00.00",
-          eighth: "00.00\n00.00\n00.00",
-          ninth: "00.00\n00.00\n00.00",
-          tenth: "00.00\n00.00"
-        })
+        var flg = false
+        for (var j = 0; j < body.length; j++) {
+          if (body[j].customer_id.content == data[i].customer_id) {
+            flg = true; 
+            var date_split = data[i].reg_date.split("-");
+            var day = date_split[2];
+            var body_split = body[j][day_to_body_lab[day]].split("\n");
+            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + data[i].time_spent;
+            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+            body[j][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
+            break;
+          }
+        }
+        if (!flg) {
+          body.push({
+            customer_id: {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
+            email: {content: data[i].email, styles: { valign: 'middle', halign: 'center' }},
+            first: "00.00\n00.00\n00.00",
+            second: "00.00\n00.00\n00.00",
+            third: "00.00\n00.00\n00.00",
+            fourth: "00.00\n00.00\n00.00",
+            fifth: "00.00\n00.00\n00.00",
+            sixth: "00.00\n00.00\n00.00",
+            seventh: "00.00\n00.00\n00.00",
+            eighth: "00.00\n00.00\n00.00",
+            ninth: "00.00\n00.00\n00.00",
+            tenth: "00.00\n00.00"
+          })
+          var date_split = data[i].reg_date.split("-");
+          var day = date_split[2];
+          var body_split = body[body.length - 1][day_to_body_lab[day]].split("\n");
+          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + data[i].time_spent;
+          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+          body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
+        }
       }
       return body
     case 28:
       for (var i = 0; i < data.length; i++) {
-        body.push({
-          customer_id: {content: data.customer_id, styles: { valign: 'middle', halign: 'center' }},
-          email: {content: data.email, styles: { valign: 'middle', halign: 'center' }},
-          first: "00.00\n00.00\n00.00",
-          second: "00.00\n00.00\n00.00",
-          third: "00.00\n00.00\n00.00",
-          fourth: "00.00\n00.00\n00.00",
-          fifth: "00.00\n00.00\n00.00",
-          sixth: "00.00\n00.00\n00.00",
-          seventh: "00.00\n00.00\n00.00",
-          eighth: "00.00\n00.00\n00.00",
-          ninth: "00.00\n00.00",
-          tenth: "00.00\n00.00"
-        })
+        var flg = false
+        for (var j = 0; j < body.length; j++) {
+          if (body[j].customer_id.content == data[i].customer_id) {
+            flg = true; 
+            var date_split = data[i].reg_date.split("-");
+            var day = date_split[2];
+            var body_split = body[j][day_to_body_lab[day]].split("\n");
+            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + data[i].time_spent;
+            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+            body[j][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
+            break;
+          }
+        }
+        if (!flg) {
+          body.push({
+            customer_id: {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
+            email: {content: data[i].email, styles: { valign: 'middle', halign: 'center' }},
+            first: "00.00\n00.00\n00.00",
+            second: "00.00\n00.00\n00.00",
+            third: "00.00\n00.00\n00.00",
+            fourth: "00.00\n00.00\n00.00",
+            fifth: "00.00\n00.00\n00.00",
+            sixth: "00.00\n00.00\n00.00",
+            seventh: "00.00\n00.00\n00.00",
+            eighth: "00.00\n00.00\n00.00",
+            ninth: "00.00\n00.00",
+            tenth: "00.00\n00.00"
+          })
+          var date_split = data[i].reg_date.split("-");
+          var day = date_split[2];
+          var body_split = body[body.length - 1][day_to_body_lab[day]].split("\n");
+          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + data[i].time_spent;
+          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
+          body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
+        }
       }
       return body
     default:
@@ -939,6 +1023,7 @@ function bodyRows(data, latest_day) {
   rowCount = rowCount || 10
   var body = []
   for (var j = 1; j <= rowCount; j++) {
+    
     body.push({
       cutomer_id: {content: "123456", styles: { valign: 'middle', halign: 'center' }}, 
       email: {content: "kropcentrum@hotmail.com", styles: { valign: 'middle', halign: 'center' }}, 

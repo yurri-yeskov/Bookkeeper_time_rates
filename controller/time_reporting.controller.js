@@ -93,7 +93,7 @@ exports.getDayCustomerInfo = (req, res) => {
   let query_str = "SELECT (COALESCE(january_spent, 0.00) + COALESCE(february_spent, 0.00) + COALESCE(march_spent, 0.00) + " +
                   "COALESCE(april_spent, 0.00) + COALESCE(may_spent, 0.00) + COALESCE(june_spent, 0.00) + " +
                   "COALESCE(july_spent, 0.00) + COALESCE(august_spent, 0.00) + COALESCE(september_spent, 0.00) + " +
-                  "COALESCE(october_spent, 0.00) + COALESCE(november_spent, 0.00) + COALESCE(december_spent, 0.00)) as time_spent, reg_date, customer_id, email " +
+                  "COALESCE(october_spent, 0.00) + COALESCE(november_spent, 0.00) + COALESCE(december_spent, 0.00)) as time_spent, reg_date, customer_id, email_address " +
                   "FROM task_manager.time_entries WHERE bookkeeper_name='" + req.body.bookkeeper_fname + "' AND " +
                   "deleted = false AND reg_date >= '" + req.body.sel_start_date + "'::date AND reg_date <= '" + req.body.sel_end_date + "'::date";
   console.log(query_str);
