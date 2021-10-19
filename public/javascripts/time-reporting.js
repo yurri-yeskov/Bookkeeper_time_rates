@@ -774,24 +774,22 @@ function downloadPDFFile() {
   doc.setFontStyle('normal')
   doc.text("Bookkeeper Name: ", 14, 35)
   doc.setFontStyle('bold')
-  doc.text($('.bookkeeper-name').html(), 60, 35)
+  doc.text($('.bookkeeper-name').html(), 61, 35)
 
   doc.setFontStyle('normal')
   doc.text("Time Period: ", 140, 35)
   doc.setFontStyle('bold')
   doc.text($('.time-period').html(), 172, 35)
   
-  doc.setFontSize(15)
+  doc.setFontStyle('normal')
   doc.text("Total Time (hour): ", 14, 45)
-  doc.setFontSize(15)
   doc.setFontStyle('bold')
-  doc.text($('.total-time').html(), 30, 45)
+  doc.text($('.total-time').html(), 40, 45)
 
-  doc.setFontSize(15)
-  doc.text("Total Cost: ", 100, 45)
-  doc.setFontSize(15)
+  doc.setFontStyle('normal')
+  doc.text("Total Cost: ", 140, 45)
   doc.setFontStyle('bold')
-  doc.text($('.total-cost').html(), 100, 45)
+  doc.text($('.total-cost').html(), 150, 45)
 
   doc.autoTable({
       head: headRows(selected_month, day_by_month),
