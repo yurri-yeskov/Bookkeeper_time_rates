@@ -767,16 +767,36 @@ function downloadPDFFile() {
   var doc = new jsPDF('l', 'mm', 'a4')
 
   doc.setFontSize(18)
-  doc.text('With content', 14, 22)
+  doc.text('Report', 14, 22)
 
-  doc.setFontSize(12)
+  doc.setFontSize(15)
+  doc.text("Bookkeeper Name: ", 14, 30)
+  doc.setFontSize(15)
   doc.setFontStyle('bold')
-  doc.text("text", 14, 30)
+  doc.text($('.bookkeeper-name').html(), 30, 30)
+
+  doc.setFontSize(15)
+  doc.text("Time Period: ", 100, 30)
+  doc.setFontSize(15)
+  doc.setFontStyle('bold')
+  doc.text($('.time-period').html(), 30, 30)
+  
+  doc.setFontSize(15)
+  doc.text("Total Time (hour): ", 14, 45)
+  doc.setFontSize(15)
+  doc.setFontStyle('bold')
+  doc.text($('.total-time').html(), 30, 45)
+
+  doc.setFontSize(15)
+  doc.text("Total Cost: ", 100, 45)
+  doc.setFontSize(15)
+  doc.setFontStyle('bold')
+  doc.text($('.total-cost').html(), 100, 45)
 
   doc.autoTable({
       head: headRows(selected_month, day_by_month),
       body: bodyRows(pdf_data, day_by_month),
-      startY: 50,
+      startY: 60,
       showHead: true,
   })
 
