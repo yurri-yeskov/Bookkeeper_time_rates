@@ -897,7 +897,7 @@ function bodyRows(data, latest_day) {
           var day = date_split[2].substring(0,2);
           console.log("-------------------", day, day_to_body_lab[day]);
           var body_split = body[body.length - 1][day_to_body_lab[day]].split("\n");
-          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + data[i].time_spent;
+          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10) + 1]) + parseFloat(data[i].time_spent);
           change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10) + 1] = change_body;
           body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
         }
