@@ -703,7 +703,8 @@ function searchWithTimePeriod() {
           data: {
             sel_start_date: selected_month + "-01",
             sel_end_date: selected_month + "-" + day_by_month,
-            bookkeeper_fname: bookkeeper_fname
+            bookkeeper_fname: bookkeeper_fname,
+            user_token: getSelToken()
           },
           dataType: "json",
           success: function(data) {
