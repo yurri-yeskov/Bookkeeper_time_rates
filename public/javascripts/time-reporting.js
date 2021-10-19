@@ -696,40 +696,44 @@ function searchWithTimePeriod() {
       $this.removeData('timer');
       var selected_month = $('#input-date_interval').val();
       var day_by_month = isValidDate(selected_month);
-      console.log(day_by_month, selected_month);
       if (day_by_month) {
-        $('.time-period').html(selected_month + "-01 ~ " + selected_month + "-" + day_by_month);
-        $('.dot-loaders').css('display', 'none');
+        $.ajax({
+          type: "post",
+          url: base_url + "/get_day_customer_info",
+          data: {
+            sel_start_date: selected_month + "-01",
+            sel_end_date: selected_month + "-" + day_by_month,
+            bookkeeper_fname: bookkeeper_fname
+          },
+          dataType: "json",
+          success: function(data) {
+      
+            console.log(data);
+            return;
+            if (data.data.length > 0) {
+              $('.bookkeeper-name').html(data.data[0].bookkeeper_name);
+              $('.company-name').html(data.data[0].company_name);
+              $('.email-addr').html(data.data[0].primary_email);
+              $('.customer-id').html(data.data[0].customer_id);
+            } else {
+              $('.bookkeeper-name').html("N/A");
+              $('.company-name').html("N/A");
+              $('.email-addr').html("N/A");
+              $('.customer-id').html("N/A");
+            }
+            $('.dot-loaders').css('display', 'none');
+          }
+        }); 
+        // $('.time-period').html(selected_month + "-01 ~ " + selected_month + "-" + day_by_month);
+        // $('.total-time').html("N/A");
+        // $('.total-cost').html("N/A");
+        // $('.dot-loaders').css('display', 'none');
       } else {
         $('.time-period').html("N/A");
         $('.total-time').html("N/A");
         $('.total-cost').html("N/A");
         $('.dot-loaders').css('display', 'none');
       }
-      
-      // $.ajax({
-      //   type: "post",
-      //   url: base_url + "/get_ex_customer_info",
-      //   data: {
-      //     sel_id: $('#input-customer_id').val()
-      //   },
-      //   dataType: "json",
-      //   success: function(data) {
-    
-      //     if (data.data.length > 0) {
-      //       $('.bookkeeper-name').html(data.data[0].bookkeeper_name);
-      //       $('.company-name').html(data.data[0].company_name);
-      //       $('.email-addr').html(data.data[0].primary_email);
-      //       $('.customer-id').html(data.data[0].customer_id);
-      //     } else {
-      //       $('.bookkeeper-name').html("N/A");
-      //       $('.company-name').html("N/A");
-      //       $('.email-addr').html("N/A");
-      //       $('.customer-id').html("N/A");
-      //     }
-      //     $('.dot-loaders').css('display', 'none');
-      //   }
-      // }); 
     }, delay));
   });
 }
@@ -737,11 +741,10 @@ function searchWithTimePeriod() {
 function isValidDate(dateString)
 {
   if (!dateString) return false;
-  console.log("1111111111111111111111111");
+  
   // First check for the pattern
-  if(!/^\d{1,4}\-\d{1,2}\-\d{2}$/.test(dateString + "-01")) 
+  if(!/^\d{4}\-\d{2}\-\d{2}$/.test(dateString + "-01")) 
     return false;
-  console.log("2222222222222222222222222222");
 
   // Parse the date parts to integers
   var parts = dateString.split("-");
@@ -751,7 +754,7 @@ function isValidDate(dateString)
   // Check the ranges of month and year
   if(year < 1000 || year > 3000 || month == 0 || month > 12)
     return false;
-  console.log("2222222222222222222222222222");
+  
   var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
 
   // Adjust for leap years

@@ -60,6 +60,7 @@ router.get('/get_company_list', timeOvvwCtrl.findCompanyTypes);
 /* GET TIME REPORTING page */
 router.post('/time-reporting', timeReptCtrl.getCurrentYear);
 router.get('/time-reporting', function(req, res) { res.redirect(linkConfig.OTHER_LINK); });
+router.post('/get_day_customer_info', timeReptCtrl.getDayCustomerInfo);
 router.post('/get_customerminfo_with_year', timeReptCtrl.findCustomerInfoWithYear);
 router.post('/set_report_time', timeReptCtrl.insertReportTime);
 router.post('/get_report_time', timeReptCtrl.findReportTimes);
