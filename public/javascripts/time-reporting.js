@@ -1,6 +1,7 @@
 var time_spent_table;
 var bookkeeper_fname = 'N/A';
 var acl_level = 500;
+var pdf_data = [];
 
 $(document).ready(function(){
 
@@ -714,19 +715,7 @@ function searchWithTimePeriod() {
             $('.total-time').html(data.time_spent);
             $('.total-cost').html(data.cost_spent);
             $('.dot-loaders').css('display', 'none');
-            return;
-            if (data.data.length > 0) {
-              $('.bookkeeper-name').html(data.data[0].bookkeeper_name);
-              $('.company-name').html(data.data[0].company_name);
-              $('.email-addr').html(data.data[0].primary_email);
-              $('.customer-id').html(data.data[0].customer_id);
-            } else {
-              $('.bookkeeper-name').html("N/A");
-              $('.company-name').html("N/A");
-              $('.email-addr').html("N/A");
-              $('.customer-id').html("N/A");
-            }
-            $('.dot-loaders').css('display', 'none');
+            pdf_data = data.data;
           }
         }); 
         
@@ -766,6 +755,229 @@ function isValidDate(dateString)
   // Check the range of the day
   return monthLength[month - 1];
 };
+
+///////////////////////////////////////////////////////////////////
+function showDownloadPDFModals() {
+  alert("Download PDF!!!");
+  var doc = new jsPDF('l', 'mm', 'a4')
+
+  doc.setFontSize(18)
+  doc.text('With content', 14, 22)
+
+  doc.setFontSize(12)
+  doc.setFontStyle('bold')
+  doc.text("text", 14, 30)
+
+  doc.autoTable({
+      head: headRows(),
+      body: bodyRows(400),
+      startY: 50,
+      showHead: 'firstPage',
+  })
+
+  doc.save("test.pdf");
+}
+
+function headRows(month, latest_day) {
+  switch (latest_day) {
+    case 31:
+      return [{ 
+        cutomer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
+        email:         {content: 'Email', styles: { valign: 'middle', halign: 'center' }}, 
+        first:         month + "-01\n" + month + "-11\n" + month + "-21",
+        second:        month + "-02\n" + month + "-12\n" + month + "-22",
+        third:         month + "-03\n" + month + "-13\n" + month + "-23",
+        fourth:        month + "-04\n" + month + "-14\n" + month + "-24",
+        fifth:         month + "-05\n" + month + "-15\n" + month + "-25",
+        sixth:         month + "-06\n" + month + "-16\n" + month + "-26",
+        seventh:       month + "-07\n" + month + "-17\n" + month + "-27",
+        eighth:        month + "-08\n" + month + "-18\n" + month + "-28",
+        ninth:         month + "-09\n" + month + "-19\n" + month + "-29",
+        tenth:         month + "-10\n" + month + "-20\n" + month + "-30",
+        eleventh:      "\n\n" + month + "-31"
+      }]
+    case 30:
+      return [{ 
+        cutomer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
+        email:         {content: 'Email', styles: { valign: 'middle', halign: 'center' }}, 
+        first:         month + "-01\n" + month + "-11\n" + month + "-21",
+        second:        month + "-02\n" + month + "-12\n" + month + "-22",
+        third:         month + "-03\n" + month + "-13\n" + month + "-23",
+        fourth:        month + "-04\n" + month + "-14\n" + month + "-24",
+        fifth:         month + "-05\n" + month + "-15\n" + month + "-25",
+        sixth:         month + "-06\n" + month + "-16\n" + month + "-26",
+        seventh:       month + "-07\n" + month + "-17\n" + month + "-27",
+        eighth:        month + "-08\n" + month + "-18\n" + month + "-28",
+        ninth:         month + "-09\n" + month + "-19\n" + month + "-29",
+        tenth:         month + "-10\n" + month + "-20\n" + month + "-30"
+      }]
+    case 29:
+      return [{ 
+        cutomer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
+        email:         {content: 'Email', styles: { valign: 'middle', halign: 'center' }}, 
+        first:         month + "-01\n" + month + "-11\n" + month + "-21",
+        second:        month + "-02\n" + month + "-12\n" + month + "-22",
+        third:         month + "-03\n" + month + "-13\n" + month + "-23",
+        fourth:        month + "-04\n" + month + "-14\n" + month + "-24",
+        fifth:         month + "-05\n" + month + "-15\n" + month + "-25",
+        sixth:         month + "-06\n" + month + "-16\n" + month + "-26",
+        seventh:       month + "-07\n" + month + "-17\n" + month + "-27",
+        eighth:        month + "-08\n" + month + "-18\n" + month + "-28",
+        ninth:         month + "-09\n" + month + "-19\n" + month + "-29",
+        tenth:         month + "-10\n" + month + "-20"
+      }]
+    case 28:
+      return [{ 
+        cutomer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
+        email:         {content: 'Email', styles: { valign: 'middle', halign: 'center' }}, 
+        first:         month + "-01\n" + month + "-11\n" + month + "-21",
+        second:        month + "-02\n" + month + "-12\n" + month + "-22",
+        third:         month + "-03\n" + month + "-13\n" + month + "-23",
+        fourth:        month + "-04\n" + month + "-14\n" + month + "-24",
+        fifth:         month + "-05\n" + month + "-15\n" + month + "-25",
+        sixth:         month + "-06\n" + month + "-16\n" + month + "-26",
+        seventh:       month + "-07\n" + month + "-17\n" + month + "-27",
+        eighth:        month + "-08\n" + month + "-18\n" + month + "-28",
+        ninth:         month + "-09\n" + month + "-19",
+        tenth:         month + "-10\n" + month + "-20"
+      }]
+    default:
+      break;
+  }
+  
+}
+
+function bodyRows(data, latest_day) {
+  var body = [];
+  var day_to_body_lab = {"01":"first", "02":"second", "03":"third", "04":"fourth", "05":"fifth",
+                         "11":"first", "12":"second", "13":"third", "14":"fourth", "15":"fifth",
+                         "21":"first", "22":"second", "23":"third", "24":"fourth", "25":"fifth",
+                         "06":"sixth", "07":"seventh", "08":"eighth", "09":"ninth", "10":"tenth",
+                         "16":"sixth", "17":"seventh", "18":"eighth", "19":"ninth", "20":"tenth",
+                         "26":"sixth", "27":"seventh", "28":"eighth", "29":"ninth", "30":"tenth", 
+                         "31":"eleventh"};
+  switch (latest_day) {
+    case 31:
+      for (var i = 0; i < data.length; i++) {
+        body.push({
+          customer_id: {content: data.customer_id, styles: { valign: 'middle', halign: 'center' }},
+          email: {content: data.email, styles: { valign: 'middle', halign: 'center' }},
+          first: "00.00\n00.00\n00.00",
+          second: "00.00\n00.00\n00.00",
+          third: "00.00\n00.00\n00.00",
+          fourth: "00.00\n00.00\n00.00",
+          fifth: "00.00\n00.00\n00.00",
+          sixth: "00.00\n00.00\n00.00",
+          seventh: "00.00\n00.00\n00.00",
+          eighth: "00.00\n00.00\n00.00",
+          ninth: "00.00\n00.00\n00.00",
+          tenth: "00.00\n00.00\n00.00",
+          eleventh: "\n\n00.00",
+        })
+
+      }
+      return body
+    case 30:
+      for (var i = 0; i < data.length; i++) {
+        body.push({
+          customer_id: {content: data.customer_id, styles: { valign: 'middle', halign: 'center' }},
+          email: {content: data.email, styles: { valign: 'middle', halign: 'center' }},
+          first: "00.00\n00.00\n00.00",
+          second: "00.00\n00.00\n00.00",
+          third: "00.00\n00.00\n00.00",
+          fourth: "00.00\n00.00\n00.00",
+          fifth: "00.00\n00.00\n00.00",
+          sixth: "00.00\n00.00\n00.00",
+          seventh: "00.00\n00.00\n00.00",
+          eighth: "00.00\n00.00\n00.00",
+          ninth: "00.00\n00.00\n00.00",
+          tenth: "00.00\n00.00\n00.00"
+        })
+      }
+      return body
+    case 29:
+      for (var i = 0; i < data.length; i++) {
+        body.push({
+          customer_id: {content: data.customer_id, styles: { valign: 'middle', halign: 'center' }},
+          email: {content: data.email, styles: { valign: 'middle', halign: 'center' }},
+          first: "00.00\n00.00\n00.00",
+          second: "00.00\n00.00\n00.00",
+          third: "00.00\n00.00\n00.00",
+          fourth: "00.00\n00.00\n00.00",
+          fifth: "00.00\n00.00\n00.00",
+          sixth: "00.00\n00.00\n00.00",
+          seventh: "00.00\n00.00\n00.00",
+          eighth: "00.00\n00.00\n00.00",
+          ninth: "00.00\n00.00\n00.00",
+          tenth: "00.00\n00.00"
+        })
+      }
+      return body
+    case 28:
+      for (var i = 0; i < data.length; i++) {
+        body.push({
+          customer_id: {content: data.customer_id, styles: { valign: 'middle', halign: 'center' }},
+          email: {content: data.email, styles: { valign: 'middle', halign: 'center' }},
+          first: "00.00\n00.00\n00.00",
+          second: "00.00\n00.00\n00.00",
+          third: "00.00\n00.00\n00.00",
+          fourth: "00.00\n00.00\n00.00",
+          fifth: "00.00\n00.00\n00.00",
+          sixth: "00.00\n00.00\n00.00",
+          seventh: "00.00\n00.00\n00.00",
+          eighth: "00.00\n00.00\n00.00",
+          ninth: "00.00\n00.00",
+          tenth: "00.00\n00.00"
+        })
+      }
+      return body
+    default:
+      break;
+  }
+  
+  
+  rowCount = rowCount || 10
+  var body = []
+  for (var j = 1; j <= rowCount; j++) {
+    body.push({
+      cutomer_id: {content: "123456", styles: { valign: 'middle', halign: 'center' }}, 
+      email: {content: "kropcentrum@hotmail.com", styles: { valign: 'middle', halign: 'center' }}, 
+      first: "200.00\n120.16\n120.16",
+      second: "12.02\n120.16\n120.16",
+      third: "102.03\n12.16\n120.16",
+      fourth: "102.04\n12.16\n120.16",
+      fifth: "120.05\n12.16\n120.16",
+      sixth: "120.06\n12.16\n120.16",
+      seventh: "102.07\n12.16\n120.16",
+      eighth: "120.08\n102.16\n120.16",
+      ninth: "102.09\n102.16\n120.16",
+      tenth: "120.10\n102.16\n120.16",
+      eleventh: "\n\n102.16",
+      // twelfth: "120.12\n102.16",
+      // thirteenth: "012.13\n120.16",
+      // fourteenth: "102.14\n102.16",
+      // fifteenth: "120.15\n102.16", 
+      // sixteenth: "\n102.16", 
+      // seventeenth: "12.17",
+      // eighteenth: "12.18", 
+      // ninteenth: "12.19", 
+      // twentieth: "12.20", 
+      // twentyfirst: "12.21",
+      // twentysecond: "12.22",
+      // twentythird: "12.23",
+      // twentyfourth: "12.24",
+      // twentyfifth: "12.25",
+      // twentysixth: "12.26",
+      // twentyseventh: "12.27",
+      // twentyeighth: "12.28",
+      // twentyninth: "12.29",
+      // thirtieth: "12.30", 
+      // thirtyfirst: "12.31" 
+    })
+  }
+  return body
+}
+/////////////////////////////////////////////////////////////
 
 function renderSelect(data, type, full, meta) {
   var select_str = "<button class='btn btn-default link-btn' id='" + data +"' style='font-size: 12px; padding: 3px 12px;'>Links</button>"
