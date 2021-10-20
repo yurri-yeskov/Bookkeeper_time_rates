@@ -710,7 +710,6 @@ function searchWithTimePeriod() {
           dataType: "json",
           success: function(data) {
       
-            console.log(data);
             $('.time-period').html(selected_month + "-01 ~ " + selected_month + "-" + day_by_month);
             $('.total-time').html(data.time_spent);
             $('.total-cost').html(data.cost_spent);
@@ -798,7 +797,7 @@ function downloadPDFFile() {
       showHead: true,
   })
 
-  doc.save("test.pdf");
+  doc.save("Report.pdf");
 }
 
 function headRows(month, latest_day) {
@@ -919,7 +918,6 @@ function bodyRows(data, latest_day) {
           body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
         }
       }
-      console.log(body);
       return body
     case 30:
       for (var i = 0; i < data.length; i++) {
