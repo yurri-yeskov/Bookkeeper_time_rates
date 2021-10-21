@@ -699,8 +699,7 @@ function searchWithTimePeriod() {
       $this.removeData('timer');
       var start_date = $('#start-date').val();
       var end_date = $('#end-date').val();
-      var day_by_month = isValidDate(selected_month);
-      if (day_by_month) {
+      if (isValidDate(start_date) && isValidDate(end_date)) {
         $.ajax({
           type: "post",
           url: base_url + "/get_day_customer_info",
