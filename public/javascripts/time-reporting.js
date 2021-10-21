@@ -629,7 +629,6 @@ function submitsWithYear(e) {
 }
 
 function searchWithCustomerId() {
-  $('#download_button').prop('disabled', true);
   $('#input-customer_id').bind('input keyup', function(){
     var $this = $(this);
     var delay = 1000; // 1 seconds delay after last input
@@ -694,6 +693,8 @@ function searchWithTimePeriod() {
       $('.total-cost').html("N/A");
       $('.dot-loaders').css('display', 'none');
     }
+    $('#download_button').prop('disabled', true);
+    pdf_data = [];
 
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function(){
@@ -717,6 +718,7 @@ function searchWithTimePeriod() {
             $('.total-time').html(data.time_spent);
             $('.total-cost').html(data.cost_spent);
             $('.dot-loaders').css('display', 'none');
+            $('#download_button').prop('disabled', false);
             pdf_data = data.data;
           }
         }); 
@@ -726,6 +728,8 @@ function searchWithTimePeriod() {
         $('.total-time').html("N/A");
         $('.total-cost').html("N/A");
         $('.dot-loaders').css('display', 'none');
+        $('#download_button').prop('disabled', true);
+        pdf_data = [];
       }
     }, delay));
   });
