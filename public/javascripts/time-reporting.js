@@ -812,7 +812,7 @@ function headRows() {
     delivery_year:   {content: 'Delivery Year', styles: { valign: 'middle', halign: 'center' }}, 
     time_spent:      {content: 'Time Spent', styles: { valign: 'middle', halign: 'center' }}, 
     timestamp:       {content: 'Timestamp', styles: { valign: 'middle', halign: 'center' }}, 
-    note:            {content: 'Note', styles: { valign: 'middle', halign: 'center', columnWidth: 50}, }, 
+    note:            {content: 'Note', styles: { columnWidth: 70}, }, 
   }];
 }
 
