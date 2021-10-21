@@ -756,7 +756,6 @@ function isValidDate(dateString)
   return monthLength[month - 1];
 };
 
-///////////////////////////////////////////////////////////////////
 function downloadPDFFile() {
 
   // var selected_month = $('#input-date_interval').val();
@@ -792,8 +791,8 @@ function downloadPDFFile() {
   doc.text($('.total-cost').html(), 167, 45)
 
   doc.autoTable({
-      head: headRows_test(),
-      body: bodyRows_test(pdf_data),
+      head: headRows(),
+      body: bodyRows(pdf_data),
       startY: 60,
       showHead: true,
   })
@@ -802,7 +801,7 @@ function downloadPDFFile() {
   doc.save(pdf_name);
 }
 
-function headRows_test() {
+function headRows() {
   return [{ 
     customer_id:     {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
     email:           {content: 'Email Address', styles: { valign: 'middle', halign: 'center' }}, 
@@ -813,11 +812,11 @@ function headRows_test() {
     delivery_year:   {content: 'Delivery Year', styles: { valign: 'middle', halign: 'center' }}, 
     time_spent:      {content: 'Time Spent', styles: { valign: 'middle', halign: 'center' }}, 
     timestamp:       {content: 'Timestamp', styles: { valign: 'middle', halign: 'center' }}, 
-    note:            {content: 'Note', styles: { valign: 'middle', halign: 'center' }}, 
+    note:            {content: 'Note', styles: { valign: 'middle', halign: 'center', columnWidth: 50}, }, 
   }];
 }
 
-function bodyRows_test(data) {
+function bodyRows(data) {
   var body = [];
   for (var i = 0; i < data.length; i++) {
     body.push({
@@ -835,248 +834,6 @@ function bodyRows_test(data) {
   }
   return body;
 }
-
-function headRows(month, latest_day) {
-  switch (latest_day) {
-    case 31:
-      return [{ 
-        customer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
-        email:         {content: 'Email', styles: { valign: 'middle', halign: 'center' }}, 
-        first:         month + "-01\n" + month + "-11\n" + month + "-21",
-        second:        month + "-02\n" + month + "-12\n" + month + "-22",
-        third:         month + "-03\n" + month + "-13\n" + month + "-23",
-        fourth:        month + "-04\n" + month + "-14\n" + month + "-24",
-        fifth:         month + "-05\n" + month + "-15\n" + month + "-25",
-        sixth:         month + "-06\n" + month + "-16\n" + month + "-26",
-        seventh:       month + "-07\n" + month + "-17\n" + month + "-27",
-        eighth:        month + "-08\n" + month + "-18\n" + month + "-28",
-        ninth:         month + "-09\n" + month + "-19\n" + month + "-29",
-        tenth:         month + "-10\n" + month + "-20\n" + month + "-30",
-        eleventh:      "\n\n" + month + "-31"
-      }]
-    case 30:
-      return [{ 
-        customer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
-        email:         {content: 'Email', styles: { valign: 'middle', halign: 'center' }}, 
-        first:         month + "-01\n" + month + "-11\n" + month + "-21",
-        second:        month + "-02\n" + month + "-12\n" + month + "-22",
-        third:         month + "-03\n" + month + "-13\n" + month + "-23",
-        fourth:        month + "-04\n" + month + "-14\n" + month + "-24",
-        fifth:         month + "-05\n" + month + "-15\n" + month + "-25",
-        sixth:         month + "-06\n" + month + "-16\n" + month + "-26",
-        seventh:       month + "-07\n" + month + "-17\n" + month + "-27",
-        eighth:        month + "-08\n" + month + "-18\n" + month + "-28",
-        ninth:         month + "-09\n" + month + "-19\n" + month + "-29",
-        tenth:         month + "-10\n" + month + "-20\n" + month + "-30"
-      }]
-    case 29:
-      return [{ 
-        customer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
-        email:         {content: 'Email', styles: { valign: 'middle', halign: 'center' }}, 
-        first:         month + "-01\n" + month + "-11\n" + month + "-21",
-        second:        month + "-02\n" + month + "-12\n" + month + "-22",
-        third:         month + "-03\n" + month + "-13\n" + month + "-23",
-        fourth:        month + "-04\n" + month + "-14\n" + month + "-24",
-        fifth:         month + "-05\n" + month + "-15\n" + month + "-25",
-        sixth:         month + "-06\n" + month + "-16\n" + month + "-26",
-        seventh:       month + "-07\n" + month + "-17\n" + month + "-27",
-        eighth:        month + "-08\n" + month + "-18\n" + month + "-28",
-        ninth:         month + "-09\n" + month + "-19\n" + month + "-29",
-        tenth:         month + "-10\n" + month + "-20"
-      }]
-    case 28:
-      return [{ 
-        customer_id:    {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
-        email:         {content: 'Email', styles: { valign: 'middle', halign: 'center' }}, 
-        first:         month + "-01\n" + month + "-11\n" + month + "-21",
-        second:        month + "-02\n" + month + "-12\n" + month + "-22",
-        third:         month + "-03\n" + month + "-13\n" + month + "-23",
-        fourth:        month + "-04\n" + month + "-14\n" + month + "-24",
-        fifth:         month + "-05\n" + month + "-15\n" + month + "-25",
-        sixth:         month + "-06\n" + month + "-16\n" + month + "-26",
-        seventh:       month + "-07\n" + month + "-17\n" + month + "-27",
-        eighth:        month + "-08\n" + month + "-18\n" + month + "-28",
-        ninth:         month + "-09\n" + month + "-19",
-        tenth:         month + "-10\n" + month + "-20"
-      }]
-    default:
-      break;
-  }
-  
-}
-
-function bodyRows(data, latest_day) {
-  var body = [];
-  var day_to_body_lab = {"01":"first", "02":"second", "03":"third", "04":"fourth", "05":"fifth",
-                         "11":"first", "12":"second", "13":"third", "14":"fourth", "15":"fifth",
-                         "21":"first", "22":"second", "23":"third", "24":"fourth", "25":"fifth",
-                         "06":"sixth", "07":"seventh", "08":"eighth", "09":"ninth", "10":"tenth",
-                         "16":"sixth", "17":"seventh", "18":"eighth", "19":"ninth", "20":"tenth",
-                         "26":"sixth", "27":"seventh", "28":"eighth", "29":"ninth", "30":"tenth", 
-                         "31":"eleventh"};
-  switch (latest_day) {
-    case 31:
-      for (var i = 0; i < data.length; i++) {
-        var flg = false
-        for (var j = 0; j < body.length; j++) {
-          if (body[j].customer_id.content == "" + data[i].customer_id) {
-            flg = true; 
-            var date_split = data[i].reg_date.split("-");
-            var day = date_split[2].substring(0,2);
-            var body_split = body[j][day_to_body_lab[day]].split("\n");
-            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
-            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
-            body[j][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
-            break;
-          }
-        }
-        if (!flg) {
-          body.push({
-            customer_id: {content: "" + data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
-            email: {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }},
-            first: "00.00\n00.00\n00.00",
-            second: "00.00\n00.00\n00.00",
-            third: "00.00\n00.00\n00.00",
-            fourth: "00.00\n00.00\n00.00",
-            fifth: "00.00\n00.00\n00.00",
-            sixth: "00.00\n00.00\n00.00",
-            seventh: "00.00\n00.00\n00.00",
-            eighth: "00.00\n00.00\n00.00",
-            ninth: "00.00\n00.00\n00.00",
-            tenth: "00.00\n00.00\n00.00",
-            eleventh: "\n\n00.00",
-          })
-          var date_split = data[i].reg_date.split("-");
-          var day = date_split[2].substring(0,2);
-          var body_split = body[body.length - 1][day_to_body_lab[day]].split("\n");
-          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
-          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
-          body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
-        }
-      }
-      return body
-    case 30:
-      for (var i = 0; i < data.length; i++) {
-        var flg = false
-        for (var j = 0; j < body.length; j++) {
-          if (body[j].customer_id.content == "" + data[i].customer_id) {
-            flg = true; 
-            var date_split = data[i].reg_date.split("-");
-            var day = date_split[2].substring(0,2);
-            var body_split = body[j][day_to_body_lab[day]].split("\n");
-            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
-            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
-            body[j][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
-            break;
-          }
-        }
-        if (!flg) {
-          body.push({
-            customer_id: {content: "" + data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
-            email: {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }},
-            first: "00.00\n00.00\n00.00",
-            second: "00.00\n00.00\n00.00",
-            third: "00.00\n00.00\n00.00",
-            fourth: "00.00\n00.00\n00.00",
-            fifth: "00.00\n00.00\n00.00",
-            sixth: "00.00\n00.00\n00.00",
-            seventh: "00.00\n00.00\n00.00",
-            eighth: "00.00\n00.00\n00.00",
-            ninth: "00.00\n00.00\n00.00",
-            tenth: "00.00\n00.00\n00.00"
-          })
-          var date_split = data[i].reg_date.split("-");
-          var day = date_split[2].substring(0,2);
-          var body_split = body[body.length - 1][day_to_body_lab[day]].split("\n");
-          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
-          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
-          body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
-        }
-      }
-      return body
-    case 29:
-      for (var i = 0; i < data.length; i++) {
-        var flg = false
-        for (var j = 0; j < body.length; j++) {
-          if (body[j].customer_id.content == "" + data[i].customer_id) {
-            flg = true; 
-            var date_split = data[i].reg_date.split("-");
-            var day = date_split[2].substring(0,2);
-            var body_split = body[j][day_to_body_lab[day]].split("\n");
-            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
-            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
-            body[j][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
-            break;
-          }
-        }
-        if (!flg) {
-          body.push({
-            customer_id: {content: "" + data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
-            email: {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }},
-            first: "00.00\n00.00\n00.00",
-            second: "00.00\n00.00\n00.00",
-            third: "00.00\n00.00\n00.00",
-            fourth: "00.00\n00.00\n00.00",
-            fifth: "00.00\n00.00\n00.00",
-            sixth: "00.00\n00.00\n00.00",
-            seventh: "00.00\n00.00\n00.00",
-            eighth: "00.00\n00.00\n00.00",
-            ninth: "00.00\n00.00\n00.00",
-            tenth: "00.00\n00.00"
-          })
-          var date_split = data[i].reg_date.split("-");
-          var day = date_split[2].substring(0,2);
-          var body_split = body[body.length - 1][day_to_body_lab[day]].split("\n");
-          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
-          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
-          body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
-        }
-      }
-      return body
-    case 28:
-      for (var i = 0; i < data.length; i++) {
-        var flg = false
-        for (var j = 0; j < body.length; j++) {
-          if (body[j].customer_id.content == "" + data[i].customer_id) {
-            flg = true; 
-            var date_split = data[i].reg_date.split("-");
-            var day = date_split[2].substring(0,2);
-            var body_split = body[j][day_to_body_lab[day]].split("\n");
-            var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
-            change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
-            body[j][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
-            break;
-          }
-        }
-        if (!flg) {
-          body.push({
-            customer_id: {content: "" + data[i].customer_id, styles: { valign: 'middle', halign: 'center' }},
-            email: {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }},
-            first: "00.00\n00.00\n00.00",
-            second: "00.00\n00.00\n00.00",
-            third: "00.00\n00.00\n00.00",
-            fourth: "00.00\n00.00\n00.00",
-            fifth: "00.00\n00.00\n00.00",
-            sixth: "00.00\n00.00\n00.00",
-            seventh: "00.00\n00.00\n00.00",
-            eighth: "00.00\n00.00\n00.00",
-            ninth: "00.00\n00.00",
-            tenth: "00.00\n00.00"
-          })
-          var date_split = data[i].reg_date.split("-");
-          var day = date_split[2].substring(0,2);
-          var body_split = body[body.length - 1][day_to_body_lab[day]].split("\n");
-          var change_body = parseFloat(body_split[Math.floor(parseInt(day) / 10)]) + parseFloat(data[i].time_spent);
-          change_body = change_body.toFixed(2); body_split[Math.floor(parseInt(day) / 10)] = change_body;
-          body[body.length - 1][day_to_body_lab[day]] = body_split[0] + "\n" + body_split[1] + "\n" + body_split[2];
-        }
-      }
-      return body
-    default:
-      break;
-  }
-}
-/////////////////////////////////////////////////////////////
 
 function renderSelect(data, type, full, meta) {
   var select_str = "<button class='btn btn-default link-btn' id='" + data +"' style='font-size: 12px; padding: 3px 12px;'>Links</button>"

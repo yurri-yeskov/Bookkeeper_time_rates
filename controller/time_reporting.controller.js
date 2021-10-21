@@ -96,7 +96,8 @@ exports.getDayCustomerInfo = (req, res) => {
                   "COALESCE(october_spent, 0.00) + COALESCE(november_spent, 0.00) + COALESCE(december_spent, 0.00)) as time_spent, reg_date, " +
                   "customer_id, email_address, company_name, bookkeeper_name, task_type, period, delivery_year, note " + 
                   "FROM task_manager.time_entries WHERE bookkeeper_name='" + req.body.bookkeeper_fname + "' AND " +
-                  "deleted = false AND reg_date >= '" + req.body.sel_start_date + "'::date AND reg_date <= '" + req.body.sel_end_date + "'::date";
+                  "deleted = false AND reg_date >= '" + req.body.sel_start_date + "'::date AND reg_date <= '" + req.body.sel_end_date + "'::date " + 
+                  "ORDER BY reg_date ASC";
   
   client.query(query_str, function(err, result) {
     if (err) {
@@ -106,6 +107,7 @@ exports.getDayCustomerInfo = (req, res) => {
     let time_spent = 0.00;
     for (let i = 0; i < result.rows.length; i++) {
       time_spent += parseFloat(result.rows[i].time_spent);
+      result.rows[i].reg_date = moment(result.rows[i].reg_date).format("DD-MM-YYYY HH:mm:ss");
     }
     // time_spent = (time_spent / 60).toFixed(2);
     // time_spent = time_spent / 60.00;
