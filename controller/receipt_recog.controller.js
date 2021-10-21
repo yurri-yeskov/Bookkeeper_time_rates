@@ -1,8 +1,8 @@
 const dbConfig = require("../config/db.config");
 const linkConfig = require("../config/links.config");
-const {Client} = require('pg');
 const ocrSpace = require('ocr-space-api-wrapper');
 const moment = require('moment');  
+const {Client} = require('pg');
 
 const client = new Client ({
     user: dbConfig.USER,
