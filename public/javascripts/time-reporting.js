@@ -812,7 +812,7 @@ function headRows() {
     delivery_year:   {content: 'Delivery Year', styles: { valign: 'middle', halign: 'center' }}, 
     time_spent:      {content: 'Time Spent', styles: { valign: 'middle', halign: 'center' }}, 
     timestamp:       {content: 'Timestamp', styles: { valign: 'middle', halign: 'center' }}, 
-    note:            {content: 'Note', styles: { columnWidth: 70}, }, 
+    note:            {content: 'Note', styles: { valign: 'middle', halign: 'center', columnWidth: 70}, }, 
   }];
 }
 
@@ -829,7 +829,7 @@ function bodyRows(data) {
       delivery_year:   {content: data[i].delivery_year, styles: { valign: 'middle', halign: 'center' }}, 
       time_spent:      {content: data[i].time_spent, styles: { valign: 'middle', halign: 'center' }}, 
       timestamp:       {content: data[i].reg_date, styles: { valign: 'middle', halign: 'center' }}, 
-      note:            {content: data[i].note, styles: { valign: 'middle', halign: 'center' }}, 
+      note:            {content: data[i].note}, 
     });
   }
   return body;
