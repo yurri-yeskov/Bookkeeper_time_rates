@@ -738,6 +738,8 @@ function isValidDate(dateString)
   // First check for the pattern
   if(!/^\d{2}\-\d{2}\-\d{4}$/.test(dateString)) 
     return false;
+  
+  console.log("asdfasdf-1", dateString);
 
   // Parse the date parts to integers
   var parts = dateString.split("-");
@@ -748,6 +750,7 @@ function isValidDate(dateString)
   // Check the ranges of month and year
   if(year < 1000 || year > 3000 || month == 0 || month > 12)
     return false;
+  console.log("asdfasdf-2", dateString);
 
   var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
 
