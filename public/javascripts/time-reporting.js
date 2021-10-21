@@ -717,7 +717,6 @@ function searchWithTimePeriod() {
             $('.total-cost').html(data.cost_spent);
             $('.dot-loaders').css('display', 'none');
             pdf_data = data.data;
-            console.log(pdf_data);
           }
         }); 
         
@@ -761,10 +760,6 @@ function isValidDate(dateString)
 
 function downloadPDFFile() {
 
-  // var selected_month = $('#input-date_interval').val();
-  // var day_by_month = isValidDate(selected_month);
-  // selected_month = selected_month.split("-")[1]; selected_month = parseInt(selected_month);
-
   alert("Download PDF!!!");
   var doc = new jsPDF('l', 'mm', 'a4')
 
@@ -800,7 +795,13 @@ function downloadPDFFile() {
       showHead: true,
   })
   // Flemming Hansen - 01-10-2021 - 31-10-2021 - 02-11-2021.pdf
-  var pdf_name = $('.bookkeeper-name').html() + ".pdf";
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = dd + "-" + mm + "-" + yyyy;
+  var pdf_name = $('.bookkeeper-name').html() + " - " +$('.time-period').html() + " - " + today + ".pdf";
   doc.save(pdf_name);
 }
 
