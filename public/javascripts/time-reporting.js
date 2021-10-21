@@ -629,6 +629,7 @@ function submitsWithYear(e) {
 }
 
 function searchWithCustomerId() {
+  $('#download_button').prop('disabled', true);
   $('#input-customer_id').bind('input keyup', function(){
     var $this = $(this);
     var delay = 1000; // 1 seconds delay after last input
