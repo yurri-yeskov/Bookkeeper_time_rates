@@ -763,7 +763,7 @@ function downloadPDFFile() {
   selected_month = selected_month.split("-")[1]; selected_month = parseInt(selected_month);
 
   alert("Download PDF!!!");
-  var doc = new jsPDF('l', 'mm', 'a4')
+  var doc = new jsPDF('p', 'mm', 'a4')
 
   doc.setFontSize(18)
   doc.setFontStyle('bold')
@@ -791,13 +791,28 @@ function downloadPDFFile() {
   doc.text($('.total-cost').html(), 167, 45)
 
   doc.autoTable({
-      head: headRows(selected_month, day_by_month),
+      head: headRows_test(),
       body: bodyRows(pdf_data, day_by_month),
       startY: 60,
       showHead: true,
   })
 
   doc.save("Report.pdf");
+}
+
+function headRows_test() {
+  return [{ 
+    customer_id:     {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
+    email:           {content: 'Email Address', styles: { valign: 'middle', halign: 'center' }}, 
+    company_name:    {content: 'Company Name', styles: { valign: 'middle', halign: 'center' }}, 
+    bookkeeper_name: {content: 'Bookkeeper Name', styles: { valign: 'middle', halign: 'center' }}, 
+    task_type:       {content: 'Primary Task Type', styles: { valign: 'middle', halign: 'center' }}, 
+    delivery_period: {content: 'Delivery Period', styles: { valign: 'middle', halign: 'center' }}, 
+    delivery_year:   {content: 'Delivery Year', styles: { valign: 'middle', halign: 'center' }}, 
+    time_spent:      {content: 'Time Spent', styles: { valign: 'middle', halign: 'center' }}, 
+    timestamp:       {content: 'Timestamp', styles: { valign: 'middle', halign: 'center' }}, 
+    note:            {content: 'Note', styles: { valign: 'middle', halign: 'center' }}, 
+  }];
 }
 
 function headRows(month, latest_day) {
