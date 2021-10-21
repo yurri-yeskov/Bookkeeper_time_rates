@@ -103,6 +103,8 @@ exports.getDayCustomerInfo = (req, res) => {
                   "deleted = false AND reg_date >= '" + start_date + "'::date AND reg_date <= '" + end_date + "'::date " + 
                   "ORDER BY reg_date ASC";
   
+  console.log(query_str);
+  
   client.query(query_str, function(err, result) {
     if (err) {
       console.log(err);
