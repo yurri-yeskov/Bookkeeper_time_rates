@@ -710,11 +710,12 @@ function searchWithTimePeriod() {
           dataType: "json",
           success: function(data) {
       
-            $('.time-period').html(selected_month + "-01 ~ " + selected_month + "-" + day_by_month);
+            $('.time-period').html(selected_month + "-01 - " + selected_month + "-" + day_by_month);
             $('.total-time').html(data.time_spent);
             $('.total-cost').html(data.cost_spent);
             $('.dot-loaders').css('display', 'none');
             pdf_data = data.data;
+            console.log(pdf_data);
           }
         }); 
         
@@ -758,12 +759,12 @@ function isValidDate(dateString)
 ///////////////////////////////////////////////////////////////////
 function downloadPDFFile() {
 
-  var selected_month = $('#input-date_interval').val();
-  var day_by_month = isValidDate(selected_month);
-  selected_month = selected_month.split("-")[1]; selected_month = parseInt(selected_month);
+  // var selected_month = $('#input-date_interval').val();
+  // var day_by_month = isValidDate(selected_month);
+  // selected_month = selected_month.split("-")[1]; selected_month = parseInt(selected_month);
 
   alert("Download PDF!!!");
-  var doc = new jsPDF('p', 'mm', 'a4')
+  var doc = new jsPDF('l', 'mm', 'a4')
 
   doc.setFontSize(18)
   doc.setFontStyle('bold')
@@ -792,12 +793,13 @@ function downloadPDFFile() {
 
   doc.autoTable({
       head: headRows_test(),
-      body: bodyRows(pdf_data, day_by_month),
+      body: bodyRows_test(pdf_data),
       startY: 60,
       showHead: true,
   })
-
-  doc.save("Report.pdf");
+  // Flemming Hansen - 01-10-2021 - 31-10-2021 - 02-11-2021.pdf
+  var pdf_name = $('.bookkeeper-name').html() + ".pdf";
+  doc.save(pdf_name);
 }
 
 function headRows_test() {
@@ -813,6 +815,25 @@ function headRows_test() {
     timestamp:       {content: 'Timestamp', styles: { valign: 'middle', halign: 'center' }}, 
     note:            {content: 'Note', styles: { valign: 'middle', halign: 'center' }}, 
   }];
+}
+
+function bodyRows_test(data) {
+  var body = [];
+  for (var i = 0; i < data.length; i++) {
+    body.push({
+      customer_id:     {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }}, 
+      email:           {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }}, 
+      company_name:    {content: data[i].company_name, styles: { valign: 'middle', halign: 'center' }}, 
+      bookkeeper_name: {content: data[i].bookkeeper_name, styles: { valign: 'middle', halign: 'center' }}, 
+      task_type:       {content: data[i].task_type, styles: { valign: 'middle', halign: 'center' }}, 
+      delivery_period: {content: data[i].period, styles: { valign: 'middle', halign: 'center' }}, 
+      delivery_year:   {content: data[i].delivery_year, styles: { valign: 'middle', halign: 'center' }}, 
+      time_spent:      {content: data[i].time_spent, styles: { valign: 'middle', halign: 'center' }}, 
+      timestamp:       {content: data[i].reg_date, styles: { valign: 'middle', halign: 'center' }}, 
+      note:            {content: data[i].note, styles: { valign: 'middle', halign: 'center' }}, 
+    });
+  }
+  return body;
 }
 
 function headRows(month, latest_day) {
