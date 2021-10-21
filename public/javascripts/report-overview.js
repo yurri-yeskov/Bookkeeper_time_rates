@@ -221,14 +221,14 @@ function isValidDate(dateString)
   if (!dateString) return true;
 
   // First check for the pattern
-  if(!/^\d{1,4}\-\d{1,2}\-\d{2}$/.test(dateString)) 
+  if(!/^\d{2}\-\d{2}\-\d{4}$/.test(dateString)) 
     return false;
 
   // Parse the date parts to integers
   var parts = dateString.split("-");
-  var day = parseInt(parts[2], 10);
+  var day = parseInt(parts[0], 10);
   var month = parseInt(parts[1], 10);
-  var year = parseInt(parts[0], 10);
+  var year = parseInt(parts[2], 10);
 
   // Check the ranges of month and year
   if(year < 1000 || year > 3000 || month == 0 || month > 12)
@@ -350,158 +350,6 @@ function showAuditModal(e) {
     }
   });
 }
-
-// function editRow(id) {
-//   $('.show_cell_' + id).css('display', 'none');
-//   $('.edit_cell_' + id).css('display', 'block');
-//   $('#acep_btn_' + id).css('display', 'block');
-//   $('#canc_btn_' + id).css('display', 'block');
-//   $('#edit_btn_' + id).css('display', 'none');
-//   $('#dele_btn_' + id).css('display', 'none');
-// }
-
-// function cancRow(id) {
-//   $('.show_cell_' + id).css('display', 'block');
-//   $('.edit_cell_' + id).css('display', 'none');
-//   $('#acep_btn_' + id).css('display', 'none');
-//   $('#canc_btn_' + id).css('display', 'none');
-//   $('#edit_btn_' + id).css('display', 'block');
-//   $('#dele_btn_' + id).css('display', 'block');
-// }
-
-// function acepRow(id, month_name) {
-//   var today = new Date();
-//   var dd = String(today.getDate()).padStart(2, '0');
-//   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-//   var yyyy = today.getFullYear();
-
-//   today = yyyy + "-" + mm + "-" + dd + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-//   var change_data = {
-//     task_type: null,
-//     period: null,
-//     time_spent: null,
-//     note: null,
-//     id: id,
-//     month: month_name,
-//     today: today
-//   }
-//   var sel_task = $('#e_task_' + id).val();
-//   if (sel_task == null) {
-//     alert('Please fill all fields.');
-//     return;
-//   }
-
-//   var task_list = {
-//     "1": "Almindelig kontering",
-//     "2": "Årsafslutningspakke - Selskaber 1. År",
-//     "3": "Årsafslutningspakke - Selskaber eksisterende kunde",
-//     "4": "Årsafslutningspakke - Enkeltmands 1. År",
-//     "5": "Årsafslutningspakke - Enkeltmands eksisterende kunde",
-//     "6": "VSO - beregning ny kunde",
-//     "7": "VSO - beregning eksisterende kunde",
-//     "8": "Samtale/Rådgivning af kunde",
-//     "9": "Intern kommunikation og møder",
-//     "10": "Primo ny kunde",
-//     "11": "Primo eksisterende",
-//     "12": "kundeCatchup/kontering"
-//   }
-//   if (task_list[sel_task] != $('#s_task_' + id).html()) {
-//     change_data.task_type = sel_task;
-//     $('#s_task_' + id).html(task_list[sel_task]);
-//   }
-
-//   var sel_period = $('#e_period_' + id).val();
-//   if (sel_period == null) {
-//     alert('Please fill all fields.');
-//     return;
-//   }
-//   if (sel_period != $('#s_period_' + id).html()) {
-//     change_data.period = sel_period;
-//     $('#s_period_' + id).html(sel_period);
-//   }
-  
-//   var sel_time = $('#e_time_' + id).val();
-//   if (sel_time == '') {
-//     alert('Please fill all fields.');
-//     return;
-//   }
-//   if (parseFloat(sel_time) != parseFloat($('#s_time_' + id).html())) {
-//     change_data.time_spent = sel_time;
-//     $('#s_time_' + id).html(sel_time);
-//   }
-  
-//   var sel_note = $('#e_note_' + id).val().replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g,"\n");
-//   if (sel_note == '') {
-//     alert('Please fill all fields.');
-//     return;
-//   }
-//   if (sel_note != $('#s_note_' + id).html()) {
-//     change_data.note = sel_note;
-//     $('#s_note_' + id).html(sel_note);
-//   }
-  
-//   if (change_data.task_type == null && change_data.period == null && change_data.time_spent == null && change_data.note == null) {
-//     console.log("No ajax!");
-//     alert("No Data to update!");
-//     return;
-//   }
-
-//   $('.show_cell_' + id).css('display', 'block');
-//   $('.edit_cell_' + id).css('display', 'none');
-//   $('#acep_btn_' + id).css('display', 'none');
-//   $('#canc_btn_' + id).css('display', 'none');
-//   $('#edit_btn_' + id).css('display', 'block');
-  
-//   if(confirm('Are you sure you want to')){
-    
-//     $('.btn').prop('disabled', true);
-//     $.ajax({
-//       type: "post",
-//       url: base_url + "/update_report_time",
-//       data: change_data,
-//       dataType: "json",
-//       success: function(data) {
-//         setTimeout(function(){
-//           $('.btn').prop('disabled', false);
-//           time_entry_table.ajax.reload();
-//           getTotalTimes($('#input-year').val());
-//         }, 500); 
-//       }
-//     });
-//   }
-// }
-
-// function deleRow(id, month_name) {
-//   var today = new Date();
-//   var dd = String(today.getDate()).padStart(2, '0');
-//   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-//   var yyyy = today.getFullYear();
-
-//   today = yyyy + "-" + mm + "-" + dd + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
-//   if(confirm('Are you sure you want to delete')){
-    
-//     $('.btn').prop('disabled', true);
-//     $.ajax({
-//       type: "post",
-//       url: base_url + "/delete_report_time",
-//       data: {
-//         id: id,
-//         month: month_name,
-//         today: today
-//       },
-//       dataType: "json",
-//       success: function(data) {
-//         setTimeout(function(){
-//           $('.btn').prop('disabled', false);
-//           $('#etr_' + id).remove();
-//           time_entry_table.ajax.reload();
-//           getTotalTimes($('#input-year').val());
-//         }, 500); 
-//       }
-//     });
-//   }
-// }
 
 function appendTagAuditContent(month_name, data) {
 

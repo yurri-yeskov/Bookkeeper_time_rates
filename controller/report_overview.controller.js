@@ -1,5 +1,6 @@
 const dbConfig = require("../config/db.config");
 const linkConfig = require("../config/links.config");
+const moment = require('moment');
 const {Client} = require('pg');
 
 const client = new Client ({
@@ -170,11 +171,13 @@ exports.findAllTimeEntry = (req, res) => {
     }
   }
   if (extra_search["s_start_date_val"]) {
-    extra_search_str = extra_search_str + " AND '" + extra_search["s_start_date_val"] + "'::DATE " + "<= reg_date::DATE";
+    let format_start_date = moment(extra_search["s_start_date_val"], 'DD-MM-YYYY').format("YYYY-MM-DD");
+    extra_search_str = extra_search_str + " AND '" + format_start_date + "'::DATE " + "<= reg_date::DATE";
   }
 
   if (extra_search["s_end_date_val"]) {
-    extra_search_str = extra_search_str + " AND '" + extra_search["s_end_date_val"] + "'::DATE " + ">= reg_date::DATE";
+    let format_end_date = moment(extra_search["s_end_date_val"], 'DD-MM-YYYY').format("YYYY-MM-DD");
+    extra_search_str = extra_search_str + " AND '" + format_end_date + "'::DATE " + ">= reg_date::DATE";
   }
 
   if (extra_search_str != "") {

@@ -3,7 +3,7 @@ $(document).ready(function(){
     loadImage();
 
     $('#input-date').datepicker({
-        format: "yyyy-mm-dd",
+        format: "dd-mm-yyyy",
         todayHighlight: true,
         clearBtn: true
     });
@@ -23,14 +23,14 @@ function isValidDate(dateString)
   if (!dateString) return true;
 
   // First check for the pattern
-  if(!/^\d{1,4}\-\d{1,2}\-\d{2}$/.test(dateString)) 
+  if(!/^\d{2}\-\d{2}\-\d{4}$/.test(dateString)) 
     return false;
 
   // Parse the date parts to integers
   var parts = dateString.split("-");
-  var day = parseInt(parts[2], 10);
+  var day = parseInt(parts[0], 10);
   var month = parseInt(parts[1], 10);
-  var year = parseInt(parts[0], 10);
+  var year = parseInt(parts[2], 10);
 
   // Check the ranges of month and year
   if(year < 1000 || year > 3000 || month == 0 || month > 12)

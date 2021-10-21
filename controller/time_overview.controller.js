@@ -279,10 +279,10 @@ exports.findCustomerInfoWithYear = (req, res) => {
           for (var i = 0; i < result.rows.length; i++) {
             
             if (result.rows[i].no_longer_customer_from != null) 
-              result.rows[i].no_longer_customer_from = moment(result.rows[i].no_longer_customer_from).format("YYYY-MM-DD");
+              result.rows[i].no_longer_customer_from = moment(result.rows[i].no_longer_customer_from).format("DD-MM-YYYY");
             else result.rows[i].no_longer_customer_from = '';
             if (result.rows[i].first_end_year != null) 
-              result.rows[i].first_end_year = moment(result.rows[i].first_end_year).format("YYYY-MM-DD");
+              result.rows[i].first_end_year = moment(result.rows[i].first_end_year).format("DD-MM-YYYY");
             else result.rows[i].first_end_year = '';
 
             result.rows[i].receipts_used = parseInt(result.rows[i].receipts_used);
