@@ -150,7 +150,7 @@
                 </select>
               </div>
               <div class="col-12 modal-margin">
-                <label for="input-period" class="form-label">Period:</label>
+                <label for="input-period" class="form-label">Period: </label>
                 <select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-period">
                   <option value="Q1">Q1</option>
                   <option value="Q2">Q2</option>
@@ -193,8 +193,12 @@
             <div class="loader" style="display: none;"></div>
             <form id="report-time-frm" style="display: block;">
               <div class="col-12 modal-margin">
-                <label for="input-date_interval" class="form-label">Select Month: </label>
-                <input type="text" class="form-control"  id="input-date_interval" style="width: 30%; display: none;">
+                <label for="input-date_interval" class="form-label">Select Date Range: </label>
+                <div class="input-daterange input-group" id="datepicker" style="display: inline-flex; width: 200px;">
+                  <input type="text" class="input-sm form-control" id="start-date" name="start" />
+                  <span class="input-group-addon" style="min-width: 35px;">to</span>
+                  <input type="text" class="input-sm form-control" id="end-date" name="end" />
+                </div>
               </div>
               <div class="col-12 modal-margin">
                 <b>Bookkeeper Name: </b> <label class="bookkeeper-name" style="font-weight:normal">bookkeeper test</label> <!--change when showing-->

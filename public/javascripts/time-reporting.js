@@ -100,9 +100,11 @@ $(document).ready(function(){
     searchWithCustomerId();
     searchWithTimePeriod();
 
-    $('#input-date_interval').datepicker({
-      format: "yyyy-mm",
-      minViewMode: 1
+    $('.input-daterange').datepicker({
+      format: "dd-mm-yyyy",
+      todayBtn: true,
+      todayHighlight: true,
+      clearBtn: true
     });
 });
 
@@ -829,7 +831,7 @@ function bodyRows(data) {
       delivery_year:   {content: data[i].delivery_year, styles: { valign: 'middle', halign: 'center' }}, 
       time_spent:      {content: data[i].time_spent, styles: { valign: 'middle', halign: 'center' }}, 
       timestamp:       {content: data[i].reg_date, styles: { valign: 'middle', halign: 'center' }}, 
-      note:            {content: data[i].note}, 
+      note:            {content: data[i].note, styles: { valign: 'middle', halign: 'center' }}, 
     });
   }
   return body;

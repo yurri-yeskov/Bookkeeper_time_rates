@@ -115,7 +115,7 @@ $(document).ready(function(){
   getTotalTimes($('#input-year').val());
 
   $('.input-daterange').datepicker({
-    format: "yyyy-mm-dd",
+    format: "dd-mm-yyyy",
     todayBtn: true,
     todayHighlight: true,
     clearBtn: true
