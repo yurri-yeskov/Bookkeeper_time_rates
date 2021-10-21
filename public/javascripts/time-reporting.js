@@ -678,7 +678,7 @@ function searchWithCustomerId() {
 }
 
 function searchWithTimePeriod() {
-  $('#input-date_interval').bind('input change', function(){
+  $('.input-sm').bind('input change', function(){
     var $this = $(this);
     var delay = 1000; // 1 seconds delay after last input
 
@@ -687,7 +687,7 @@ function searchWithTimePeriod() {
     $('.total-time').html("");
     $('.total-cost').html("");
     $('.dot-loaders').css('display', 'inline-block');
-    if ($('#input-date_interval').val() == '') {
+    if ($('#start-date').val() == '' || $('#end-date').val() == '') {
       $('.time-period').html("N/A");
       $('.total-time').html("N/A");
       $('.total-cost').html("N/A");
