@@ -91,13 +91,16 @@ exports.getDayCustomerInfo = (req, res) => {
     return;             
   }
 
+  var start_date = moment(req.body.sel_start_date, 'DD-MM-YYYY').format('YYYY-MM-DD')
+  var end_date = moment(req.body.sel_end_date, 'DD-MM-YYYY').format('YYYY-MM-DD')
+
   let query_str = "SELECT (COALESCE(january_spent, 0.00) + COALESCE(february_spent, 0.00) + COALESCE(march_spent, 0.00) + " +
                   "COALESCE(april_spent, 0.00) + COALESCE(may_spent, 0.00) + COALESCE(june_spent, 0.00) + " +
                   "COALESCE(july_spent, 0.00) + COALESCE(august_spent, 0.00) + COALESCE(september_spent, 0.00) + " +
                   "COALESCE(october_spent, 0.00) + COALESCE(november_spent, 0.00) + COALESCE(december_spent, 0.00)) as time_spent, reg_date, " +
                   "customer_id, email_address, company_name, bookkeeper_name, task_type, period, delivery_year, note " + 
                   "FROM task_manager.time_entries WHERE bookkeeper_name='" + req.body.bookkeeper_fname + "' AND " +
-                  "deleted = false AND reg_date >= '" + req.body.sel_start_date + "'::date AND reg_date <= '" + req.body.sel_end_date + "'::date " + 
+                  "deleted = false AND reg_date >= '" + start_date + "'::date AND reg_date <= '" + end_date + "'::date " + 
                   "ORDER BY reg_date ASC";
   
   client.query(query_str, function(err, result) {

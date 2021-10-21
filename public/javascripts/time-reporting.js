@@ -697,22 +697,23 @@ function searchWithTimePeriod() {
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function(){
       $this.removeData('timer');
-      var selected_month = $('#input-date_interval').val();
+      var start_date = $('#start-date').val();
+      var end_date = $('#end-date').val();
       var day_by_month = isValidDate(selected_month);
       if (day_by_month) {
         $.ajax({
           type: "post",
           url: base_url + "/get_day_customer_info",
           data: {
-            sel_start_date: selected_month + "-01",
-            sel_end_date: selected_month + "-" + day_by_month,
+            sel_start_date: start_date,
+            sel_end_date: end_date,
             bookkeeper_fname: bookkeeper_fname,
             user_token: getSelToken()
           },
           dataType: "json",
           success: function(data) {
       
-            $('.time-period').html(selected_month + "-01 - " + selected_month + "-" + day_by_month);
+            $('.time-period').html(start_date + " - " + end_date);
             $('.total-time').html(data.time_spent);
             $('.total-cost').html(data.cost_spent);
             $('.dot-loaders').css('display', 'none');
