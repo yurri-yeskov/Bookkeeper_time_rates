@@ -179,8 +179,9 @@ function showAddModalForExternal() {
 
 function showDownloadPDFModal() {
   $('.form-control').val('');
-  $('#input-date_interval').css('display', 'inline');
   $('.small-loader').css('display', 'none');
+
+  $('#datepicker').val("").datepicker("update");
 
   var cur_row_data = time_spent_table.row(1).data();
   if (acl_level != 1) {
