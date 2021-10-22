@@ -273,12 +273,6 @@ exports.findCustomerInfoWithYear = (req, res) => {
               console.log(err);
               res.status(400).send(err);
             }
-
-            let bookkeeper_fullname = 'Admin';
-            if (acl_level != 1) {
-              if (result.rows.length < 0) bookkeeper_fullname = "None";
-              else bookkeeper_fullname = result.rows[0].bookkeeper_name;
-            }
   
             var data = JSON.stringify({
               "draw": req.body.draw,
@@ -599,34 +593,54 @@ exports.findTotalTimes = (req, res) => {
       });
   }
   
-  if (!req.body.sel_year) {
+  if (!req.body.sel_year || !req.body.my_email) {
       console.log("Oops!");
       res.redirect("/");
       return;
   }
 
-  let query_str = "SELECT COALESCE(SUM(january_spent), 0.00) as january_time, " + 
-                  "COALESCE(SUM(february_spent), 0.00) as february_time, " +
-                  "COALESCE(SUM(march_spent), 0.00) as march_time, " + 
-                  "COALESCE(SUM(april_spent), 0.00) as april_time, " +
-                  "COALESCE(SUM(may_spent), 0.00) as may_time, " +
-                  "COALESCE(SUM(june_spent), 0.00) as june_time, " +
-                  "COALESCE(SUM(july_spent), 0.00) as july_time, " +
-                  "COALESCE(SUM(august_spent), 0.00) as august_time, " +
-                  "COALESCE(SUM(september_spent), 0.00) as september_time, " +
-                  "COALESCE(SUM(october_spent), 0.00) as october_time, " +
-                  "COALESCE(SUM(november_spent), 0.00) as november_time, " +
-                  "COALESCE(SUM(december_spent), 0.00) as december_time " +
-                  "FROM task_manager.time_entries WHERE deleted=false AND " +
-                  "extract(year from reg_date) = '" + req.body.sel_year + "';";
-                      
-  client.query(query_str, function(err, result) {
+  
+  
+  let pre_query_str = "SELECT TRIM(CONCAT(first_name, ' ', last_name)) AS bookkeeper_name FROM task_manager.freelancers WHERE email='" + my_email + "'";
+  client.query(pre_query_str, function(err, result) {
     if (err) {
         console.log(err);
         res.status(400).send(err);
     }
+    let my_name = "N/A";
+    let acl_level = admin_emails.includes(req.body.my_email) ? 1 : 0;
+    if (acl_level == 1) my_name = "Admin";
+    else {
+      if (result.rows.length > 0) my_name = result.rows[0].bookkeeper_name
+    }
 
-    res.send({ data: result.rows });
+    let query_str = "SELECT COALESCE(SUM(january_spent), 0.00) as january_time, " + 
+                    "COALESCE(SUM(february_spent), 0.00) as february_time, " +
+                    "COALESCE(SUM(march_spent), 0.00) as march_time, " + 
+                    "COALESCE(SUM(april_spent), 0.00) as april_time, " +
+                    "COALESCE(SUM(may_spent), 0.00) as may_time, " +
+                    "COALESCE(SUM(june_spent), 0.00) as june_time, " +
+                    "COALESCE(SUM(july_spent), 0.00) as july_time, " +
+                    "COALESCE(SUM(august_spent), 0.00) as august_time, " +
+                    "COALESCE(SUM(september_spent), 0.00) as september_time, " +
+                    "COALESCE(SUM(october_spent), 0.00) as october_time, " +
+                    "COALESCE(SUM(november_spent), 0.00) as november_time, " +
+                    "COALESCE(SUM(december_spent), 0.00) as december_time " +
+                    "FROM task_manager.time_entries WHERE deleted=false AND " +
+                    "extract(year from reg_date) = '" + req.body.sel_year + "' ";
+    
+    if (my_name != 'N/A' && my_name != 'Admin')
+      query_str = query_str + "AND bookkeeper_name='" + my_name + "'";
+
+    client.query(query_str, function(err, result) {
+      if (err) {
+        console.log(err);
+        res.status(400).send(err);
+      }
+      if (my_name == 'N/A') result.rows = [];
+
+      res.send({ data: result.rows });
+    });
   });
 };
 

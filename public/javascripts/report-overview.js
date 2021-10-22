@@ -127,11 +127,14 @@ $(document).ready(function(){
 });
 
 function getTotalTimes(sel_year) {
+  var my_email = $('#logout-link').html().split("(");
+  my_email = my_email[1].split(")"); my_email = my_email[0];
   $.ajax({
     type: "post",
     url: base_url + "/get_total_times",
     data: {
-      sel_year: sel_year
+      sel_year: sel_year,
+      my_email: my_email
     },
     dataType: "json",
     success: function(data) {
