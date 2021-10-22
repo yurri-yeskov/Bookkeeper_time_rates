@@ -599,9 +599,7 @@ exports.findTotalTimes = (req, res) => {
       return;
   }
 
-  
-  
-  let pre_query_str = "SELECT TRIM(CONCAT(first_name, ' ', last_name)) AS bookkeeper_name FROM task_manager.freelancers WHERE email='" + my_email + "'";
+  let pre_query_str = "SELECT TRIM(CONCAT(first_name, ' ', last_name)) AS bookkeeper_name FROM task_manager.freelancers WHERE email='" + req.body.my_email + "'";
   client.query(pre_query_str, function(err, result) {
     if (err) {
         console.log(err);
@@ -611,7 +609,7 @@ exports.findTotalTimes = (req, res) => {
     let acl_level = admin_emails.includes(req.body.my_email) ? 1 : 0;
     if (acl_level == 1) my_name = "Admin";
     else {
-      if (result.rows.length > 0) my_name = result.rows[0].bookkeeper_name
+      if (result.rows.length > 0) my_name = result.rows[0].bookkeeper_name;
     }
 
     let query_str = "SELECT COALESCE(SUM(january_spent), 0.00) as january_time, " + 
