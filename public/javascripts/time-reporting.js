@@ -181,8 +181,6 @@ function showDownloadPDFModal() {
   $('.form-control').val('');
   $('.small-loader').css('display', 'none');
 
-  $('#datepicker').val("").datepicker("update");
-
   var cur_row_data = time_spent_table.row(1).data();
   if (acl_level != 1) {
     bookkeeper_fname = cur_row_data.bookkeeper_name;
@@ -799,7 +797,9 @@ function downloadPDFFile() {
       body: bodyRows(pdf_data),
       startY: 60,
       showHead: true,
+      fontSize: 8
   })
+  
   // Flemming Hansen - 01-10-2021 - 31-10-2021 - 02-11-2021.pdf
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -822,7 +822,7 @@ function headRows() {
     delivery_year:   {content: 'Delivery Year', styles: { valign: 'middle', halign: 'center' }}, 
     time_spent:      {content: 'Time Spent', styles: { valign: 'middle', halign: 'center' }}, 
     timestamp:       {content: 'Timestamp', styles: { valign: 'middle', halign: 'center' }}, 
-    note:            {content: 'Note', styles: { valign: 'middle', halign: 'center', columnWidth: 70}, }, 
+    note:            {content: 'Note', styles: { valign: 'middle', halign: 'center', columnWidth: 100}, }, 
   }];
 }
 
