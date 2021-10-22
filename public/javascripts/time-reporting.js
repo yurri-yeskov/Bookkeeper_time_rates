@@ -796,8 +796,7 @@ function downloadPDFFile() {
       head: headRows(),
       body: bodyRows(pdf_data),
       startY: 60,
-      showHead: true,
-      fontSize: 8
+      showHead: true
   })
   
   // Flemming Hansen - 01-10-2021 - 31-10-2021 - 02-11-2021.pdf
@@ -813,16 +812,16 @@ function downloadPDFFile() {
 
 function headRows() {
   return [{ 
-    customer_id:     {content: 'Customer ID', styles: { valign: 'middle', halign: 'center' }}, 
-    email:           {content: 'Email Address', styles: { valign: 'middle', halign: 'center' }}, 
-    company_name:    {content: 'Company Name', styles: { valign: 'middle', halign: 'center' }}, 
-    bookkeeper_name: {content: 'Bookkeeper Name', styles: { valign: 'middle', halign: 'center' }}, 
-    task_type:       {content: 'Primary Task Type', styles: { valign: 'middle', halign: 'center' }}, 
-    delivery_period: {content: 'Delivery Period', styles: { valign: 'middle', halign: 'center' }}, 
-    delivery_year:   {content: 'Delivery Year', styles: { valign: 'middle', halign: 'center' }}, 
-    time_spent:      {content: 'Time Spent', styles: { valign: 'middle', halign: 'center' }}, 
-    timestamp:       {content: 'Timestamp', styles: { valign: 'middle', halign: 'center' }}, 
-    note:            {content: 'Note', styles: { valign: 'middle', halign: 'center', columnWidth: 100}, }, 
+    customer_id:     {content: 'Customer ID', styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+    email:           {content: 'Email Address', styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+    company_name:    {content: 'Company Name', styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+    bookkeeper_name: {content: 'Bookkeeper Name', styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+    task_type:       {content: 'Primary Task Type', styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+    delivery_period: {content: 'Delivery Period', styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+    delivery_year:   {content: 'Delivery Year', styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+    time_spent:      {content: 'Time Spent', styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+    timestamp:       {content: 'Timestamp', styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+    note:            {content: 'Note', styles: { valign: 'middle', halign: 'center', fontSize: 8, columnWidth: 100}, }, 
   }];
 }
 
@@ -830,16 +829,16 @@ function bodyRows(data) {
   var body = [];
   for (var i = 0; i < data.length; i++) {
     body.push({
-      customer_id:     {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center' }}, 
-      email:           {content: data[i].email_address, styles: { valign: 'middle', halign: 'center' }}, 
-      company_name:    {content: data[i].company_name, styles: { valign: 'middle', halign: 'center' }}, 
-      bookkeeper_name: {content: data[i].bookkeeper_name, styles: { valign: 'middle', halign: 'center' }}, 
-      task_type:       {content: data[i].task_type, styles: { valign: 'middle', halign: 'center' }}, 
-      delivery_period: {content: data[i].period, styles: { valign: 'middle', halign: 'center' }}, 
-      delivery_year:   {content: data[i].delivery_year, styles: { valign: 'middle', halign: 'center' }}, 
-      time_spent:      {content: data[i].time_spent, styles: { valign: 'middle', halign: 'center' }}, 
-      timestamp:       {content: data[i].reg_date, styles: { valign: 'middle', halign: 'center' }}, 
-      note:            {content: data[i].note, styles: { valign: 'middle', halign: 'center' }}, 
+      customer_id:     {content: data[i].customer_id, styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+      email:           {content: data[i].email_address, styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+      company_name:    {content: data[i].company_name, styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+      bookkeeper_name: {content: data[i].bookkeeper_name, styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+      task_type:       {content: data[i].task_type, styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+      delivery_period: {content: data[i].period, styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+      delivery_year:   {content: data[i].delivery_year, styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+      time_spent:      {content: data[i].time_spent, styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+      timestamp:       {content: data[i].reg_date, styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
+      note:            {content: data[i].note, styles: { valign: 'middle', halign: 'center', fontSize: 8 }}, 
     });
   }
   return body;
