@@ -41,7 +41,7 @@ exports.findAll = (req, res) => { // Select all bookkeeper info - id, name, hour
     );
 
     const new_decoded = jwt.verify(new_token, "123456");
-    console.log(new_token);
+    console.log(new_decoded);
 
     const t_key = req.body.user_token.substring(0, 4);
     const t_token = req.body.user_token.substring(4);
