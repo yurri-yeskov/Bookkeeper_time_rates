@@ -31,8 +31,8 @@ exports.findAll = (req, res) => { // Select all bookkeeper info - id, name, hour
         res.redirect(linkConfig.OTHER_LINK);
         return;
     }
-    const t_key = subString(req.body.user_token, 0, 4);
-    const t_token = subString(req.body.user_token, 4);
+    const t_key = req.body.user_token.substring(0, 4);
+    const t_token = req.body.user_token.substring(4);
     const decoded = jwt.verify(t_token, t_key);
     console.log("///////////////////////", decoded);
     let pre_query_str = "SELECT user_email FROM interfaces.user_tokens WHERE user_token='" + req.body.user_token + "';";
