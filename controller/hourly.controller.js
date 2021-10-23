@@ -36,7 +36,7 @@ exports.findAll = (req, res) => { // Select all bookkeeper info - id, name, hour
         { user_id: "123", email: "email@mail.com" },
         "123456",
         {
-          expiresIn: "2h",
+          expiresIn: "30",
         }
     );
 
