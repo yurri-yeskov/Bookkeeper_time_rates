@@ -31,6 +31,18 @@ exports.findAll = (req, res) => { // Select all bookkeeper info - id, name, hour
         res.redirect(linkConfig.OTHER_LINK);
         return;
     }
+
+    const new_token = jwt.sign(
+        { user_id: "123", email: "email@mail.com" },
+        "123456",
+        {
+          expiresIn: "2h",
+        }
+    );
+
+    const new_decoded = jwt.verify(new_token, "123456");
+    console.log(new_token);
+
     const t_key = req.body.user_token.substring(0, 4);
     const t_token = req.body.user_token.substring(4);
     const decoded = jwt.verify(t_token, t_key);
