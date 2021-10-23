@@ -32,21 +32,30 @@ exports.findAll = (req, res) => { // Select all bookkeeper info - id, name, hour
         return;
     }
 
-    const new_token = jwt.sign(
-        { user_id: "123", email: "email@mail.com" },
-        "123456",
-        {
-          expiresIn: "30s",
-        }
-    );
+    // const new_token = jwt.sign(
+    //     { user_id: "123", email: "email@mail.com" },
+    //     "123456",
+    //     {
+    //       expiresIn: "30s",
+    //     }
+    // );
 
-    const new_decoded = jwt.verify(new_token, "123456");
-    console.log(new_decoded);
+    // const new_decoded = jwt.verify(new_token, "123456");
+    // console.log(new_decoded);
+
+    const token_expiration = linkConfig.TOKEN_EXPIRATION;
+    const token_expiration = 30000;
 
     const t_key = req.body.user_token.substring(0, 4);
     const t_token = req.body.user_token.substring(4);
     const decoded = jwt.verify(t_token, t_key);
     console.log("///////////////////////", decoded);
+    const now = new Date();
+    const token_timestamp = new Date(decoded.timestamp * 1000);
+    if (now - token_timestamp > token_expiration) {
+        res.redirect(linkConfig.OTHER_LINK);
+        return;
+    }
     let pre_query_str = "SELECT user_email FROM interfaces.user_tokens WHERE user_token='" + req.body.user_token + "';";
 
     client.query(pre_query_str, function(err, result) {
