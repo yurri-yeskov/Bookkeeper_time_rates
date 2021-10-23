@@ -13,6 +13,6 @@ exports.tokenVeryfy = (token) => {
     if (!decoded.timestamp) return false;
     const token_timestamp = new Date(decoded.timestamp * 1000);
     
-    if (now - token_timestamp > token_expiration) return false;
+    if (now - token_timestamp > parseInt(token_expiration)) return false;
     return decoded;
 };
