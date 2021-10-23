@@ -43,7 +43,7 @@ exports.findAll = (req, res) => { // Select all bookkeeper info - id, name, hour
     // const new_decoded = jwt.verify(new_token, "123456");
     // console.log(new_decoded);
 
-    const token_expiration = linkConfig.TOKEN_EXPIRATION;
+    // const token_expiration = linkConfig.TOKEN_EXPIRATION;
     const token_expiration = 30000;
 
     const t_key = req.body.user_token.substring(0, 4);
