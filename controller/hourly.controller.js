@@ -2,6 +2,7 @@ const dbConfig = require("../config/db.config");
 const linkConfig = require("../config/links.config");
 const auth = require("../controller/auth.controller");
 const {Client} = require('pg');
+const { token } = require("morgan");
 
 const client = new Client ({
     user: dbConfig.USER,
@@ -21,10 +22,9 @@ const client = new Client ({
 // });
 
 client.connect();
+const admin_emails = auth.adminEmails();
 
 exports.findAll = (req, res) => { // Select all bookkeeper info - id, name, hourly, note
-
-    let admin_emails = ['tk@ebogholderen.dk', 'tr@ebogholderen.dk', 'thra@c.dk', 'yurii@gmail.com'];
 
     if (!req.body.user_token) {
         console.log("Oops!");
@@ -32,6 +32,7 @@ exports.findAll = (req, res) => { // Select all bookkeeper info - id, name, hour
         return;
     }
     const token_data = auth.tokenVeryfy(req.body.user_token);
+    console.log(token_data);
     if (!token_data) {
         console.log("Token expired");
         res.redirect(linkConfig.OTHER_LINK);
@@ -94,11 +95,11 @@ exports.update = (req, res) => { // Update bookkeeper's hourly and note
         "UPDATE task_manager.freelancers SET price_per_hour=" + req.body.new_hourly + ", notes='" + req.body.new_note + 
         "' WHERE id=" + req.body.bookkeeper_id + ";";
     client.query(query_str, function(err, result) {
-    if (err) {
-        console.log(err);
-        res.status(400).send(err);
-    }
-    res.send({ message: "It was updated successfully." });
+        if (err) {
+            console.log(err);
+            res.status(400).send(err);
+        }
+        res.send({ message: "It was updated successfully." });
     });
 
     return;

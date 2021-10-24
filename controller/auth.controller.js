@@ -16,3 +16,7 @@ exports.tokenVeryfy = (token) => {
     if (now - token_timestamp > parseInt(token_expiration)) return false;
     return decoded;
 };
+
+exports.adminEmails = () => {
+    return ['tk@ebogholderen.dk', 'tr@ebogholderen.dk', 'thra@c.dk', 'yurii@gmail.com'];
+}

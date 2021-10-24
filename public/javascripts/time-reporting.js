@@ -710,7 +710,6 @@ function searchWithTimePeriod() {
           data: {
             sel_start_date: start_date,
             sel_end_date: end_date,
-            bookkeeper_fname: bookkeeper_fname,
             user_token: getSelToken()
           },
           dataType: "json",

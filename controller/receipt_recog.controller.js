@@ -21,8 +21,6 @@ const client = new Client ({
 // });
 
 client.connect();
-
-// const OCR_API_KEY = '8163d9aa9b88957';
 const OCR_API_KEY = linkConfig.OCR_API_KEY;
 
 exports.index = (req, res) => {
