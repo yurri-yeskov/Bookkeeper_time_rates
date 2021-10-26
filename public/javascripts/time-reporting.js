@@ -768,11 +768,11 @@ function downloadPDFFile() {
   alert("Download PDF!!!");
   var doc = new jsPDF('l', 'mm', 'a4')
 
-  doc.setFontSize(18)
+  doc.setFontSize(14)
   doc.setFontStyle('bold')
   doc.text('Report', 14, 22)
 
-  doc.setFontSize(15)
+  doc.setFontSize(12)
   doc.setFontStyle('normal')
   doc.text("Bookkeeper Name: ", 14, 35)
   doc.setFontStyle('bold')
