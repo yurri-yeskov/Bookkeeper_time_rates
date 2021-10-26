@@ -781,7 +781,7 @@ function downloadPDFFile() {
   doc.setFontStyle('normal')
   doc.text("Time Period: ", 140, 35)
   doc.setFontStyle('bold')
-  doc.text($('.time-period').html(), 165, 35)
+  doc.text($('.time-period').html(), 170, 35)
   
   doc.setFontStyle('normal')
   doc.text("Total Time (hour): ", 14, 45)
@@ -791,7 +791,7 @@ function downloadPDFFile() {
   doc.setFontStyle('normal')
   doc.text("Total Cost: ", 140, 45)
   doc.setFontStyle('bold')
-  doc.text($('.total-cost').html(), 165, 45)
+  doc.text($('.total-cost').html(), 170, 45)
 
   doc.autoTable({
       head: headRows(),
