@@ -776,27 +776,27 @@ function downloadPDFFile() {
   doc.setFontStyle('normal')
   doc.text("Bookkeeper Name: ", 14, 35)
   doc.setFontStyle('bold')
-  doc.text($('.bookkeeper-name').html(), 61, 35)
+  doc.text($('.bookkeeper-name').html(), 55, 35)
 
   doc.setFontStyle('normal')
   doc.text("Time Period: ", 140, 35)
   doc.setFontStyle('bold')
-  doc.text($('.time-period').html(), 172, 35)
+  doc.text($('.time-period').html(), 165, 35)
   
   doc.setFontStyle('normal')
   doc.text("Total Time (hour): ", 14, 45)
   doc.setFontStyle('bold')
-  doc.text($('.total-time').html(), 58, 45)
+  doc.text($('.total-time').html(), 55, 45)
 
   doc.setFontStyle('normal')
   doc.text("Total Cost: ", 140, 45)
   doc.setFontStyle('bold')
-  doc.text($('.total-cost').html(), 167, 45)
+  doc.text($('.total-cost').html(), 165, 45)
 
   doc.autoTable({
       head: headRows(),
       body: bodyRows(pdf_data),
-      startY: 60,
+      startY: 55,
       showHead: true
   })
   
