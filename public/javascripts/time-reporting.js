@@ -109,14 +109,13 @@ $(document).ready(function(){
 });
 
 function getTotalTimes(sel_year) {
-  var my_email = $('#logout-link').html().split("(");
-  my_email = my_email[1].split(")"); my_email = my_email[0];
+  
   $.ajax({
     type: "post",
     url: base_url + "/get_total_times",
     data: {
       sel_year: sel_year,
-      my_email: my_email
+      user_token: getSelToken()
     },
     dataType: "json",
     success: function(data) {
@@ -714,7 +713,7 @@ function searchWithTimePeriod() {
           },
           dataType: "json",
           success: function(data) {
-      
+
             $('.time-period').html(start_date + " - " + end_date);
             $('.total-time').html(data.time_spent);
             $('.total-cost').html(data.cost_spent);

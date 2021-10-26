@@ -32,7 +32,6 @@ exports.findAll = (req, res) => { // Select all bookkeeper info - id, name, hour
         return;
     }
     const token_data = auth.tokenVeryfy(req.body.user_token);
-    console.log(token_data);
     if (!token_data) {
         console.log("Token expired");
         res.redirect(linkConfig.OTHER_LINK);
