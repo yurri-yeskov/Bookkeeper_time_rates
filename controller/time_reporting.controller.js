@@ -33,7 +33,7 @@ exports.getCurrentYear = (req, res) => {
   const token_data = auth.tokenVeryfy(req.body.user_token);
   if (!token_data) {
       console.log("Token expired");
-      res.redirect(linkConfig.OTHER_LINK);
+      res.redirect(linkConfig.OTHER_LINK + "logout");
       return;
   }
 
@@ -85,9 +85,10 @@ exports.getDayCustomerInfo = (req, res) => {
   }
   const token_data = auth.tokenVeryfy(req.body.user_token);
   if (!token_data) {
-      console.log("Token expired");
-      res.redirect(linkConfig.OTHER_LINK);
-      return;
+    console.log("Token expired");
+    // res.redirect(linkConfig.OTHER_LINK); ///////////////Ajax
+    res.send({ other_link: linkConfig.OTHER_LINK + "logout", data: "token_expired" });
+    return;
   }
 
   const my_email = token_data.username;
@@ -154,9 +155,17 @@ exports.findCustomerInfoWithYear = (req, res) => {
   }
   const token_data = auth.tokenVeryfy(req.body.user_token);
   if (!token_data) {
-      console.log("Token expired");
-      res.redirect(linkConfig.OTHER_LINK);
-      return;
+    console.log("Token expired");
+    // res.redirect(linkConfig.OTHER_LINK); ////////////////////Ajax
+    var data = JSON.stringify({
+      "draw": 0,
+      "recordsFiltered": 0,
+      "recordsTotal": 0,
+      "data": [],
+      "this_year": req.body.this_year
+    });
+    res.send(data);
+    return;
   }
 
   const my_email = token_data.username;
@@ -593,9 +602,10 @@ exports.findTotalTimes = (req, res) => {
   }
   const token_data = auth.tokenVeryfy(req.body.user_token);
   if (!token_data) {
-      console.log("Token expired");
-      res.redirect(linkConfig.OTHER_LINK);
-      return;
+    console.log("Token expired");
+    // res.redirect(linkConfig.OTHER_LINK); ////////////////////////Ajax
+    res.send({ other_link: linkConfig.OTHER_LINK + "logout", data: "token_expired" });
+    return;
   }
 
   const my_email = token_data.username;

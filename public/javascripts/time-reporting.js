@@ -119,6 +119,11 @@ function getTotalTimes(sel_year) {
     },
     dataType: "json",
     success: function(data) {
+
+      if (data.data == 'token_expired') {
+        window.location.replace(data.other_link);
+        return;
+      }
     
       var total_time = parseFloat(data.data[0].january_time) + parseFloat(data.data[0].february_time) + 
                         parseFloat(data.data[0].march_time) + parseFloat(data.data[0].april_time) + 
@@ -714,6 +719,10 @@ function searchWithTimePeriod() {
           dataType: "json",
           success: function(data) {
 
+            if (data.data == 'token_expired') {
+              window.location.replace(data.other_link);
+              return;
+            }
             $('.time-period').html(start_date + " - " + end_date);
             $('.total-time').html(data.time_spent);
             $('.total-cost').html(data.cost_spent);

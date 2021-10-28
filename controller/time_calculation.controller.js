@@ -33,7 +33,7 @@ exports.findProductProfiles = (req, res) => { // Select All product info - id, u
     const token_data = auth.tokenVeryfy(req.body.user_token);
     if (!token_data) {
         console.log("Token expired");
-        res.redirect(linkConfig.OTHER_LINK);
+        res.redirect(linkConfig.OTHER_LINK + "logout");
         return;
     }
 
