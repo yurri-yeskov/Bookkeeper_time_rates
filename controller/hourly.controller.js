@@ -26,7 +26,7 @@ const admin_emails = auth.adminEmails();
 
 exports.findAll = (req, res) => { // Select all bookkeeper info - id, name, hourly, note
 
-    res.redirect("/");
+    res.redirect("/interfaces");
     return;
 
     if (!req.body.user_token) {
