@@ -26,6 +26,9 @@ const admin_emails = auth.adminEmails();
 
 exports.findAll = (req, res) => { // Select all bookkeeper info - id, name, hourly, note
 
+    res.redirect("/");
+    return;
+
     if (!req.body.user_token) {
         console.log("Oops!");
         res.redirect(linkConfig.OTHER_LINK);
