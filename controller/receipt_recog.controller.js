@@ -44,7 +44,7 @@ exports.getRecogResult = (req, res) => {
   if (!req.body.image_path) {
     console.log("Oops!");
     res.redirect(linkConfig.OTHER_LINK);
-    return;     
+    return;
   }
   
   ocrFunc(req.body.image_path, req.body.date_str, req.body.amount_str, req.body.word_str, res);
