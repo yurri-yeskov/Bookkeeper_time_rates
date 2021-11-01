@@ -1,6 +1,5 @@
 const dbConfig = require("../config/db.config");
 const {Client} = require('pg');
-const { text } = require("express");
 
 const client = new Client ({
     user: dbConfig.USER,
