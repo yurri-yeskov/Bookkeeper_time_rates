@@ -54,32 +54,17 @@ $(document).ready(function(){
         "columns": [
             {data:'customer_id', render: renderSelect},
             { data: 'customer_id' },      // Customer ID
-            { data: 'primary_email' },    // Email Address
-            { data: 'january_spent' },    // January
-            { data: 'february_spent' },   // February
-            { data: 'march_spent' },      // March
-            { data: 'april_spent' },      // April
-            { data: 'may_spent' },        // May
-            { data: 'june_spent' },       // June
-            { data: 'july_spent' },       // July
-            { data: 'august_spent' },     // August
-            { data: 'september_spent' },  // September
-            { data: 'october_spent' },    // October
-            { data: 'november_spent' },   // November
-            { data: 'december_spent' },   // December
-            { data: 'total_spent' },      // Total Time
-            { data: 'company_name'},
-            { data: 'bookkeeper_name'}
+            { data: 'email_address' },    // Email Address
+            { data: 'company_name' },     // Company Name
+            { data: 'bookkeeper_name' },  // Bookkeeper Name
+            { data: 'task_type' },        // Primary Task Type
+            { data: 'period' },           // Delivery Period
+            { data: 'delivery_year' },    // Delivery Year
+            { data: 'time_spent' },       // Time Spent
+            { data: 'reg_date' },         // Timestamp
+            { data: 'note' }              // Note
         ],
         "columnDefs":[
-          {
-            "targets": [ 16 ],
-            "visible": false
-          },
-          {
-            "targets": [ 17 ],
-            "visible": false
-          },
           {
             "targets": [0],
             "searchable": false,

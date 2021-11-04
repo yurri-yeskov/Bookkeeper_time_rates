@@ -208,9 +208,8 @@ exports.findCustomerInfoWithYear = (req, res) => {
     let query_count = "SELECT COUNT(*) " + query_from;
 
     let order_list = {
-      // 'january_spent': 1, 'february_spent': 2, 'march_spent': 3, 'april_spent': 4, 'may_spent': 5, 'june_spent': 6, 'july_spent': 7,
-      // 'august_spent': 8, 'september_spent': 9, 'october_spent': 10, 'november_spent': 11, 'december_spent': 12, 
-      // 'total_spent': 13, 'customer_id': 14, 'primary_email': 15, 'company_name': 16, 'bookkeeper_name': 17, 'time_spent': 19
+      'time_spent': 1, 'reg_date': 2, 'customer_id': 3, 'email_address': 4, 'company_name': 5, 
+      'bookkeeper_name': 6, 'task_type': 7, 'period': 8, 'delivery_year': 9, 'note': 10
     };
 
     let o_index = 'reg_date';
@@ -220,22 +219,14 @@ exports.findCustomerInfoWithYear = (req, res) => {
       o_index = req.body[o_index];
       o_dir = req.body['order[0][dir]'];
     }
-    o_index = 'reg_date'; // delete later
-    // let order_by = " ORDER BY " + order_list[o_index] + " " + o_dir + " ";
-    let order_by = "ORDER BY " + o_index + " " + o_dir + " ";
+    let order_by = " ORDER BY " + order_list[o_index] + " " + o_dir + " ";
     let searchStr_r = req.body["search[value]"];
     let searchStr = ""
     if(req.body["search[value]"])  {
-      searchStr = "AND --------------- "
-      // let sub_searchStr = "(vv.january_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.february_spent::TEXT ILIKE '%" + searchStr_r + 
-      //                     "%' OR vv.march_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.april_spent::TEXT ILIKE '%" + searchStr_r + 
-      //                     "%' OR vv.may_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.june_spent::TEXT ILIKE '%" + searchStr_r + 
-      //                     "%' OR vv.july_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.august_spent::TEXT ILIKE '%" + searchStr_r + 
-      //                     "%' OR vv.september_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.october_spent::TEXT ILIKE '%" + searchStr_r +
-      //                     "%' OR vv.november_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.december_spent::TEXT ILIKE '%" + searchStr_r +
-      //                     "%' OR vv.total_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.customer_id::TEXT ILIKE '%" + searchStr_r + 
-      //                     "%' OR vv.primary_email::TEXT ILIKE '%" + searchStr_r + "%') ";
-      // searchStr += sub_searchStr;
+      searchStr = "AND " + "(time_spent::TEXT ILIKE '%" + searchStr_r + "%' OR reg_date::TEXT ILIKE '%" + searchStr_r + 
+                      "%' OR customer_id::TEXT ILIKE '%" + searchStr_r + "%' OR email_address::TEXT ILIKE '%" + searchStr_r + 
+                      "%' OR company_name::TEXT ILIKE '%" + searchStr_r + "%' OR bookkeeper_name::TEXT ILIKE '%" + searchStr_r + 
+                      "%' OR task_type::TEXT ILIKE '%" + searchStr_r + "%' OR period::TEXT ILIKE '%" + searchStr_r + "%') ";
     }
     let query_search_count = "SELECT COUNT(*) " + query_from + searchStr;
 
