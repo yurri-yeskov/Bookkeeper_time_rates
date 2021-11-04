@@ -48,6 +48,8 @@ $(document).ready(function(){
             data: function(d){
               d.this_year = getSelYear();
               d.user_token = getSelToken();
+              d.sel_start_date = getSelStartDate();
+              d.sel_end_date = getSelEndDate();
             },
             dataType: "json"
         },
@@ -84,6 +86,7 @@ $(document).ready(function(){
     getTotalTimes($('#input-year').val());
     searchWithCustomerId();
     searchWithTimePeriod();
+    extraShearchSubmit();
 
     $('.input-daterange').datepicker({
       format: "dd-mm-yyyy",
@@ -92,6 +95,25 @@ $(document).ready(function(){
       clearBtn: true
     });
 });
+
+function extraShearchSubmit() {
+  $('.sbm-button').on( 'click', function () {
+    var start_date = $('#main-start-date').val();
+    if (!isValidDate(start_date) && start_date != '') {
+      alert("The value is not a valid date!");
+      $('#main-start-date').focus();
+      return;
+    }
+    var end_date = $('#main-end-date').val();
+    if (!isValidDate(end_date) && end_date != '') {
+      alert("The value is not a valid date!");
+      $('#main-end-date').focus();
+      return;
+    }
+
+    time_spent_table.ajax.reload();
+  });
+}
 
 function getTotalTimes(sel_year) {
   
@@ -608,7 +630,14 @@ function getSelYear() {
 
 function getSelToken() {
   return $('input[name="user_token"]').val();
-  // return $('#input-year').val();
+}
+
+function getSelStartDate() {
+  return $('#main-start-date').val();
+}
+
+function getSelEndDate() {
+  return $('main-end-date').val();
 }
 
 function submitsWithYear(e) {
