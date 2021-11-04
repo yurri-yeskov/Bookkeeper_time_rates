@@ -222,12 +222,13 @@ exports.findCustomerInfoWithYear = (req, res) => {
       o_index = req.body[o_index];
       o_dir = req.body['order[0][dir]'];
     }
+    o_index = 'reg_date'; // delete later
     // let order_by = " ORDER BY " + order_list[o_index] + " " + o_dir + " ";
     let order_by = " ORDER BY " + o_index + " " + o_dir + " ";
     let searchStr_r = req.body["search[value]"];
     let searchStr = ""
     if(req.body["search[value]"])  {
-      searchStr = "--------------- "
+      searchStr = "AND --------------- "
       // let sub_searchStr = "(vv.january_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.february_spent::TEXT ILIKE '%" + searchStr_r + 
       //                     "%' OR vv.march_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.april_spent::TEXT ILIKE '%" + searchStr_r + 
       //                     "%' OR vv.may_spent::TEXT ILIKE '%" + searchStr_r + "%' OR vv.june_spent::TEXT ILIKE '%" + searchStr_r + 
@@ -238,11 +239,11 @@ exports.findCustomerInfoWithYear = (req, res) => {
       //                     "%' OR vv.primary_email::TEXT ILIKE '%" + searchStr_r + "%') ";
       // searchStr += sub_searchStr;
     }
-    let query_search_count = "SELECT COUNT(*) " + query_from + "AND " + searchStr;
+    let query_search_count = "SELECT COUNT(*) " + query_from + searchStr;
 
     query_str = query_str + "AND " + searchStr + order_by;
     if (req.body.length != -1)
-      query_str = query_str + " LIMIT " + req.body.length + " OFFSET " + req.body.start;
+      query_str = query_str + "LIMIT " + req.body.length + " OFFSET " + req.body.start;
     
     console.log("----------------query_str: ", query_str);
     console.log("----------------query_count: ", query_count);
