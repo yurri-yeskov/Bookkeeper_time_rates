@@ -223,7 +223,11 @@ exports.findCustomerInfoWithYear = (req, res) => {
     let searchStr_r = req.body["search[value]"];
     let searchStr = ""
     if(req.body["search[value]"])  {
-      searchStr = "AND " + "(time_spent::TEXT ILIKE '%" + searchStr_r + "%' OR reg_date::TEXT ILIKE '%" + searchStr_r + 
+      let time_spent_str = "(COALESCE(january_spent, 0.00) + COALESCE(february_spent, 0.00) + COALESCE(march_spent, 0.00) + " +
+                          "COALESCE(april_spent, 0.00) + COALESCE(may_spent, 0.00) + COALESCE(june_spent, 0.00) + " +
+                          "COALESCE(july_spent, 0.00) + COALESCE(august_spent, 0.00) + COALESCE(september_spent, 0.00) + " +
+                          "COALESCE(october_spent, 0.00) + COALESCE(november_spent, 0.00) + COALESCE(december_spent, 0.00))"
+      searchStr = "AND " + "(" + time_spent_str + "::TEXT ILIKE '%" + searchStr_r + "%' OR reg_date::TEXT ILIKE '%" + searchStr_r + 
                       "%' OR customer_id::TEXT ILIKE '%" + searchStr_r + "%' OR email_address::TEXT ILIKE '%" + searchStr_r + 
                       "%' OR company_name::TEXT ILIKE '%" + searchStr_r + "%' OR bookkeeper_name::TEXT ILIKE '%" + searchStr_r + 
                       "%' OR task_type::TEXT ILIKE '%" + searchStr_r + "%' OR period::TEXT ILIKE '%" + searchStr_r + "%') ";
