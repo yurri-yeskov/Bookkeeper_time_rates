@@ -224,7 +224,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
     }
     o_index = 'reg_date'; // delete later
     // let order_by = " ORDER BY " + order_list[o_index] + " " + o_dir + " ";
-    let order_by = " ORDER BY " + o_index + " " + o_dir + " ";
+    let order_by = "ORDER BY " + o_index + " " + o_dir + " ";
     let searchStr_r = req.body["search[value]"];
     let searchStr = ""
     if(req.body["search[value]"])  {
@@ -241,7 +241,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
     }
     let query_search_count = "SELECT COUNT(*) " + query_from + searchStr;
 
-    query_str = query_str + "AND " + searchStr + order_by;
+    query_str = query_str + searchStr + order_by;
     if (req.body.length != -1)
       query_str = query_str + "LIMIT " + req.body.length + " OFFSET " + req.body.start;
     
