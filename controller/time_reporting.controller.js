@@ -231,6 +231,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
     let query_search_count = "SELECT COUNT(*) " + query_from + searchStr;
 
     query_str = query_str + searchStr + order_by;
+    console.log("query_str-----------------", query_str);
     if (req.body.length != -1)
       query_str = query_str + "LIMIT " + req.body.length + " OFFSET " + req.body.start;
 
@@ -244,6 +245,10 @@ exports.findCustomerInfoWithYear = (req, res) => {
             res.status(400).send(err);
           }
 
+          for (let i = 0; i < result.rows.length; i++) {
+            result.rows[i].reg_date = moment(result.rows[i].reg_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+          }
+
           var data = JSON.stringify({
             "draw": req.body.draw,
             "recordsFiltered": recordsFiltered,
@@ -251,7 +256,6 @@ exports.findCustomerInfoWithYear = (req, res) => {
             "data": result.rows,
             "this_year": req.body.this_year
           });
-          console.log("--------------------", result.rows[0]);
           res.send(data);
         });
       });
