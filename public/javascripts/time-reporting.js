@@ -198,6 +198,7 @@ function showDownloadPDFModal() {
   $('.total-time').html('N/A');
   $('.total-cost').html('N/A');
   $('#pdfModal').modal();
+  console.log("---------------------", $('#start-date'));
   // ajaxWithTimePeriod()
 }
 
