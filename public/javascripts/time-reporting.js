@@ -192,8 +192,8 @@ function showDownloadPDFModal() {
   $('.form-control').val('');
   $('.small-loader').css('display', 'none');
 
-  $('#start-date').val($('#main-start-date'));
-  $('#end-date').val($('#main-end-date'));
+  $('#start-date').val($('#main-start-date').val());
+  $('#end-date').val($('#main-end-date').val());
 
   $('.bookkeeper-name').html('N/A');
   $('.time-period').html('N/A');
