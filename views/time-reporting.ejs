@@ -54,6 +54,19 @@
             <input class="form-control-custom" type="number" id="input-year" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="<%=this_year%>">
           </div>
           <div class="col-sm-3">
+            <div class="col-xs-5" style="text-align: right; padding-top: 7px;">
+              <label>Date Interval:</label>
+            </div>
+            <div class="col-xs-7" style="text-align: left; padding-left: 0;">
+              <div class="input-daterange input-group" id="main_datepicker" style="display: inline-flex; width: 200px;">
+                <input type="text" class="input-sm form-control" id="main-start-date" name="start" />
+                <span class="input-group-addon" style="min-width: 35px;">to</span>
+                <input type="text" class="input-sm form-control" id="main-end-date" name="end" />
+              </div>
+              <button type="button" class="btn btn-default sbm-button" style="padding: 4px 7px; width: 30px; height: 30px;"><span class="fa fa-paper-plane" ></span></button>
+            </div>
+          </div>
+          <div class="col-sm-3">
             <button class="btn btn-default" id="ex-add-time" onclick="showAddModalForExternal()">Add time for external customer</button>
           </div>
           <div class="col-sm-3">
