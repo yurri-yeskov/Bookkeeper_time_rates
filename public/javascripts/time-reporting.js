@@ -189,9 +189,7 @@ function showAddModalForExternal() {
 }
 
 function showDownloadPDFModal() {
-  $('.form-control').val('');
   $('.small-loader').css('display', 'none');
-
   $('#start-date').val($('#main-start-date').val());
   $('#end-date').val($('#main-end-date').val());
 
@@ -688,6 +686,7 @@ function searchWithCustomerId() {
 
 function searchWithTimePeriod() {
   $('.input-sm').bind('input change', function(){
+    console.log("asdfasdfasdf");
     var $this = $(this);
     var delay = 1000; // 1 seconds delay after last input
 
