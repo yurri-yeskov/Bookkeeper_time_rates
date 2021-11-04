@@ -706,11 +706,13 @@ function searchWithTimePeriod() {
     $('.time-period').html("");
     $('.total-time').html("");
     $('.total-cost').html("");
+    $('.bookkeeper-name').html("");
     $('.dot-loaders').css('display', 'inline-block');
     if ($('#start-date').val() == '' || $('#end-date').val() == '') {
       $('.time-period').html("N/A");
       $('.total-time').html("N/A");
       $('.total-cost').html("N/A");
+      $('.bookkeeper-name').html("N/A");
       $('.dot-loaders').css('display', 'none');
     }
     $('#download_button').prop('disabled', true);
@@ -740,6 +742,7 @@ function searchWithTimePeriod() {
             $('.time-period').html(start_date + " - " + end_date);
             $('.total-time').html(data.time_spent);
             $('.total-cost').html(data.cost_spent);
+            $('.bookkeeper-name').html(data.bookkeeper_name);
             $('.dot-loaders').css('display', 'none');
             $('#download_button').prop('disabled', false);
             pdf_data = data.data;
@@ -750,6 +753,7 @@ function searchWithTimePeriod() {
         $('.time-period').html("N/A");
         $('.total-time').html("N/A");
         $('.total-cost').html("N/A");
+        $('.bookkeeper-name').html("N/A");
         $('.dot-loaders').css('display', 'none');
         $('#download_button').prop('disabled', true);
         pdf_data = [];

@@ -135,7 +135,7 @@ exports.getDayCustomerInfo = (req, res) => {
       let cost_spent = time_spent / 60.00 * parseFloat(price_per_hour);
       cost_spent = cost_spent.toFixed(2);
       time_spent = (time_spent / 60).toFixed(2);
-      res.send({ data: arr_time_spt, time_spent:time_spent, cost_spent:cost_spent });
+      res.send({ data: arr_time_spt, bookkeeper_name: bookkeeper_full_name, time_spent:time_spent, cost_spent:cost_spent });
     });
   });
 };
@@ -243,7 +243,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
     let query_search_count = "SELECT COUNT(*) " + query_from + searchStr;
 
     query_str = query_str + searchStr + order_by;
-    console.log("query_str-----------------", query_str);
+
     if (req.body.length != -1)
       query_str = query_str + "LIMIT " + req.body.length + " OFFSET " + req.body.start;
 
