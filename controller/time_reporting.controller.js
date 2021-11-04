@@ -170,11 +170,13 @@ exports.findCustomerInfoWithYear = (req, res) => {
 
   const my_email = token_data.username;
   let pre_query_str = "SELECT TRIM(CONCAT(first_name, ' ', last_name)) AS bookkeeper_name, COALESCE(price_per_hour, 0.00) as hourly FROM task_manager.freelancers WHERE email='" + my_email + "'";
+  console.log("-------------------ok");
   client.query(pre_query_str, function(err, result) {
     if (err) {
       console.log(err);
       res.status(400).send(err);  
     }
+    console.log("asdfasdf----------------------");
     let bookkeeper_full_name = "N/A"; 
     let acl_level = admin_emails.includes(my_email) ? 1 : 0;
     if (acl_level == 1) bookkeeper_full_name = "Admin";
@@ -264,7 +266,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
             "this_year": req.body.this_year
           });
           console.log("--------------------", data);
-          // res.send(data);
+          res.send(data);
         });
       });
     });
