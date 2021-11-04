@@ -1,11 +1,8 @@
 var time_spent_table;
-var bookkeeper_fname = 'N/A';
-var acl_level = 500;
 var pdf_data = [];
 
 $(document).ready(function(){
 
-    acl_level = $('#acl_level_hidden').val();
     time_spent_table = $("#time-spent-table").DataTable({
         "scrollCollapse": true,
         "ScrollInfinite": true,
@@ -195,18 +192,10 @@ function showDownloadPDFModal() {
   $('.form-control').val('');
   $('.small-loader').css('display', 'none');
 
-  var cur_row_data = time_spent_table.row(1).data();
-  if (acl_level != 1) {
-    bookkeeper_fname = cur_row_data.bookkeeper_name;
-  } else {
-    bookkeeper_fname = "Admin";
-  }
+  $('#start-date').val($('#main-start-date'));
+  $('#end-date').val($('#main-end-date'));
 
-  var today = new Date();
-  var delivery_year = today.getFullYear();
-  $('#delivery-year').val(delivery_year);
-  $(".selectpicker").selectpicker("refresh");
-  $('.bookkeeper-name').html(bookkeeper_fname);
+  $('.bookkeeper-name').html('N/A');
   $('.time-period').html('N/A');
   $('.total-time').html('N/A');
   $('.total-cost').html('N/A');
@@ -702,7 +691,6 @@ function searchWithTimePeriod() {
     var $this = $(this);
     var delay = 1000; // 1 seconds delay after last input
 
-    // $('.bookkeeper-name').html("");
     $('.time-period').html("");
     $('.total-time').html("");
     $('.total-cost').html("");
