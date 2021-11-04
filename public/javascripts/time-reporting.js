@@ -684,9 +684,14 @@ function searchWithCustomerId() {
   });
 }
 
+function ajaxWithTimePeriod(el) {
+
+}
+
 function searchWithTimePeriod() {
   $('.input-sm').bind('input change', function(){
-    console.log("asdfasdfasdf");
+    
+    console.log(this);
     var $this = $(this);
     var delay = 1000; // 1 seconds delay after last input
 
