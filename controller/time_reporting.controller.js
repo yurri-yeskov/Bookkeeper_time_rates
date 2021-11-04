@@ -185,19 +185,26 @@ exports.findCustomerInfoWithYear = (req, res) => {
       start_date = moment(req.body.sel_start_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
     if (req.body.sel_end_date) 
       end_date = moment(req.body.sel_end_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
-    
+
+    let service_from = req.body.this_year + "-01-01";
+    let service_until = req.body.this_year + "-12-31";
+  
     let recordsTotal = 0;
     let recordsFiltered = 0;
+  
+    let init_query = "CALL set_customer_time_into_temp('" + service_from + "', '" + service_until + "');"
 
     let query_str = "SELECT (COALESCE(january_spent, 0.00) + COALESCE(february_spent, 0.00) + COALESCE(march_spent, 0.00) + " +
                     "COALESCE(april_spent, 0.00) + COALESCE(may_spent, 0.00) + COALESCE(june_spent, 0.00) + " +
                     "COALESCE(july_spent, 0.00) + COALESCE(august_spent, 0.00) + COALESCE(september_spent, 0.00) + " +
                     "COALESCE(october_spent, 0.00) + COALESCE(november_spent, 0.00) + COALESCE(december_spent, 0.00)) as time_spent, reg_date, " +
-                    "customer_id, email_address, company_name, bookkeeper_name, task_type, period, delivery_year, note ";
-    let query_from = "FROM task_manager.time_entries WHERE deleted = false ";
+                    "task_manager.time_entries.customer_id, email_address, task_manager.time_entries.company_name, task_manager.time_entries.bookkeeper_name, task_type, period, delivery_year, note ";
+                    
+    
+    let query_from = "FROM task_manager.time_entries JOIN temp_customer_time ON task_manager.time_entries.customer_id = temp_customer_time.customer_id WHERE deleted = false ";
     
     if (bookkeeper_full_name != "Admin")
-      query_from = query_from + "AND bookkeeper_name = '" + bookkeeper_full_name + "' ";
+      query_from = query_from + "AND task_manager.time_entries.bookkeeper_name = '" + bookkeeper_full_name + "' ";
     if (start_date != "")
       query_from = query_from + "AND reg_date >= '" + start_date + "'::date ";
     if (end_date != "")
@@ -239,28 +246,30 @@ exports.findCustomerInfoWithYear = (req, res) => {
     if (req.body.length != -1)
       query_str = query_str + "LIMIT " + req.body.length + " OFFSET " + req.body.start;
 
-    client.query(query_count, function(err, result) {
-      recordsTotal = result.rows[0].count;
-      client.query(query_search_count, function(err, result) {
-        recordsFiltered = result.rows[0].count;
-        client.query(query_str, function(err, result) {
-          if (err) {
-            console.log(err);
-            res.status(400).send(err);
-          }
-
-          for (let i = 0; i < result.rows.length; i++) {
-            result.rows[i].reg_date = moment(result.rows[i].reg_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
-          }
-
-          var data = JSON.stringify({
-            "draw": req.body.draw,
-            "recordsFiltered": recordsFiltered,
-            "recordsTotal": recordsTotal,
-            "data": result.rows,
-            "this_year": req.body.this_year
+    client.query(init_query, function(){
+      client.query(query_count, function(err, result) {
+        recordsTotal = result.rows[0].count;
+        client.query(query_search_count, function(err, result) {
+          recordsFiltered = result.rows[0].count;
+          client.query(query_str, function(err, result) {
+            if (err) {
+              console.log(err);
+              res.status(400).send(err);
+            }
+  
+            for (let i = 0; i < result.rows.length; i++) {
+              result.rows[i].reg_date = moment(result.rows[i].reg_date, 'YYYY-MM-DD').format('DD-MM-YYYY');
+            }
+  
+            var data = JSON.stringify({
+              "draw": req.body.draw,
+              "recordsFiltered": recordsFiltered,
+              "recordsTotal": recordsTotal,
+              "data": result.rows,
+              "this_year": req.body.this_year
+            });
+            res.send(data);
           });
-          res.send(data);
         });
       });
     });
