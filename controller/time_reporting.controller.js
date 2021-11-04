@@ -234,10 +234,11 @@ exports.findCustomerInfoWithYear = (req, res) => {
                           "COALESCE(april_spent, 0.00) + COALESCE(may_spent, 0.00) + COALESCE(june_spent, 0.00) + " +
                           "COALESCE(july_spent, 0.00) + COALESCE(august_spent, 0.00) + COALESCE(september_spent, 0.00) + " +
                           "COALESCE(october_spent, 0.00) + COALESCE(november_spent, 0.00) + COALESCE(december_spent, 0.00))"
-      searchStr = "AND " + "(" + time_spent_str + "::TEXT ILIKE '%" + searchStr_r + "%' OR reg_date::TEXT ILIKE '%" + searchStr_r + 
-                      "%' OR customer_id::TEXT ILIKE '%" + searchStr_r + "%' OR email_address::TEXT ILIKE '%" + searchStr_r + 
-                      "%' OR company_name::TEXT ILIKE '%" + searchStr_r + "%' OR bookkeeper_name::TEXT ILIKE '%" + searchStr_r + 
-                      "%' OR task_type::TEXT ILIKE '%" + searchStr_r + "%' OR period::TEXT ILIKE '%" + searchStr_r + "%') ";
+      searchStr = "AND (" + time_spent_str + "::TEXT ILIKE '%" + searchStr_r + "%' OR reg_date::TEXT ILIKE '%" + searchStr_r + 
+                      "%' OR task_manager.time_entries.customer_id::TEXT ILIKE '%" + searchStr_r + "%' OR email_address::TEXT ILIKE '%" + searchStr_r + 
+                      "%' OR task_manager.time_entries.company_name::TEXT ILIKE '%" + searchStr_r + "%' OR task_manager.time_entries.bookkeeper_name::TEXT ILIKE '%" + searchStr_r + 
+                      "%' OR task_type::TEXT ILIKE '%" + searchStr_r + "%' OR period::TEXT ILIKE '%" + searchStr_r + 
+                      "%' OR delivery_year::TEXT ILIKE '%" + searchStr_r + "%' OR note::TEXT ILIKE '%" + searchStr_r + "%') ";
     }
     let query_search_count = "SELECT COUNT(*) " + query_from + searchStr;
 
