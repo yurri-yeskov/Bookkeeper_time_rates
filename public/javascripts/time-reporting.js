@@ -198,6 +198,7 @@ function showDownloadPDFModal() {
   $('.total-time').html('N/A');
   $('.total-cost').html('N/A');
   $('#pdfModal').modal();
+  // ajaxWithTimePeriod()
 }
 
 function showEditModal(e) {
@@ -686,71 +687,72 @@ function searchWithCustomerId() {
 
 function ajaxWithTimePeriod(el) {
 
-}
+  var $this = $(el);
+  console.log(el);
+  console.log($this);
+  var delay = 1000; // 1 seconds delay after last input
 
-function searchWithTimePeriod() {
-  $('.input-sm').bind('input change', function(){
-    
-    console.log(this);
-    var $this = $(this);
-    var delay = 1000; // 1 seconds delay after last input
+  $('.time-period').html("");
+  $('.total-time').html("");
+  $('.total-cost').html("");
+  $('.bookkeeper-name').html("");
+  $('.dot-loaders').css('display', 'inline-block');
+  if ($('#start-date').val() == '' || $('#end-date').val() == '') {
+    $('.time-period').html("N/A");
+    $('.total-time').html("N/A");
+    $('.total-cost').html("N/A");
+    $('.bookkeeper-name').html("N/A");
+    $('.dot-loaders').css('display', 'none');
+  }
+  $('#download_button').prop('disabled', true);
+  pdf_data = [];
 
-    $('.time-period').html("");
-    $('.total-time').html("");
-    $('.total-cost').html("");
-    $('.bookkeeper-name').html("");
-    $('.dot-loaders').css('display', 'inline-block');
-    if ($('#start-date').val() == '' || $('#end-date').val() == '') {
+  clearTimeout($this.data('timer'));
+  $this.data('timer', setTimeout(function(){
+    $this.removeData('timer');
+    var start_date = $('#start-date').val();
+    var end_date = $('#end-date').val();
+    if (isValidDate(start_date) && isValidDate(end_date)) {
+      $.ajax({
+        type: "post",
+        url: base_url + "/get_day_customer_info",
+        data: {
+          sel_start_date: start_date,
+          sel_end_date: end_date,
+          user_token: getSelToken()
+        },
+        dataType: "json",
+        success: function(data) {
+
+          if (data.data == 'token_expired') {
+            window.location.replace(data.other_link);
+            return;
+          }
+          $('.time-period').html(start_date + " - " + end_date);
+          $('.total-time').html(data.time_spent);
+          $('.total-cost').html(data.cost_spent);
+          $('.bookkeeper-name').html(data.bookkeeper_name);
+          $('.dot-loaders').css('display', 'none');
+          $('#download_button').prop('disabled', false);
+          pdf_data = data.data;
+        }
+      }); 
+      
+    } else {
       $('.time-period').html("N/A");
       $('.total-time').html("N/A");
       $('.total-cost').html("N/A");
       $('.bookkeeper-name').html("N/A");
       $('.dot-loaders').css('display', 'none');
+      $('#download_button').prop('disabled', true);
+      pdf_data = [];
     }
-    $('#download_button').prop('disabled', true);
-    pdf_data = [];
+  }, delay));
+}
 
-    clearTimeout($this.data('timer'));
-    $this.data('timer', setTimeout(function(){
-      $this.removeData('timer');
-      var start_date = $('#start-date').val();
-      var end_date = $('#end-date').val();
-      if (isValidDate(start_date) && isValidDate(end_date)) {
-        $.ajax({
-          type: "post",
-          url: base_url + "/get_day_customer_info",
-          data: {
-            sel_start_date: start_date,
-            sel_end_date: end_date,
-            user_token: getSelToken()
-          },
-          dataType: "json",
-          success: function(data) {
-
-            if (data.data == 'token_expired') {
-              window.location.replace(data.other_link);
-              return;
-            }
-            $('.time-period').html(start_date + " - " + end_date);
-            $('.total-time').html(data.time_spent);
-            $('.total-cost').html(data.cost_spent);
-            $('.bookkeeper-name').html(data.bookkeeper_name);
-            $('.dot-loaders').css('display', 'none');
-            $('#download_button').prop('disabled', false);
-            pdf_data = data.data;
-          }
-        }); 
-        
-      } else {
-        $('.time-period').html("N/A");
-        $('.total-time').html("N/A");
-        $('.total-cost').html("N/A");
-        $('.bookkeeper-name').html("N/A");
-        $('.dot-loaders').css('display', 'none');
-        $('#download_button').prop('disabled', true);
-        pdf_data = [];
-      }
-    }, delay));
+function searchWithTimePeriod() {
+  $('.input-sm').bind('input change', function(){
+    ajaxWithTimePeriod(this);
   });
 }
 
