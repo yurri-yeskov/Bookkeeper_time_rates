@@ -198,8 +198,7 @@ function showDownloadPDFModal() {
   $('.total-time').html('N/A');
   $('.total-cost').html('N/A');
   $('#pdfModal').modal();
-  console.log("---------------------", $('#start-date'));
-  // ajaxWithTimePeriod()
+  ajaxWithTimePeriod($('#start-date'))
 }
 
 function showEditModal(e) {
@@ -688,9 +687,7 @@ function searchWithCustomerId() {
 
 function ajaxWithTimePeriod(el) {
 
-  var $this = $(el);
-  console.log(el);
-  console.log($this);
+  var $this = el;
   var delay = 1000; // 1 seconds delay after last input
 
   $('.time-period').html("");
@@ -753,7 +750,7 @@ function ajaxWithTimePeriod(el) {
 
 function searchWithTimePeriod() {
   $('.input-sm').bind('input change', function(){
-    ajaxWithTimePeriod(this);
+    ajaxWithTimePeriod($(this));
   });
 }
 
