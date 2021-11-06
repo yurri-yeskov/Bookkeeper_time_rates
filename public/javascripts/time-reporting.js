@@ -948,5 +948,12 @@ function submitReportTime() {
 
 function goToLinkCid() {
   alert("go to link with Customer ID!");
-  window.location.href = base_url + "/time-reporting/202811";
+  // window.location.href = base_url + "/time-reporting/202811";
+  // window.post = function(url, data) {
+  //   return fetch(url, {method: "POST", body: JSON.stringify(data)});
+  // }
+  var form = document.getElementById('form_gotolink');
+  form.method = "POST";
+  form.action = base_url + "/time-reporting/202811";
+  form.submit();
 }

@@ -110,10 +110,15 @@
             <div class="loader" style="display: none;"></div>
             <form id="report-time-frm" style="display: block;">
               <div class="col-12 modal-margin">
-                <label for="input-customer_id" class="form-label">Customer ID: </label>
-                <label class="customer-id" style="font-weight:normal">1</label> <!--change when showing-->
-                <input type="number" class="form-control"  id="input-customer_id" style="width: 30%; display: none;">
-                <button type="button" class="btn btn-default" id="del_button" style="margin-left: 70px;"  onclick="goToLinkCid()"> Link with Customer ID </button> <!-- delete this button after integratoin -->
+                <form id="form_gotolink">
+                  <label for="input-customer_id" class="form-label">Customer ID: </label>
+                  <label class="customer-id" style="font-weight:normal">1</label> <!--change when showing-->
+                  <input type="number" class="form-control"  id="input-customer_id" style="width: 30%; display: none;">
+                
+                  <input name="user_token" type="hidden" value="<%= user_token %>">
+                  <button type="button" class="btn btn-default" id="del_button" style="margin-left: 70px;"  onclick="goToLinkCid()"> Link with Customer ID </button> <!-- delete this button after integratoin -->
+                  <!-- <li><a style="cursor: pointer;" onclick="document.getElementById('form_hourly-rates').submit();">Bookkeeper Hourly Rates</a></li> -->
+                </form>
               </div>
               <div class="col-12 modal-margin">
                 <b>Bookkeeper Name: </b> <label class="bookkeeper-name" style="font-weight:normal">bookkeeper test</label> <!--change when showing-->
