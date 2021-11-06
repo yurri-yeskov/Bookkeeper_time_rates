@@ -94,6 +94,7 @@ $(document).ready(function(){
     });
 
     link_form = document.getElementById('form_gotolink');
+    console.log(link_form);
 });
 
 function extraShearchSubmit() {
