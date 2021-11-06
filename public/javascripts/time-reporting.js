@@ -1,5 +1,6 @@
 var time_spent_table;
 var pdf_data = [];
+var link_form = null;
 
 $(document).ready(function(){
 
@@ -91,6 +92,8 @@ $(document).ready(function(){
       todayHighlight: true,
       clearBtn: true
     });
+
+    link_form = document.getElementById('form_gotolink');
 });
 
 function extraShearchSubmit() {
@@ -952,8 +955,9 @@ function goToLinkCid() {
   // window.post = function(url, data) {
   //   return fetch(url, {method: "POST", body: JSON.stringify(data)});
   // }
-  var form = document.getElementById('form_gotolink');
-  form.method = "POST";
-  form.action = base_url + "/time-reporting/202811";
-  form.submit();
+  // var form = document.getElementById('form_gotolink');
+  // var form = $('#form_gotolink');
+  link_form.method = "POST";
+  link_form.action = base_url + "/time-reporting/202811";
+  link_form.submit();
 }
