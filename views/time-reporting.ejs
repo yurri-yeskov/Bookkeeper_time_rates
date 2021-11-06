@@ -110,15 +110,11 @@
             <div class="loader" style="display: none;"></div>
             <form id="report-time-frm" style="display: block;">
               <div class="col-12 modal-margin">
-                <form id="form_gotolink">
-                  <label for="input-customer_id" class="form-label">Customer ID: </label>
-                  <label class="customer-id" style="font-weight:normal">1</label> <!--change when showing-->
-                  <input type="number" class="form-control"  id="input-customer_id" style="width: 30%; display: none;">
-                
-                  <input name="user_token" type="hidden" value="<%= user_token %>">
-                  <button type="button" class="btn btn-default" id="del_button" style="margin-left: 70px;"  onclick="goToLinkCid()"> Link with Customer ID </button> <!-- delete this button after integratoin -->
-                  <!-- <li><a style="cursor: pointer;" onclick="document.getElementById('form_hourly-rates').submit();">Bookkeeper Hourly Rates</a></li> -->
-                </form>
+                <label for="input-customer_id" class="form-label">Customer ID: </label>
+                <label class="customer-id" style="font-weight:normal">1</label> <!--change when showing-->
+                <input type="number" class="form-control"  id="input-customer_id" style="width: 30%; display: none;">
+                <input name="user_token" type="hidden" value="<%= user_token %>">
+                <button type="button" class="btn btn-default" id="del_button" style="margin-left: 70px;"  onclick="goToLinkCid()"> Link with Customer ID </button> <!-- delete this button after integratoin -->
               </div>
               <div class="col-12 modal-margin">
                 <b>Bookkeeper Name: </b> <label class="bookkeeper-name" style="font-weight:normal">bookkeeper test</label> <!--change when showing-->
@@ -369,17 +365,17 @@
 <script src="./javascripts/time-reporting.js"></script>
 <script>
   function goToLinkCid() {
-    alert("go to link with Customer ID!");
-    // window.location.href = base_url + "/time-reporting/202811";
-    // window.post = function(url, data) {
-    //   return fetch(url, {method: "POST", body: JSON.stringify(data)});
-    // }
-    var link_form = document.getElementById('form_gotolink');
-    // var link_form = $('#form_gotolink');
-    console.log(link_form);
-    link_form.method = "POST";
-    link_form.action = base_url + "/time-reporting/202811";
-    link_form.submit();
-  }
+  alert("go to link with Customer ID!");
+  // window.location.href = base_url + "/time-reporting/202811";
+  // window.post = function(url, data) {
+  //   return fetch(url, {method: "POST", body: JSON.stringify(data)});
+  // }
+  var link_form = document.getElementById('report-time-frm');
+  // var link_form = $('#form_gotolink');
+  console.log(link_form);
+  link_form.method = "POST";
+  link_form.action = base_url + "/time-reporting/202811";
+  link_form.submit();
+}
 </script>
 </html>

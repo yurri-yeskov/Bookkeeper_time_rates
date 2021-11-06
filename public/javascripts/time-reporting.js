@@ -945,4 +945,3 @@ function submitReportTime() {
     });
   }
 }
-
