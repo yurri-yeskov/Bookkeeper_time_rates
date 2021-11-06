@@ -367,4 +367,19 @@
 <% include partials/script %>
 <script type="text/javascript" src="./javascripts/tipped.min.js"></script>  
 <script src="./javascripts/time-reporting.js"></script>
+<script>
+  function goToLinkCid() {
+    alert("go to link with Customer ID!");
+    // window.location.href = base_url + "/time-reporting/202811";
+    // window.post = function(url, data) {
+    //   return fetch(url, {method: "POST", body: JSON.stringify(data)});
+    // }
+    // var form = document.getElementById('form_gotolink');
+    var link_form = $('#form_gotolink');
+    console.log(link_form);
+    link_form.method = "POST";
+    link_form.action = base_url + "/time-reporting/202811";
+    link_form.submit();
+  }
+</script>
 </html>
