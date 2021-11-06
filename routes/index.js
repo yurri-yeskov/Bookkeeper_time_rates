@@ -81,4 +81,7 @@ router.post('/update_areport_time', reptOvvwCtrl.updateReportTimes);
 router.get('/receipt-recog', rcptRecoCtrl.index);
 router.post('/get_recog_result', rcptRecoCtrl.getRecogResult);
 
+router.post('/time-reporting/:customer_id', timeReptCtrl.timeReportingWithCustomerId);
+router.get('/time-reporting/:customer_id', function(req, res) { res.redirect(linkConfig.OTHER_LINK); });
+
 module.exports = router;
