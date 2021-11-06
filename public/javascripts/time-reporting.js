@@ -155,6 +155,7 @@ function showAddModal(e) {
   $('.form-control').val('');
   $('.customer-id').css('display', 'inline-block');
   $('#input-customer_id').css('display', 'none');
+  $('#del_button').css('display', 'none'); // delete this button after integratoin
   $('.small-loader').css('display', 'none');
 
   var today = new Date();
@@ -174,6 +175,7 @@ function showAddModalForExternal() {
   $('.form-control').val('');
   $('.customer-id').css('display', 'none');
   $('#input-customer_id').css('display', 'inline');
+  $('#del_button').css('display', 'inline'); // delete this button after integratoin
   $('.small-loader').css('display', 'none');
 
   var today = new Date();
@@ -942,4 +944,9 @@ function submitReportTime() {
       }
     });
   }
+}
+
+function goToLinkCid() {
+  alert("go to link with Customer ID!");
+  window.location.href = base_url + "/time-reporting/202811";
 }

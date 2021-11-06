@@ -58,7 +58,7 @@
               <label>Date Interval:</label>
             </div>
             <div class="col-xs-7" style="text-align: left; padding-left: 0;">
-              <div class="input-daterange input-group" id="main_datepicker" style="display: inline-flex; width: 200px;">
+              <div class="input-daterange input-group" id="main_datepicker" style="display: inline-flex; width: 230px;">
                 <input type="text" class="form-control" id="main-start-date" name="start" />
                 <span class="input-group-addon" style="min-width: 35px;">to</span>
                 <input type="text" class="form-control" id="main-end-date" name="end" />
@@ -113,6 +113,7 @@
                 <label for="input-customer_id" class="form-label">Customer ID: </label>
                 <label class="customer-id" style="font-weight:normal">1</label> <!--change when showing-->
                 <input type="number" class="form-control"  id="input-customer_id" style="width: 30%; display: none;">
+                <button type="button" class="btn btn-default" id="del_button" style="margin-left: 70px;"  onclick="goToLinkCid()"> Link with Customer ID </button> <!-- delete this button after integratoin -->
               </div>
               <div class="col-12 modal-margin">
                 <b>Bookkeeper Name: </b> <label class="bookkeeper-name" style="font-weight:normal">bookkeeper test</label> <!--change when showing-->
