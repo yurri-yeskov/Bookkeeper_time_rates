@@ -365,17 +365,12 @@
 <script src="./javascripts/time-reporting.js"></script>
 <script>
   function goToLinkCid() {
-  alert("go to link with Customer ID!");
-  // window.location.href = base_url + "/time-reporting/202811";
-  // window.post = function(url, data) {
-  //   return fetch(url, {method: "POST", body: JSON.stringify(data)});
-  // }
-  var link_form = document.getElementById('report-time-frm');
-  // var link_form = $('#form_gotolink');
-  console.log(link_form);
-  link_form.method = "POST";
-  link_form.action = base_url + "/time-reporting/202811";
-  link_form.submit();
-}
+
+    var link_form = document.getElementById('report-time-frm');
+    link_form.method = "POST";
+    var r_customer_id = $('#input-customer_id').val();
+    link_form.action = base_url + "/time-reporting/" + r_customer_id;
+    link_form.submit();
+  }
 </script>
 </html>
