@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.locals.baseURL = "http://34.245.181.88/interfaces"; // change baseurl;;
+app.locals.baseURL = "http://34.245.181.88/interfaces/timereg"; // change baseurl;;
 
 app.use('/', indexRouter);
 
