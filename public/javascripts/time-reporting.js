@@ -672,7 +672,7 @@ function searchWithCustomerId() {
           if (data.data.length > 0) {
             $('.bookkeeper-name').html(data.data[0].bookkeeper_name);
             $('.company-name').html(data.data[0].company_name);
-            $('.email-addr').html(data.data[0].email_address);
+            $('.email-addr').html(data.data[0].primary_email);
             $('.customer-id').html(data.data[0].customer_id);
           } else {
             $('.bookkeeper-name').html("N/A");
