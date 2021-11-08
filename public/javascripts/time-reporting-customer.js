@@ -9,9 +9,9 @@ function submitReportTime() {
     alert('Please select other Customer ID.');
     return;
   }
-  if ($('#bookkeeper-name').html() == '' ||
-      $('#company-name').html() == '' ||
-      $('#email-addr').html() == '') {
+  if ($('#bookkeeper-name').html() == 'N/A' ||
+      $('#company-name').html() == 'N/A' ||
+      $('#email-addr').html() == 'N/A') {
     alert('Please select other Customer ID.');
     return;
   }

@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start_dev": "forever start --minUptime 1000 --spinSleepTime 1000 ./bin/www",
-    "start": "node ./bin/www",
+    "start": "forever start --minUptime 1000 --spinSleepTime 1000 ./bin/www",
     "stop": "forever stop ./bin/www"
   },
   "dependencies": {
