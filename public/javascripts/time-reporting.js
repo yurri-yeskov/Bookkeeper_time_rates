@@ -167,7 +167,7 @@ function showAddModal(e) {
   var cur_row_data = time_spent_table.row(cur_row).data();
   $('.bookkeeper-name').html(cur_row_data.bookkeeper_name);
   $('.company-name').html(cur_row_data.company_name);
-  $('.email-addr').html(cur_row_data.primary_email);
+  $('.email-addr').html(cur_row_data.email_address);
   $('#basicModal').modal();
 }
 
@@ -210,7 +210,7 @@ function showEditModal(e) {
   var customer_id = e.name;
   var bookkeeper_name = cur_row_data.bookkeeper_name;
   var company_name = cur_row_data.company_name;
-  var email_addr = cur_row_data.primary_email;
+  var email_addr = cur_row_data.email_address;
 
   $('#editModal').modal();
   $('.loader').css('display', 'block');
@@ -672,7 +672,7 @@ function searchWithCustomerId() {
           if (data.data.length > 0) {
             $('.bookkeeper-name').html(data.data[0].bookkeeper_name);
             $('.company-name').html(data.data[0].company_name);
-            $('.email-addr').html(data.data[0].primary_email);
+            $('.email-addr').html(data.data[0].email_address);
             $('.customer-id').html(data.data[0].customer_id);
           } else {
             $('.bookkeeper-name').html("N/A");
