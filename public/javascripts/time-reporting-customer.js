@@ -64,8 +64,9 @@ function submitReportTime() {
       },
       dataType: "json",
       success: function(data) {
+        $('#save-button').prop('disabled', true);
         setTimeout(function(){
-          alert("success!");
+          alert("success! You need to redirect other link");
         }, 1000); 
       }
     });
