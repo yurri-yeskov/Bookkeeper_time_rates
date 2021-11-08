@@ -181,7 +181,7 @@ function showAddModalForExternal() {
   var today = new Date();
   var delivery_year = today.getFullYear();
   $('#delivery-year').val(delivery_year);
-  $(".selectpicker").selectpicker("refresh");
+  // $(".selectpicker").selectpicker("refresh");
   $('.customer-id').html("");
   $('.bookkeeper-name').html('N/A');
   $('.company-name').html('N/A');
