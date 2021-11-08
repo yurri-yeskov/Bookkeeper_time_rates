@@ -149,107 +149,24 @@
         <div class="container-customer bg-3 container-cus" style="margin-bottom: 40px;">
           <div class="row">
             <div class="col-sm-12">
-              <button type="button" class="btn btn-primary"  onclick="submitReportTime()"> Save </button>
+              <label for="input-note" class="form-label">Note:</label>
+              <textarea style="resize:none; height: 80px;" class="form-control-custom" id="input-note"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="container-customer bg-3 container-cus" style="margin-bottom: 40px;">
+          <div class="row">
+            <div class="col-sm-12">
+              <button type="button" class="btn btn-primary pull-right"  onclick="submitReportTime()"> Save </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- Report Modal begin-->
-    <div class="modal fade text-left" style="margin-top: 20px;" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel">Add Time For Customer</h4>
-          </div>
-          <div class="modal-body">
-            <div class="loader" style="display: none;"></div>
-            <form id="report-time-frm" style="display: block;">
-              <div class="col-12 modal-margin">
-                <label for="input-customer_id" class="form-label">Customer ID: </label>
-                <label class="customer-id" style="font-weight:normal">1</label> <!--change when showing-->
-                <input type="number" class="form-control"  id="input-customer_id" style="width: 30%; display: none;">
-                <input name="user_token" type="hidden" value="<%= user_token %>">
-                <button type="button" class="btn btn-default" id="del_button" style="margin-left: 70px;"  onclick="goToLinkCid()"> Link with Customer ID </button> <!-- delete this button after integratoin -->
-              </div>
-              <div class="col-12 modal-margin">
-                <b>Bookkeeper Name: </b> <label class="bookkeeper-name" style="font-weight:normal">bookkeeper test</label> <!--change when showing-->
-                <div class="dot-loaders" style="display: none; margin-bottom: 5px;">
-                  <div class="dot-loader"></div>
-                  <div class="dot-loader dot-loader--2"></div>
-                  <div class="dot-loader dot-loader--3"></div>
-                </div>
-              </div>
-              <div class="col-12 modal-margin">
-                <b>Company Name: </b> <label class="company-name" style="font-weight:normal">company test</label> <!--change when showing-->
-                <div class="dot-loaders" style="display: none; margin-bottom: 5px;">
-                  <div class="dot-loader"></div>
-                  <div class="dot-loader dot-loader--2"></div>
-                  <div class="dot-loader dot-loader--3"></div>
-                </div>
-              </div>
-              <div class="col-12 modal-margin">
-                <b>Email Address: </b> <label class="email-addr" style="font-weight:normal">email@addr.com</label> <!--change when showing-->
-                <div class="dot-loaders" style="display: none; margin-bottom: 5px;">
-                  <div class="dot-loader"></div>
-                  <div class="dot-loader dot-loader--2"></div>
-                  <div class="dot-loader dot-loader--3"></div>
-                </div>
-              </div>
-              <div class="col-12 modal-margin">
-                <label for="input-task" class="form-label">Primary Task Type:</label>
-                <select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-task">
-                  <option value="1">Almindelig kontering</option>
-                  <option value="2">Årsafslutningspakke - Selskaber 1. År</option>
-                  <option value="3">Årsafslutningspakke - Selskaber eksisterende kunde</option>
-                  <option value="4">Årsafslutningspakke - Enkeltmands 1. År</option>
-                  <option value="5">Årsafslutningspakke - Enkeltmands eksisterende kunde</option>
-                  <option value="6">VSO - beregning ny kunde</option>
-                  <option value="7">VSO - beregning eksisterende kunde</option>
-                  <option value="8">Samtale/Rådgivning af kunde</option>
-                  <option value="9">Intern kommunikation og møder</option>
-                  <option value="10">Primo ny kunde</option>
-                  <option value="11">Primo eksisterende</option>
-                  <option value="12">kundeCatchup/kontering</option>
-                </select>
-              </div>
-              <div class="col-12 modal-margin">
-                <label for="input-period" class="form-label">Period: </label>
-                <select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="input-period">
-                  <option value="Q1">Q1</option>
-                  <option value="Q2">Q2</option>
-                  <option value="Q3">Q3</option>
-                  <option value="Q4">Q4</option>
-                  <option value="Year-end">Year-end</option>
-                </select>
-              </div>
-              <div class="col-12 modal-margin">
-                <label for="delivery-year" class="form-label">Delivery Year: </label>
-                <input type="number" class="form-control" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" id="delivery-year" value="<%= this_year %>">
-              </div>
-              <div class="col-12 modal-margin">
-                <label for="input-time" class="form-label">Time Spent (in min): </label>
-                <input type="number" class="form-control" id="input-time">
-              </div>
-              <div class="col-12 modal-margin">
-                <label for="input-note" class="form-label">Note:</label>
-                <textarea style="resize:none; height: 80px;" class="form-control" id="input-note"></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary"  onclick="submitReportTime()"> Save </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal end -->
   </div>
 </body>
 <% include partials/script %>
 <!-- <script type="text/javascript" src="<%=baseURL%>/javascripts/tipped.min.js"></script>   -->
-<!-- <script src="<%=baseURL%>/javascripts/time-reporting-customer.js"></script> -->
+<script src="<%=baseURL%>/javascripts/time-reporting-customer.js"></script>
 
 </html>
