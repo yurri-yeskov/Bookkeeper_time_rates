@@ -126,6 +126,10 @@ $(document).ready(function(){
   });
 });
 
+function getSelToken() {
+  return $('input[name="user_token"]').val();
+}
+
 function getTotalTimes(sel_year) {
   
   $.ajax({
