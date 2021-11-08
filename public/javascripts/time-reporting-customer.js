@@ -37,8 +37,7 @@ function submitReportTime() {
   }
   var note_str = $('#input-note').val().replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g,"\n");
 
-  if(confirm('Are you sure you want to')){
-    $('#basicModal').hide();
+  if(confirm('Are you sure you want to')) {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
