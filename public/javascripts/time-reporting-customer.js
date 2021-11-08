@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  $('.selectpicker').val('');
   $(".selectpicker").selectpicker("refresh");
 });
 
@@ -65,8 +66,7 @@ function submitReportTime() {
       dataType: "json",
       success: function(data) {
         setTimeout(function(){
-          location.reload();
-          getTotalTimes($('#input-year').val());
+          alert("success!");
         }, 1000); 
       }
     });

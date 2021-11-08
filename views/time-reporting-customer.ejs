@@ -10,7 +10,7 @@
     <h3><%= page %></h3><br>
     <div class="row">
       <div class="container-fluid">
-        <div class="container-customer bg-3" style="margin-bottom: 80px;">
+        <div class="container-customer bg-3" style="margin-bottom: 80px; display: none;">
           <table class="table table-striped table-bordered" id="over-spent-table" style="font-size: 11px;">
             <thead class="thead-dark">
               <tr>
@@ -47,7 +47,7 @@
             </thead>
           </table>
         </div>
-        <div class="container-customer bg-3 container-cus" style="margin-bottom: 40px;">
+        <div class="container-customer bg-3 container-cus" style="margin-bottom: 40px; margin-top: 40px;">
           <div class="row">
             <div class="col-sm-6">
               <div class="col-xs-5" style="text-align: right; padding-top: 7px;">
@@ -149,15 +149,15 @@
         <div class="container-customer bg-3 container-cus" style="margin-bottom: 40px;">
           <div class="row">
             <div class="col-sm-12">
-              <label for="input-note" class="form-label">Note:</label>
-              <textarea style="resize:none; height: 80px;" class="form-control-custom" id="input-note"></textarea>
+              <label for="input-note pull-left" class="form-label">Note:</label>
+              <textarea style="resize:none; height: 80px;" class="form-control" id="input-note"></textarea>
             </div>
           </div>
         </div>
         <div class="container-customer bg-3 container-cus" style="margin-bottom: 40px;">
           <div class="row">
             <div class="col-sm-12">
-              <button type="button" class="btn btn-primary pull-right"  onclick="submitReportTime()"> Save </button>
+              <button type="button" class="btn btn-primary"  onclick="submitReportTime()"> Save </button>
             </div>
           </div>
         </div>
