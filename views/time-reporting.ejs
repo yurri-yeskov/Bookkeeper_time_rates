@@ -369,6 +369,10 @@
     var link_form = document.getElementById('report-time-frm');
     link_form.method = "POST";
     var r_customer_id = $('#input-customer_id').val();
+    if (!r_customer_id){
+      alert("Please select a customer ID");
+      return;
+    }
     link_form.action = base_url + "/time-reporting/" + r_customer_id;
     link_form.submit();
   }
