@@ -20,6 +20,10 @@ a {
   padding-top: 0px;
   padding-bottom: 0px;
 }
+.container-cus {
+  width: 60%;
+  margin: auto;
+}
 .navbar {
   padding-top: 15px;
   padding-bottom: 15px;
