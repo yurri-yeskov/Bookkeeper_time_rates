@@ -72,6 +72,7 @@ exports.getCurrentYear = (req, res) => {
 exports.timeReportingWithCustomerId = (req, res) => {
 
   console.log("--------------------", req.params.customer_id);
+  
   if (!req.body.user_token) {
     console.log("Oops!");
     res.redirect(linkConfig.OTHER_LINK);
@@ -83,36 +84,53 @@ exports.timeReportingWithCustomerId = (req, res) => {
       res.redirect(linkConfig.OTHER_LINK + "logout");
       return;
   }
-
   const my_email = token_data.username;
   let acl_level = admin_emails.includes(my_email) ? 1 : 0;
   let acl_query_str = "SELECT interface_name FROM interfaces.acl WHERE user_email='" + my_email + "';";
   let acl_array = [];
+
+  let query_str = "SELECT customer_payments.customer_id, customers.primary_email, customers.name as company_name, " +
+                  "(SELECT TRIM(CONCAT(first_name, ' ', last_name)) AS bookkeeper_name FROM freelancers WHERE worker_initials = year_end_accountant) " +
+                  "FROM customers JOIN customer_payments ON customers.id = customer_payments.customer_id " +
+                  "WHERE customers.id=" + req.params.customer_id + " " +
+                  "GROUP BY customer_payments.customer_id, customers.primary_email, customers.name, customers.year_end_accountant;"
+                      
   client.query(acl_query_str, function(err, result) {
     if (result.rows.length > 0) {
       for (let i=0; i<result.rows.length; i++) {
         acl_array[i] = result.rows[i].interface_name;
       }
     }
-
     let this_year = new Date();
     this_year = this_year.getFullYear();
-    let month_index = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    let month_list = [
-      "January", "February", "March",     "April",   "May",      "June",
-      "July",    "August",   "September", "October", "November", "December"
-    ];
-    res.render('time-reporting-customer', {
-        page:'Bookkeeper Time Reporting', 
-        menuId:'time-reporting', 
+    client.query(query_str, function(err, result) {
+      if (err) {
+          console.log(err);
+          res.status(400).send(err);
+      }
+      let customer_id = req.params.customer_id;
+      let bookkeeper_name = "N/A";
+      let company_name = "N/A";
+      let email_address = "N/A";
+      if (result.rows.length > 0) {
+        bookkeeper_name = result.rows[0].bookkeeper_name;
+        company_name = result.rows[0].company_name;
+        email_address = result.rows[0].primary_email;
+      }
+      res.render('time-reporting-customer', {
+        page: 'Bookkeeper Time Reporting', 
+        menuId: 'time-reporting', 
         this_year: this_year, 
-        month_index: month_index,
-        month_list: month_list,
-        other_link:linkConfig.OTHER_LINK,
+        other_link: linkConfig.OTHER_LINK,
         my_email: my_email,
         acl_level: acl_level,
         acl_array: acl_array,
-        user_token: req.body.user_token
+        user_token: req.body.user_token,
+        customer_id: customer_id,
+        bookkeeper_name: bookkeeper_name,
+        company_name: company_name,
+        email_address: email_address
+      });
     });
   });
 };
