@@ -711,7 +711,32 @@ exports.findTotalTimes = (req, res) => {
         res.status(400).send(err);
       }
       if (my_name == 'N/A') result.rows = [];
-
+      for (let i = 0; i < result.rows.length; i++) {
+        result.rows[i].january_time = parseFloat(result.rows[i].january_time) / 60.00;
+        result.rows[i].january_time = result.rows[i].january_time.toFixed(2);
+        result.rows[i].february_time = parseFloat(result.rows[i].february_time) / 60.00;
+        result.rows[i].february_time = result.rows[i].february_time.toFixed(2);
+        result.rows[i].march_time = parseFloat(result.rows[i].march_time) / 60.00;
+        result.rows[i].march_time = result.rows[i].march_time.toFixed(2);
+        result.rows[i].april_time = parseFloat(result.rows[i].april_time) / 60.00;
+        result.rows[i].april_time = result.rows[i].april_time.toFixed(2);
+        result.rows[i].may_time = parseFloat(result.rows[i].may_time) / 60.00;
+        result.rows[i].may_time = result.rows[i].may_time.toFixed(2);
+        result.rows[i].june_time = parseFloat(result.rows[i].june_time) / 60.00;
+        result.rows[i].june_time = result.rows[i].june_time.toFixed(2);
+        result.rows[i].july_time = parseFloat(result.rows[i].july_time) / 60.00;
+        result.rows[i].july_time = result.rows[i].july_time.toFixed(2);
+        result.rows[i].august_time = parseFloat(result.rows[i].august_time) / 60.00;
+        result.rows[i].august_time = result.rows[i].august_time.toFixed(2);
+        result.rows[i].september_time = parseFloat(result.rows[i].september_time) / 60.00;
+        result.rows[i].september_time = result.rows[i].september_time.toFixed(2);
+        result.rows[i].october_time = parseFloat(result.rows[i].october_time) / 60.00;
+        result.rows[i].october_time = result.rows[i].october_time.toFixed(2);
+        result.rows[i].november_time = parseFloat(result.rows[i].november_time) / 60.00;
+        result.rows[i].november_time = result.rows[i].november_time.toFixed(2);
+        result.rows[i].december_time = parseFloat(result.rows[i].december_time) / 60.00;
+        result.rows[i].december_time = result.rows[i].december_time.toFixed(2);
+      }
       res.send({ data: result.rows });
     });
   });
