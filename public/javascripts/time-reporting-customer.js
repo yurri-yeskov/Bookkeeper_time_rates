@@ -31,11 +31,10 @@ function submitReportTime() {
     alert('Please fill all fields.');
     return;
   }
-  if ($('#input-note').val() == '') {
-      alert('Please fill all fields.');
-      return;
+  var note_str = '';
+  if ($('#input-note').val() != '') {
+    note_str = $('#input-note').val().replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g,"\n");
   }
-  var note_str = $('#input-note').val().replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g,"\n");
 
   if(confirm('Are you sure you want to')) {
     var today = new Date();
