@@ -343,7 +343,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
 exports.insertReportTime = (req, res) => {
     
   if (!req.body.customer_id || !req.body.company_name || !req.body.primary_email || 
-    !req.body.task_type || !req.body.period || !req.body.time_spent || !req.body.time_note) {
+    !req.body.task_type || !req.body.period || !req.body.time_spent) {
     console.log("Oops!");
     res.redirect("/");
     return;
