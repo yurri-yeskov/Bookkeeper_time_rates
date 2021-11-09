@@ -50,7 +50,8 @@ function submitReportTime() {
       url: base_url + "/set_report_time",
       data: {
         customer_id: $('#customer-id').html(),
-        bookkeeper_name: $('#bookkeeper-name').html(),
+        // bookkeeper_name: $('#bookkeeper-name').html(),
+        user_token: getSelToken(),
         company_name: $('#company-name').html(),
         primary_email: $('#email-addr').html(),
         task_type: return_task,
@@ -64,6 +65,10 @@ function submitReportTime() {
       },
       dataType: "json",
       success: function(data) {
+        if (data.data == 'token_expired') {
+          window.location.replace(data.other_link);
+          return;
+        }
         $('#save-button').prop('disabled', true);
         setTimeout(function(){
           alert("success! You need to redirect other link");
@@ -71,4 +76,8 @@ function submitReportTime() {
       }
     });
   }
+}
+
+function getSelToken() {
+  return $('input[name="user_token"]').val();
 }

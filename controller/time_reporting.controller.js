@@ -71,8 +71,6 @@ exports.getCurrentYear = (req, res) => {
 };
 exports.timeReportingWithCustomerId = (req, res) => {
 
-  console.log("--------------------", req.params.customer_id);
-  
   if (!req.body.user_token) {
     console.log("Oops!");
     res.redirect(linkConfig.OTHER_LINK);
@@ -344,100 +342,115 @@ exports.findCustomerInfoWithYear = (req, res) => {
 
 exports.insertReportTime = (req, res) => {
     
-  if (!req.body) {
-      return res.status(400).send({
-        message: "Data to update can not be empty!"
-      });
-  }
-  
-  if (!req.body.customer_id || !req.body.bookkeeper_name || !req.body.company_name || !req.body.primary_email || 
-      !req.body.task_type || !req.body.period || !req.body.time_spent || !req.body.time_note) {
-      console.log("Oops!");
-      res.redirect("/");
-      return;
-  }
-  
-  let task_list = {
-    "1": "Almindelig kontering",
-    "2": "Årsafslutningspakke - Selskaber 1. År",
-    "3": "Årsafslutningspakke - Selskaber eksisterende kunde",
-    "4": "Årsafslutningspakke - Enkeltmands 1. År",
-    "5": "Årsafslutningspakke - Enkeltmands eksisterende kunde",
-    "6": "VSO - beregning ny kunde",
-    "7": "VSO - beregning eksisterende kunde",
-    "8": "Samtale/Rådgivning af kunde",
-    "9": "Intern kommunikation og møder",
-    "10": "Primo ny kunde",
-    "11": "Primo eksisterende",
-    "12": "kundeCatchup/kontering"
+  if (!req.body.customer_id || !req.body.company_name || !req.body.primary_email || 
+    !req.body.task_type || !req.body.period || !req.body.time_spent || !req.body.time_note) {
+    console.log("Oops!");
+    res.redirect("/");
+    return;
   }
 
-  let month_list = {
-    "01": "january_spent",
-    "02": "february_spent",
-    "03": "march_spent",
-    "04": "april_spent",
-    "05": "may_spent",
-    "06": "june_spent",
-    "07": "july_spent",
-    "08": "august_spent",
-    "09": "september_spent",
-    "10": "october_spent",
-    "11": "november_spent",
-    "12": "december_spent"
+  if (!req.body.user_token) {
+    console.log("Oops! You need to log in again");
+    res.redirect(linkConfig.OTHER_LINK);
+    return;
   }
-  let month_nlist = {
-    "01": "January",
-    "02": "February",
-    "03": "March",
-    "04": "April",
-    "05": "May",
-    "06": "June",
-    "07": "July",
-    "08": "August",
-    "09": "September",
-    "10": "October",
-    "11": "November",
-    "12": "December"
+  const token_data = auth.tokenVeryfy(req.body.user_token);
+  if (!token_data) {
+    console.log("Token expired");
+    // res.redirect(linkConfig.OTHER_LINK); ///////////////Ajax
+    res.send({ other_link: linkConfig.OTHER_LINK + "logout", data: "token_expired" });
+    return;
   }
-  let query_str = "INSERT INTO task_manager.time_entries (customer_id, company_name, bookkeeper_name, email_address, " +
-                  "task_type, period, " + month_list[req.body.month] + ", reg_date, note, delivery_year) " + 
-                  "VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);";
-  client.query(query_str, [req.body.customer_id, req.body.company_name, req.body.bookkeeper_name, req.body.primary_email,
-                           task_list[req.body.task_type], req.body.period, req.body.time_spent, req.body.cur_time, req.body.time_note, req.body.year], 
-              function(err, result) {
-    if (err) {
-        console.log(err);
-        res.status(400).send(err);
+  
+  const my_email = token_data.username;
+
+  let pre_query_str = "SELECT TRIM(CONCAT(first_name, ' ', last_name)) AS bookkeeper_name, COALESCE(price_per_hour, 0.00) as hourly FROM task_manager.freelancers WHERE email='" + my_email + "'";
+  client.query(pre_query_str, function(err, result) {
+    let bookkeeper_full_name = "N/A"; 
+    let acl_level = admin_emails.includes(my_email) ? 1 : 0;
+    if (acl_level == 1) bookkeeper_full_name = "Admin";
+    else if (result.rows.length > 0) bookkeeper_full_name = result.rows[0].bookkeeper_name;
+
+    let task_list = {
+      "1": "Almindelig kontering",
+      "2": "Årsafslutningspakke - Selskaber 1. År",
+      "3": "Årsafslutningspakke - Selskaber eksisterende kunde",
+      "4": "Årsafslutningspakke - Enkeltmands 1. År",
+      "5": "Årsafslutningspakke - Enkeltmands eksisterende kunde",
+      "6": "VSO - beregning ny kunde",
+      "7": "VSO - beregning eksisterende kunde",
+      "8": "Samtale/Rådgivning af kunde",
+      "9": "Intern kommunikation og møder",
+      "10": "Primo ny kunde",
+      "11": "Primo eksisterende",
+      "12": "kundeCatchup/kontering"
     }
-
-    let ext_query_str = "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" + 
-                    req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" +
-                    req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " + "'Primary Task Type', '" +
-                    task_list[req.body.task_type] + "', '" + req.body.cur_time + "'::timestamp); " +
-
-                    "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" + 
-                    req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" +
-                    req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " + "'Period', '" +
-                    req.body.period + "', '" + req.body.cur_time + "'::timestamp); " +
-
-                    "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" + 
-                    req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" +
-                    req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " + "'Time Spent', '" +
-                    req.body.time_spent + "', '" + req.body.cur_time + "'::timestamp); " +
-
-                    "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" + 
-                    req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" +
-                    req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " + "'Note', '" +
-                    req.body.time_note + "', '" + req.body.cur_time + "'::timestamp); ";
-    
-    client.query(ext_query_str, function(err, result) {
+    let month_list = {
+      "01": "january_spent",
+      "02": "february_spent",
+      "03": "march_spent",
+      "04": "april_spent",
+      "05": "may_spent",
+      "06": "june_spent",
+      "07": "july_spent",
+      "08": "august_spent",
+      "09": "september_spent",
+      "10": "october_spent",
+      "11": "november_spent",
+      "12": "december_spent"
+    }
+    let month_nlist = {
+      "01": "January",
+      "02": "February",
+      "03": "March",
+      "04": "April",
+      "05": "May",
+      "06": "June",
+      "07": "July",
+      "08": "August",
+      "09": "September",
+      "10": "October",
+      "11": "November",
+      "12": "December"
+    }
+    let query_str = "INSERT INTO task_manager.time_entries (customer_id, company_name, bookkeeper_name, email_address, " +
+                    "task_type, period, " + month_list[req.body.month] + ", reg_date, note, delivery_year) " + 
+                    "VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);";
+    client.query(query_str, [req.body.customer_id, req.body.company_name, bookkeeper_full_name, req.body.primary_email,
+                             task_list[req.body.task_type], req.body.period, req.body.time_spent, req.body.cur_time, req.body.time_note, req.body.year], 
+                function(err, result) {
       if (err) {
-        console.log(err);
-        res.status(400).send(err);
+          console.log(err);
+          res.status(400).send(err);
       }
-
-      res.send({ message: "It was updated successfully." });
+  
+      let ext_query_str = "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" + 
+                      req.body.customer_id + ", '" + req.body.company_name + "', '" + bookkeeper_full_name + "', '" +
+                      req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " + "'Primary Task Type', '" +
+                      task_list[req.body.task_type] + "', '" + req.body.cur_time + "'::timestamp); " +
+  
+                      "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" + 
+                      req.body.customer_id + ", '" + req.body.company_name + "', '" + bookkeeper_full_name + "', '" +
+                      req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " + "'Period', '" +
+                      req.body.period + "', '" + req.body.cur_time + "'::timestamp); " +
+  
+                      "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" + 
+                      req.body.customer_id + ", '" + req.body.company_name + "', '" + bookkeeper_full_name + "', '" +
+                      req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " + "'Time Spent', '" +
+                      req.body.time_spent + "', '" + req.body.cur_time + "'::timestamp); " +
+  
+                      "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" + 
+                      req.body.customer_id + ", '" + req.body.company_name + "', '" + bookkeeper_full_name + "', '" +
+                      req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " + "'Note', '" +
+                      req.body.time_note + "', '" + req.body.cur_time + "'::timestamp); ";
+      
+      client.query(ext_query_str, function(err, result) {
+        if (err) {
+          console.log(err);
+          res.status(400).send(err);
+        }
+        res.send({ message: "It was updated successfully." });
+      });
     });
   });
 };

@@ -924,7 +924,8 @@ function submitReportTime() {
       url: base_url + "/set_report_time",
       data: {
         customer_id: $('.customer-id').html(),
-        bookkeeper_name: $('.bookkeeper-name').html(),
+        // bookkeeper_name: $('.bookkeeper-name').html(),
+        user_token: getSelToken(),
         company_name: $('.company-name').html(),
         primary_email: $('.email-addr').html(),
         task_type: return_task,
@@ -938,6 +939,10 @@ function submitReportTime() {
       },
       dataType: "json",
       success: function(data) {
+        if (data.data == 'token_expired') {
+          window.location.replace(data.other_link);
+          return;
+        }
         setTimeout(function(){
           location.reload();
           getTotalTimes($('#input-year').val());
