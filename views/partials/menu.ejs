@@ -54,6 +54,7 @@
                    acl_array.includes('master-bank-reconciliation-advanced') || 
                    acl_array.includes('exception-list-sent') || 
                    acl_array.includes('exception-list-check') || 
+                   acl_array.includes('customer-startup') || 
                    acl_level == 1) { %>
               <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Delivery Process Support <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -89,6 +90,9 @@
                   <% } %>
                   <% if (acl_array.includes('exception-list-check') || acl_level == 1) { %>
                     <li><a href="<%= other_link %>delivery-process/exception-list-check">7. Check of exception list</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('customer-startup') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>delivery-process/customer-startup">Customer Startup</a></li>
                   <% } %>
                 </ul>
               </li>

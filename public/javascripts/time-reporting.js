@@ -3,94 +3,94 @@ var pdf_data = [];
 
 $(document).ready(function(){
 
-    time_spent_table = $("#time-spent-table").DataTable({
-        "scrollCollapse": true,
-        "ScrollInfinite": true,
-        "ordering": true,
-        "scrollX": false,
-        "scrollY": "48vh",
-        "paging": true,
-        "pageLength": 100,
-        "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
-        "processing": true,
-        "serverSide": true,
-        "order": [[ 9, 'asc' ]],
-        
-        drawCallback: function(){
-          $('#custom-table-info').html($('#time-spent-table_info').html());
-          
-          Tipped.create('.link-btn', function(e) {
-            var content_str = 
-              "<a href='javascript:;' onclick='showAddModal(this);' name = '" + e.id + "' class= 'close-tooltip'>Report time</a><br><br>" +
-              "<a href='javascript:;' onclick='showEditModal(this);' name = '" + e.id + "' class='close-tooltip'>Edit Reported time</a><br><br>" +
-              "<a href='javascript:;' onclick='showAuditModal(this);' name= '" + e.id + "' class='close-tooltip'>Audit log for Customer</a><br><br>" +
-              "<a>Kundebemærkninger</a>"
-            return {
-              content: content_str
-            };
-          },
-          
-          {
-            showOn: 'click',
-            hideOn: 'click',
-            hideOnClickOutside: true,
-            skin:'light',
-            position: 'right',
-            size: 'large'
-          });
-        },
-        "ajax": {
-            url: base_url + '/get_customerminfo_with_year',
-            type: "post",
-            data: function(d){
-              d.this_year = getSelYear();
-              d.user_token = getSelToken();
-              d.sel_start_date = getSelStartDate();
-              d.sel_end_date = getSelEndDate();
-            },
-            dataType: "json"
-        },
-        "columns": [
-            {data:'customer_id', render: renderSelect},
-            { data: 'customer_id' },      // Customer ID
-            { data: 'email_address' },    // Email Address
-            { data: 'company_name' },     // Company Name
-            { data: 'bookkeeper_name' },  // Bookkeeper Name
-            { data: 'task_type' },        // Primary Task Type
-            { data: 'period' },           // Delivery Period
-            { data: 'delivery_year' },    // Delivery Year
-            { data: 'time_spent' },       // Time Spent
-            { data: 'reg_date' },         // Timestamp
-            { data: 'note' }              // Note
-        ],
-        "columnDefs":[
-          {
-            "targets": [0],
-            "searchable": false,
-            "orderable": false
-          }
-        ]
-    });
-
-    selectRows();
+  time_spent_table = $("#time-spent-table").DataTable({
+    "scrollCollapse": true,
+    "ScrollInfinite": true,
+    "ordering": true,
+    "scrollX": false,
+    "scrollY": "48vh",
+    "paging": true,
+    "pageLength": 100,
+    "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
+    "processing": true,
+    "serverSide": true,
+    "order": [[ 9, 'asc' ]],
     
-    $('#time-spent-table_info').css('display', 'none');
-    $('#custom-table-info').css('display', 'block');
-    $('#custom-table-info').html($('#time-spent-table_info').html());
+    drawCallback: function(){
+      $('#custom-table-info').html($('#time-spent-table_info').html());
+      
+      Tipped.create('.link-btn', function(e) {
+        var content_str = 
+          "<a href='javascript:;' onclick='showAddModal(this);' name = '" + e.id + "' class= 'close-tooltip'>Report time</a><br><br>" +
+          "<a href='javascript:;' onclick='showEditModal(this);' name = '" + e.id + "' class='close-tooltip'>Edit Reported time</a><br><br>" +
+          "<a href='javascript:;' onclick='showAuditModal(this);' name= '" + e.id + "' class='close-tooltip'>Audit log for Customer</a><br><br>" +
+          "<a>Kundebemærkninger</a>"
+        return {
+          content: content_str
+        };
+      },
+      
+      {
+        showOn: 'click',
+        hideOn: 'click',
+        hideOnClickOutside: true,
+        skin:'light',
+        position: 'right',
+        size: 'large'
+      });
+    },
+    "ajax": {
+      url: base_url + '/get_customerminfo_with_year',
+      type: "post",
+      data: function(d){
+        d.this_year = getSelYear();
+        d.user_token = getSelToken();
+        d.sel_start_date = getSelStartDate();
+        d.sel_end_date = getSelEndDate();
+      },
+      dataType: "json"
+    },
+    "columns": [
+      {data:'customer_id', render: renderSelect},
+      { data: 'customer_id' },      // Customer ID
+      { data: 'email_address' },    // Email Address
+      { data: 'company_name' },     // Company Name
+      { data: 'bookkeeper_name' },  // Bookkeeper Name
+      { data: 'task_type' },        // Primary Task Type
+      { data: 'period' },           // Delivery Period
+      { data: 'delivery_year' },    // Delivery Year
+      { data: 'time_spent' },       // Time Spent
+      { data: 'reg_date' },         // Timestamp
+      { data: 'note' }              // Note
+    ],
+    "columnDefs":[
+      {
+        "targets": [0],
+        "searchable": false,
+        "orderable": false
+      }
+    ]
+  });
 
-    $("#input-year").on('keyup', submitsWithYear);
+  selectRows();
+  
+  $('#time-spent-table_info').css('display', 'none');
+  $('#custom-table-info').css('display', 'block');
+  $('#custom-table-info').html($('#time-spent-table_info').html());
 
-    getTotalTimes($('#input-year').val());
-    searchWithCustomerId();
-    searchWithTimePeriod();
-    extraShearchSubmit();
+  $("#input-year").on('keyup', submitsWithYear);
 
-    $('.input-daterange').datepicker({
-      format: "dd-mm-yyyy",
-      todayBtn: true,
-      todayHighlight: true,
-      clearBtn: true
-    });
+  getTotalTimes($('#input-year').val());
+  searchWithCustomerId();
+  searchWithTimePeriod();
+  extraShearchSubmit();
+
+  $('.input-daterange').datepicker({
+    format: "dd-mm-yyyy",
+    todayBtn: true,
+    todayHighlight: true,
+    clearBtn: true
+  });
 });
 
 function extraShearchSubmit() {
@@ -605,13 +605,13 @@ function selectRows() {
 
   $('#time-spent-table tbody').on( 'click', 'tr', function () {
       
-      if ( $(this).hasClass('selected') ) {
-          // $(this).removeClass('selected');
-      }
-      else {
-          time_spent_table.$('tr.selected').removeClass('selected');
-          $(this).addClass('selected');
-      }
+    if ( $(this).hasClass('selected') ) {
+      // $(this).removeClass('selected');
+    }
+    else {
+      time_spent_table.$('tr.selected').removeClass('selected');
+      $(this).addClass('selected');
+    }
   });
 }
 
@@ -816,10 +816,10 @@ function downloadPDFFile() {
   doc.text($('.total-cost').html(), 170, 45)
 
   doc.autoTable({
-      head: headRows(),
-      body: bodyRows(pdf_data),
-      startY: 55,
-      showHead: true
+    head: headRows(),
+    body: bodyRows(pdf_data),
+    startY: 55,
+    showHead: true
   })
   
   // Flemming Hansen - 01-10-2021 - 31-10-2021 - 02-11-2021.pdf

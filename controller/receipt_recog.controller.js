@@ -1,15 +1,15 @@
 const dbConfig = require("../config/db.config");
 const linkConfig = require("../config/links.config");
-const ocrSpace = require('ocr-space-api-wrapper');
-const moment = require('moment');  
-const {Client} = require('pg');
+const ocrSpace = require("ocr-space-api-wrapper");
+const moment = require("moment");
+const { Client } = require("pg");
 
-const client = new Client ({
-    user: dbConfig.USER,
-    host: dbConfig.HOST,
-    database: dbConfig.DB_NAME,
-    password: dbConfig.PASSWORD,
-    port: dbConfig.DB_PORT,
+const client = new Client({
+  user: dbConfig.USER,
+  host: dbConfig.HOST,
+  database: dbConfig.DB_NAME,
+  password: dbConfig.PASSWORD,
+  port: dbConfig.DB_PORT,
 });
 
 // const client = new Client({
@@ -24,29 +24,26 @@ client.connect();
 const OCR_API_KEY = linkConfig.OCR_API_KEY;
 
 exports.index = (req, res) => {
-
-  res.render('receipt-recog', {
-    page:' Receipt Recognition', 
-    menuId:'receipt-recog', 
+  res.render("receipt-recog", {
+    page: "Receipt Recognition",
+    menuId: "receipt-recog",
     this_year: "2021",
-    other_link:linkConfig.OTHER_LINK, 
-    data:{},
+    other_link: linkConfig.OTHER_LINK,
+    data: {},
     my_email: "my_email@mail.com",
     acl_level: 1,
     acl_array: [],
-    user_token: "123456789"
+    user_token: "123456789",
   });
-}
+};
 
 exports.getRecogResult = (req, res) => {
-
   console.log("//////////////////////////////////START//////////////////////////////////");
   if (!req.body.image_path) {
     console.log("Oops!");
     res.redirect(linkConfig.OTHER_LINK);
     return;
   }
-  
   ocrFunc(req.body.image_path, req.body.date_str, req.body.amount_str, req.body.word_str, res);
 }
 
@@ -167,9 +164,8 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
               }         
             }
             lowercase_word_text = "";
-          } else {
-            w_delta_count++;
-          }
+          } else w_delta_count++;
+          
           ////////////////////////////////WordString END/////////////////////////////////////
           if (pos_date_arr.length > 0) {
             let d_delta_count = 0;
@@ -211,7 +207,12 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
     console.log("amount_index_arr----------------------------", amount_index_arr);
     console.log("str_index_arr-------------------------------", str_index_arr);
     console.log("date_index_arr------------------------------", date_index_arr);
-    res.send({ data: result.ParsedResults, amount_indexes: amount_index_arr, str_indexes: str_index_arr, date_indexes: date_index_arr });
+    res.send({
+      data: result.ParsedResults,
+      amount_indexes: amount_index_arr,
+      str_indexes: str_index_arr,
+      date_indexes: date_index_arr,
+    });
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
@@ -219,13 +220,13 @@ const ocrFunc = async (image_path, date_str, amount_str, word_str, res) => {
 }
 
 function similarity(s1, s2) {
-  var longer = s1;
-  var shorter = s2;
+  let longer = s1;
+  let shorter = s2;
   if (s1.length < s2.length) {
     longer = s2;
     shorter = s1;
   }
-  var longerLength = longer.length;
+  let longerLength = longer.length;
   if (longerLength == 0) {
     return 1.0;
   }
@@ -236,18 +237,17 @@ function editDistance(s1, s2) {
   s1 = s1.toLowerCase();
   s2 = s2.toLowerCase();
 
-  var costs = new Array();
-  for (var i = 0; i <= s1.length; i++) {
-    var lastValue = i;
-    for (var j = 0; j <= s2.length; j++) {
+  let costs = new Array();
+  for (let i = 0; i <= s1.length; i++) {
+    let lastValue = i;
+    for (let j = 0; j <= s2.length; j++) {
       if (i == 0)
         costs[j] = j;
       else {
         if (j > 0) {
-          var newValue = costs[j - 1];
+          let newValue = costs[j - 1];
           if (s1.charAt(i - 1) != s2.charAt(j - 1))
-            newValue = Math.min(Math.min(newValue, lastValue),
-              costs[j]) + 1;
+            newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
           costs[j - 1] = lastValue;
           lastValue = newValue;
         }

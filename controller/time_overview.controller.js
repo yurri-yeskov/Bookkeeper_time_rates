@@ -1,15 +1,15 @@
 const dbConfig = require("../config/db.config");
 const linkConfig = require("../config/links.config");
 const auth = require("../controller/auth.controller");
-const {Client} = require('pg');
-const moment = require('moment');  
+const { Client } = require("pg");
+const moment = require("moment");
 
-const client = new Client ({
-    user: dbConfig.USER,
-    host: dbConfig.HOST,
-    database: dbConfig.DB_NAME,
-    password: dbConfig.PASSWORD,
-    port: dbConfig.DB_PORT,
+const client = new Client({
+  user: dbConfig.USER,
+  host: dbConfig.HOST,
+  database: dbConfig.DB_NAME,
+  password: dbConfig.PASSWORD,
+  port: dbConfig.DB_PORT,
 });
 
 // const client = new Client({
@@ -24,7 +24,6 @@ client.connect();
 const admin_emails = auth.adminEmails();
 
 exports.getCurrentYear = (req, res) => {
-
   if (!req.body.user_token) {
     console.log("Oops!");
     res.redirect(linkConfig.OTHER_LINK);
@@ -65,7 +64,6 @@ exports.getCurrentYear = (req, res) => {
 };
 
 exports.findCustomerInfoWithYear = (req, res) => {
-
   if (!req.body.this_year) {
     console.log("Oops!");
     res.redirect("/");
@@ -143,11 +141,12 @@ exports.findCustomerInfoWithYear = (req, res) => {
   let query_count = "SELECT COUNT(*) FROM temp_customer_info;";
 
   let order_list = {
-       'customer_id': 1, 'package_list': 2, 'max_receipts': 3, 'primary_email': 4, 'company_type': 5, 'vat_period': 6, 'reporting_period': 7,
-       'no_longer_customer_from': 8, 'year_end_accountant': 9, 'service_from': 10, 'service_until': 11, 'first_end_year': 12, 'new_customer': 13, 
-       'q1_used': 15, 'q2_used': 16, 'q3_used': 17, 'q4_used': 18, 'y_used': 19, 'receipts_used': 20, 'q13': 21, 'q24': 22, 'y_est': 23, 
-       't_est': 24, 'tc_est': 25, 't_inv': 26, 'effic': 27, 't_used': 28, 'tc_used': 29
-     }
+    'customer_id': 1, 'package_list': 2, 'max_receipts': 3, 'primary_email': 4, 'company_type': 5, 'vat_period': 6, 
+    'reporting_period': 7, 'no_longer_customer_from': 8, 'year_end_accountant': 9, 'service_from': 10, 
+    'service_until': 11, 'first_end_year': 12, 'new_customer': 13, 'q1_used': 15, 'q2_used': 16, 'q3_used': 17, 
+    'q4_used': 18, 'y_used': 19, 'receipts_used': 20, 'q13': 21, 'q24': 22, 'y_est': 23, 't_est': 24, 'tc_est': 25, 
+    't_inv': 26, 'effic': 27, 't_used': 28, 'tc_used': 29
+  }
 
   let o_index = 'customer_id';
   let o_dir = 'asc';
@@ -161,17 +160,6 @@ exports.findCustomerInfoWithYear = (req, res) => {
 
   let searchStr = req.body["search[value]"];
   if(req.body["search[value]"])  {
-    // searchStr = "vv.customer_id::TEXT ILIKE '%" + searchStr + "%' OR vv.primary_email ILIKE '%" + searchStr + 
-    //             "%' OR vv.year_end_accountant ILIKE '%" + searchStr + "%' OR vv.company_type::TEXT ILIKE '%" + searchStr + 
-    //             "%' OR vv.vat_period::TEXT ILIKE '%" + searchStr + "%' OR vv.reporting_period::TEXT ILIKE '%" + searchStr + 
-    //             "%' OR vv.no_longer_customer_from::TEXT ILIKE '%" + searchStr + "%' OR vv.package_list ILIKE '%" + searchStr + 
-    //             "%' OR vv.max_receipts::TEXT ILIKE '%" + searchStr + "%' OR vv.first_end_year::TEXT ILIKE '%" + searchStr +
-    //             "%' OR vv.new_customer::TEXT ILIKE '%" + searchStr + "%' OR est[1]::TEXT ILIKE '%" + searchStr +
-    //             "%' OR est[2]::TEXT ILIKE '%" + searchStr + "%' OR est[3]::TEXT ILIKE '%" + searchStr + 
-    //             "%' OR est[4]::TEXT ILIKE '%" + searchStr + "%' OR est[5]::TEXT ILIKE '%" + searchStr +
-    //             "%' OR est[6]::TEXT ILIKE '%" + searchStr + "%' OR est[7]::TEXT ILIKE '%" + searchStr + 
-    //             "%' OR est[8]::TEXT ILIKE '%" + searchStr +"%' ";
-
     searchStr = "CONCAT(vv.customer_id, vv.primary_email, vv.year_end_accountant, vv.company_type, vv.vat_period, vv.reporting_period, " +
                 "vv.no_longer_customer_from, vv.package_list, vv.max_receipts, vv.first_end_year, vv.new_customer, COALESCE(est[1], 0.00), " +
                 "COALESCE(est[2], 0.00), COALESCE(est[3], 0.00), COALESCE(est[4], 0.00), COALESCE(est[5], 0.00), COALESCE(est[6], 0.00), " +
@@ -190,69 +178,71 @@ exports.findCustomerInfoWithYear = (req, res) => {
   }
 
   // change based on Search//
-  let query_search_count = "SELECT COUNT(*) FROM (SELECT bb.*, " + 
-                        "calc_estvals(bb.customer_id, bb.max_receipts, bb.vat_period, bb.reporting_period, bb.new_customer::BOOLEAN, " + 
-                        "bb.service_from, bb.company_type, bb.package_list, bb.year_end_accountant) as est, " +                         
-                        "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q1') as q1_used, " +
-                        "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q2') as q2_used, " +
-                        "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q3') as q3_used, " +
-                        "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q4') as q4_used, " +
-                        "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Year-end') as y_used " +                      
-                        "FROM " + 
-                        "(SELECT public.temp_customer_info.*, " +
-                        "MIN(public.customer_payments.service_from) as first_end_year, " +
-                        "(CASE WHEN extract(year from temp_customer_info.service_from) = extract(year from MIN(public.customer_payments.service_from)) " + 
-                        "THEN 'True' ELSE 'False' END) as new_customer " +
-                        "FROM public.temp_customer_info " + 
-                        "JOIN public.customer_payments ON public.temp_customer_info.customer_id = public.customer_payments.customer_id " + 
-                        "GROUP BY (public.temp_customer_info.customer_id, temp_customer_info.service_from, temp_customer_info.package_list, " + 
-                        "temp_customer_info.max_receipts, temp_customer_info.primary_email, temp_customer_info.company_type, temp_customer_info.vat_period, " + 
-                        "temp_customer_info.reporting_period, temp_customer_info.no_longer_customer_from, temp_customer_info.year_end_accountant, " + 
-                        "temp_customer_info.service_until) ) bb " +
-                        "LEFT JOIN (SELECT public.temp_customer_info.customer_id " +
-                        "FROM public.temp_customer_info " +
-                        "JOIN public.customer_payments ON public.temp_customer_info.customer_id = public.customer_payments.customer_id " +
-                        "GROUP BY (public.temp_customer_info.customer_id, temp_customer_info.service_from, temp_customer_info.package_list, " + 
-                        "temp_customer_info.max_receipts, temp_customer_info.primary_email, temp_customer_info.company_type, temp_customer_info.vat_period, " + 
-                        "temp_customer_info.reporting_period, temp_customer_info.no_longer_customer_from, temp_customer_info.year_end_accountant, " + 
-                        "temp_customer_info.service_until) ) aa " +
-                        "ON bb.customer_id = aa.customer_id) as vv " + extra_search_str + searchStr + ";";
+  let query_search_count = 
+    "SELECT COUNT(*) FROM (SELECT bb.*, " + 
+    "calc_estvals(bb.customer_id, bb.max_receipts, bb.vat_period, bb.reporting_period, bb.new_customer::BOOLEAN, " + 
+    "bb.service_from, bb.company_type, bb.package_list, bb.year_end_accountant) as est, " +                         
+    "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q1') as q1_used, " +
+    "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q2') as q2_used, " +
+    "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q3') as q3_used, " +
+    "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q4') as q4_used, " +
+    "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Year-end') as y_used " +                      
+    "FROM " + 
+    "(SELECT public.temp_customer_info.*, " +
+    "MIN(public.customer_payments.service_from) as first_end_year, " +
+    "(CASE WHEN extract(year from temp_customer_info.service_from) = extract(year from MIN(public.customer_payments.service_from)) " + 
+    "THEN 'True' ELSE 'False' END) as new_customer " +
+    "FROM public.temp_customer_info " + 
+    "JOIN public.customer_payments ON public.temp_customer_info.customer_id = public.customer_payments.customer_id " + 
+    "GROUP BY (public.temp_customer_info.customer_id, temp_customer_info.service_from, temp_customer_info.package_list, " + 
+    "temp_customer_info.max_receipts, temp_customer_info.primary_email, temp_customer_info.company_type, temp_customer_info.vat_period, " + 
+    "temp_customer_info.reporting_period, temp_customer_info.no_longer_customer_from, temp_customer_info.year_end_accountant, " + 
+    "temp_customer_info.service_until) ) bb " +
+    "LEFT JOIN (SELECT public.temp_customer_info.customer_id " +
+    "FROM public.temp_customer_info " +
+    "JOIN public.customer_payments ON public.temp_customer_info.customer_id = public.customer_payments.customer_id " +
+    "GROUP BY (public.temp_customer_info.customer_id, temp_customer_info.service_from, temp_customer_info.package_list, " + 
+    "temp_customer_info.max_receipts, temp_customer_info.primary_email, temp_customer_info.company_type, temp_customer_info.vat_period, " + 
+    "temp_customer_info.reporting_period, temp_customer_info.no_longer_customer_from, temp_customer_info.year_end_accountant, " + 
+    "temp_customer_info.service_until) ) aa " +
+    "ON bb.customer_id = aa.customer_id) as vv " + extra_search_str + searchStr + ";";
   
   // add offset and limit//
-  let query_str = "SELECT vv.*, COALESCE(est[1], 0.00) as receipts_used, COALESCE(est[2], 0.00) as q13, COALESCE(est[3], 0.00) as q24, " + 
-              "COALESCE(est[4], 0.00) as y_est, COALESCE(est[5], 0.00) as t_est, COALESCE(est[6], 0.00) as tc_est, COALESCE(est[7], 0.00) as t_inv, " + 
-              "COALESCE(est[8], 0.00) as effic, COALESCE(q1_used, 0.00) as q1_used, COALESCE(q2_used, 0.00) as q2_used, COALESCE(q3_used, 0.00) q3_used, " + 
-              "COALESCE(q4_used, 0.00) as q4_used, COALESCE(y_used, 0.00) as y_used, " + 
-              "COALESCE((COALESCE(q1_used, 0.00) + COALESCE(q2_used, 0.00) + COALESCE(q3_used, 0.00) + COALESCE(q4_used, 0.00) + COALESCE(y_used, 0.00)), 0.00) " +
-              "as t_used, " + 
-              "calc_total_cost_used(COALESCE(" + 
-              "(COALESCE(q1_used, 0) + COALESCE(q2_used, 0) + COALESCE(q3_used, 0) + COALESCE(q4_used, 0) + COALESCE(y_used, 0)), 0.00), " + 
-              "vv.year_end_accountant) as tc_used " + 
-              "FROM (SELECT bb.*, calc_estvals(bb.customer_id, bb.max_receipts, bb.vat_period, bb.reporting_period, bb.new_customer::BOOLEAN, bb.service_from, " +
-              "bb.company_type, bb.package_list, bb.year_end_accountant) as est, " + 
-              "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q1') as q1_used, " +
-              "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q2') as q2_used, " +
-              "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q3') as q3_used, " +
-              "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q4') as q4_used, " +
-              "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Year-end') as y_used " +
-              "FROM " + 
-              "(SELECT public.temp_customer_info.*, " +
-              "MIN(public.customer_payments.service_from) as first_end_year, " +
-              "(CASE WHEN extract(year from temp_customer_info.service_from) = extract(year from MIN(public.customer_payments.service_from)) " +
-              "THEN 'True' ELSE 'False' END) as new_customer " +
-              "FROM public.temp_customer_info " + 
-              "JOIN public.customer_payments ON public.temp_customer_info.customer_id = public.customer_payments.customer_id " + 
-              "GROUP BY (public.temp_customer_info.customer_id, temp_customer_info.service_from, temp_customer_info.package_list, temp_customer_info.max_receipts, " +
-              "temp_customer_info.primary_email, temp_customer_info.company_type, temp_customer_info.vat_period, temp_customer_info.reporting_period, " +
-              "temp_customer_info.no_longer_customer_from, temp_customer_info.year_end_accountant, temp_customer_info.service_until) ) bb " +
-              "LEFT JOIN (SELECT public.temp_customer_info.customer_id " +
-              "FROM public.temp_customer_info " +
-              "JOIN public.customer_payments ON public.temp_customer_info.customer_id = public.customer_payments.customer_id " +
-              "GROUP BY (public.temp_customer_info.customer_id, temp_customer_info.service_from, temp_customer_info.package_list, " + 
-              "temp_customer_info.max_receipts, temp_customer_info.primary_email, temp_customer_info.company_type, temp_customer_info.vat_period, " +
-              "temp_customer_info.reporting_period, temp_customer_info.no_longer_customer_from, temp_customer_info.year_end_accountant, " + 
-              "temp_customer_info.service_until) ) aa " +
-              "ON bb.customer_id = aa.customer_id) as vv " + extra_search_str + searchStr + order_by;
+  let query_str = 
+    "SELECT vv.*, COALESCE(est[1], 0.00) as receipts_used, COALESCE(est[2], 0.00) as q13, COALESCE(est[3], 0.00) as q24, " + 
+    "COALESCE(est[4], 0.00) as y_est, COALESCE(est[5], 0.00) as t_est, COALESCE(est[6], 0.00) as tc_est, COALESCE(est[7], 0.00) as t_inv, " + 
+    "COALESCE(est[8], 0.00) as effic, COALESCE(q1_used, 0.00) as q1_used, COALESCE(q2_used, 0.00) as q2_used, COALESCE(q3_used, 0.00) q3_used, " + 
+    "COALESCE(q4_used, 0.00) as q4_used, COALESCE(y_used, 0.00) as y_used, " + 
+    "COALESCE((COALESCE(q1_used, 0.00) + COALESCE(q2_used, 0.00) + COALESCE(q3_used, 0.00) + COALESCE(q4_used, 0.00) + COALESCE(y_used, 0.00)), 0.00) " +
+    "as t_used, " + 
+    "calc_total_cost_used(COALESCE(" + 
+    "(COALESCE(q1_used, 0) + COALESCE(q2_used, 0) + COALESCE(q3_used, 0) + COALESCE(q4_used, 0) + COALESCE(y_used, 0)), 0.00), " + 
+    "vv.year_end_accountant) as tc_used " + 
+    "FROM (SELECT bb.*, calc_estvals(bb.customer_id, bb.max_receipts, bb.vat_period, bb.reporting_period, bb.new_customer::BOOLEAN, bb.service_from, " +
+    "bb.company_type, bb.package_list, bb.year_end_accountant) as est, " + 
+    "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q1') as q1_used, " +
+    "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q2') as q2_used, " +
+    "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q3') as q3_used, " +
+    "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q4') as q4_used, " +
+    "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Year-end') as y_used " +
+    "FROM " + 
+    "(SELECT public.temp_customer_info.*, " +
+    "MIN(public.customer_payments.service_from) as first_end_year, " +
+    "(CASE WHEN extract(year from temp_customer_info.service_from) = extract(year from MIN(public.customer_payments.service_from)) " +
+    "THEN 'True' ELSE 'False' END) as new_customer " +
+    "FROM public.temp_customer_info " + 
+    "JOIN public.customer_payments ON public.temp_customer_info.customer_id = public.customer_payments.customer_id " + 
+    "GROUP BY (public.temp_customer_info.customer_id, temp_customer_info.service_from, temp_customer_info.package_list, temp_customer_info.max_receipts, " +
+    "temp_customer_info.primary_email, temp_customer_info.company_type, temp_customer_info.vat_period, temp_customer_info.reporting_period, " +
+    "temp_customer_info.no_longer_customer_from, temp_customer_info.year_end_accountant, temp_customer_info.service_until) ) bb " +
+    "LEFT JOIN (SELECT public.temp_customer_info.customer_id " +
+    "FROM public.temp_customer_info " +
+    "JOIN public.customer_payments ON public.temp_customer_info.customer_id = public.customer_payments.customer_id " +
+    "GROUP BY (public.temp_customer_info.customer_id, temp_customer_info.service_from, temp_customer_info.package_list, " + 
+    "temp_customer_info.max_receipts, temp_customer_info.primary_email, temp_customer_info.company_type, temp_customer_info.vat_period, " +
+    "temp_customer_info.reporting_period, temp_customer_info.no_longer_customer_from, temp_customer_info.year_end_accountant, " + 
+    "temp_customer_info.service_until) ) aa " +
+    "ON bb.customer_id = aa.customer_id) as vv " + extra_search_str + searchStr + order_by;
   
   if (req.body.length != -1)
     query_str = query_str + " LIMIT " + req.body.length + " OFFSET " + req.body.start + ";";
@@ -296,40 +286,39 @@ exports.findCustomerInfoWithYear = (req, res) => {
 };
 
 exports.findBookkeepers = (req, res) => {
-    
-  let query_str = "SELECT worker_initials, price_per_hour FROM task_manager.freelancers" + 
-  " LEFT JOIN task_manager.freelancer_roles ON task_manager.freelancers.worker_initials = task_manager.freelancer_roles.freelancer_short_name" + 
-  " WHERE task_manager.freelancer_roles.role_name = 'bookkeeper' ORDER BY worker_initials;"
-      
+  let query_str =
+    "SELECT worker_initials, price_per_hour FROM task_manager.freelancers " +
+    "LEFT JOIN task_manager.freelancer_roles ON task_manager.freelancers.worker_initials = " +
+    "task_manager.freelancer_roles.freelancer_short_name " +
+    "WHERE task_manager.freelancer_roles.role_name = 'bookkeeper' ORDER BY worker_initials;";
+
   client.query(query_str, function (err, result) {
-      if (err) {
-          console.log(err);
-          res.status(400).send(err);
-      }
-      res.send({ data: result.rows });
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+    res.send({ data: result.rows });
   });
 };
 
 exports.findPackages = (req, res) => {
-    
-  client.query('SELECT id, short_name FROM public.products WHERE short_name IS NOT NULL ORDER BY short_name;', function (err, result) {
-    
-      if (err) {
-          console.log(err);
-          res.status(400).send(err);
-      }
-      res.send({ data: result.rows});
+  let query_str = "SELECT id, short_name FROM public.products WHERE short_name IS NOT NULL ORDER BY short_name;";
+  client.query(query_str, function (err, result) {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+    res.send({ data: result.rows });
   });
 };
 
 exports.findCompanyTypes = (req, res) => {
-    
-  client.query('SELECT enum_range(NULL::public.company_type_enum);', function (err, result) {
-    
-      if (err) {
-          console.log(err);
-          res.status(400).send(err);
-      }
-      res.send({ data: result.rows});
+  let query_str = "SELECT enum_range(NULL::public.company_type_enum);";
+  client.query(query_str, function (err, result) {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+    res.send({ data: result.rows });
   });
 };

@@ -1,15 +1,15 @@
 const dbConfig = require("../config/db.config");
 const linkConfig = require("../config/links.config");
 const auth = require("../controller/auth.controller");
-const moment = require('moment');
-const {Client} = require('pg');
+const moment = require("moment");
+const { Client } = require("pg");
 
-const client = new Client ({
-    user: dbConfig.USER,
-    host: dbConfig.HOST,
-    database: dbConfig.DB_NAME,
-    password: dbConfig.PASSWORD,
-    port: dbConfig.DB_PORT,
+const client = new Client({
+  user: dbConfig.USER,
+  host: dbConfig.HOST,
+  database: dbConfig.DB_NAME,
+  password: dbConfig.PASSWORD,
+  port: dbConfig.DB_PORT,
 });
 
 // const client = new Client({
@@ -24,7 +24,6 @@ client.connect();
 const admin_emails = auth.adminEmails();
 
 exports.getCurrentYear = (req, res) => {
-  
   if (!req.body.user_token) {
     console.log("Oops!");
     res.redirect(linkConfig.OTHER_LINK);
@@ -36,7 +35,6 @@ exports.getCurrentYear = (req, res) => {
       res.redirect(linkConfig.OTHER_LINK + "logout");
       return;
   }
-
   const my_email = token_data.username;
   let acl_level = admin_emails.includes(my_email) ? 1 : 0;
   let acl_query_str = "SELECT interface_name FROM interfaces.acl WHERE user_email='" + my_email + "';";
@@ -55,23 +53,22 @@ exports.getCurrentYear = (req, res) => {
       "January", "February", "March",     "April",   "May",      "June",
       "July",    "August",   "September", "October", "November", "December"
     ];
-    res.render('report-overview', {
-        page:'Time Entry Overview', 
-        menuId:'report-overview', 
-        this_year: this_year, 
-        month_index: month_index,
-        month_list: month_list,
-        other_link:linkConfig.OTHER_LINK,
-        my_email: my_email,
-        acl_level: acl_level,
-        acl_array: acl_array,
-        user_token: req.body.user_token
+    res.render("report-overview", {
+      page: "Time Entry Overview",
+      menuId: "report-overview",
+      this_year: this_year,
+      month_index: month_index,
+      month_list: month_list,
+      other_link: linkConfig.OTHER_LINK,
+      my_email: my_email,
+      acl_level: acl_level,
+      acl_array: acl_array,
+      user_token: req.body.user_token,
     });
   });
 };
 
 exports.findAllTimeEntry = (req, res) => {
-
   if (!req.body) {
     console.log("Oops!");
     res.redirect("/");
@@ -226,19 +223,17 @@ exports.findAllTimeEntry = (req, res) => {
       });
     });
   });
-
 };
 
 exports.findBookkeeperNames = (req, res) => {
-    
   let query_str = "SELECT TRIM(CONCAT(first_name, ' ', last_name)) AS bookkeeper_name, price_per_hour FROM task_manager.freelancers" + 
   " LEFT JOIN task_manager.freelancer_roles ON task_manager.freelancers.worker_initials = task_manager.freelancer_roles.freelancer_short_name" + 
   " WHERE task_manager.freelancer_roles.role_name = 'bookkeeper' ORDER BY worker_initials;"
       
   client.query(query_str, function (err, result) {
       if (err) {
-          console.log(err);
-          res.status(400).send(err);
+        console.log(err);
+        res.status(400).send(err);
       }
       res.send({ data: result.rows });
   });
@@ -246,76 +241,75 @@ exports.findBookkeeperNames = (req, res) => {
 
 /////////////////////////////////deleted///////////////////////////
 
-exports.findReportTimes = (req, res) => {
+// exports.findReportTimes = (req, res) => {
     
-  if (!req.body) {
-      return res.status(400).send({
-        message: "Data to update can not be empty!"
-      });
-  }
+//   if (!req.body) {
+//       return res.status(400).send({
+//         message: "Data to update can not be empty!"
+//       });
+//   }
   
-  if (!req.body.customer_id || !req.body.sel_year) {
-      console.log("Oops!");
-      res.redirect("/");
-      return;
-  }
+//   if (!req.body.customer_id || !req.body.sel_year) {
+//       console.log("Oops!");
+//       res.redirect("/");
+//       return;
+//   }
 
-  let query_str = "SELECT * FROM task_manager.time_entries WHERE customer_id = " + req.body.customer_id + 
-                      " AND extract(year from reg_date) = '" + req.body.sel_year + "' " + 
-                      " AND deleted = false " +
-                  "ORDER BY id;";
+//   let query_str = "SELECT * FROM task_manager.time_entries WHERE customer_id = " + req.body.customer_id + 
+//                       " AND extract(year from reg_date) = '" + req.body.sel_year + "' " + 
+//                       " AND deleted = false " +
+//                   "ORDER BY id;";
                       
-  client.query(query_str, function(err, result) {
-    if (err) {
-        console.log(err);
-        res.status(400).send(err);
-    }
+//   client.query(query_str, function(err, result) {
+//     if (err) {
+//         console.log(err);
+//         res.status(400).send(err);
+//     }
     
-    res.send({ data: result.rows });
-  });
-};
+//     res.send({ data: result.rows });
+//   });
+// };
 
-exports.findAuditLog = (req, res) => {
+// exports.findAuditLog = (req, res) => {
     
-  if (!req.body) {
-      return res.status(400).send({
-        message: "Data to update can not be empty!"
-      });
-  }
+//   if (!req.body) {
+//       return res.status(400).send({
+//         message: "Data to update can not be empty!"
+//       });
+//   }
   
-  if (!req.body.customer_id || !req.body.sel_year) {
-      console.log("Oops!");
-      res.redirect("/");
-      return;
-  }
+//   if (!req.body.customer_id || !req.body.sel_year) {
+//       console.log("Oops!");
+//       res.redirect("/");
+//       return;
+//   }
 
-  let query_str = "SELECT *, change_date::TEXT as change_date_str FROM task_manager.time_audit_log WHERE customer_id = " + req.body.customer_id + 
-                      " AND extract(year from change_date) = '" + req.body.sel_year + "' " + 
-                  "ORDER BY id;";
+//   let query_str = "SELECT *, change_date::TEXT as change_date_str FROM task_manager.time_audit_log WHERE customer_id = " + req.body.customer_id + 
+//                       " AND extract(year from change_date) = '" + req.body.sel_year + "' " + 
+//                   "ORDER BY id;";
                       
-  client.query(query_str, function(err, result) {
-    if (err) {
-        console.log(err);
-        res.status(400).send(err);
-    }
+//   client.query(query_str, function(err, result) {
+//     if (err) {
+//         console.log(err);
+//         res.status(400).send(err);
+//     }
     
-    res.send({ data: result.rows });
-  });
-};
+//     res.send({ data: result.rows });
+//   });
+// };
 
 exports.updateReportTimes = (req, res) => {
-    
   if (!req.body) {
-      return res.status(400).send({
-        message: "Data to update can not be empty!"
-      });
+    return res.status(400).send({
+      message: "Data to update can not be empty!",
+    });
   }
 
-  if (!req.body.task_type && !req.body.period && 
-      !req.body.time_spent && !req.body.note) {
-      console.log("Oops!");
-      res.redirect("/");
-      return;
+  if ( !req.body.task_type && !req.body.period &&
+       !req.body.time_spent && !req.body.note ) {
+    console.log("Oops!");
+    res.redirect("/");
+    return;
   }
   let pre_query_str = "SELECT * FROM task_manager.time_entries WHERE id=" + req.body.id;
 
@@ -326,18 +320,18 @@ exports.updateReportTimes = (req, res) => {
     }
     let old_data = result.rows[0];
     let month_list = {
-      "January": "january_spent", 
-      "February": "february_spent", 
-      "March": "march_spent",
-      "April": "april_spent", 
-      "May": "may_spent",
-      "June": "june_spent", 
-      "July": "july_spent", 
-      "August": "august_spent", 
-      "September": "september_spent", 
-      "October": "october_spent",
-      "November": "november_spent", 
-      "December": "december_spent" 
+      "January":    "january_spent", 
+      "February":   "february_spent", 
+      "March":      "march_spent",
+      "April":      "april_spent", 
+      "May":        "may_spent",
+      "June":       "june_spent", 
+      "July":       "july_spent", 
+      "August":     "august_spent", 
+      "September":  "september_spent", 
+      "October":    "october_spent",
+      "November":   "november_spent", 
+      "December":   "december_spent" 
     }
   
     // let task_list = {
@@ -413,38 +407,38 @@ exports.updateReportTimes = (req, res) => {
   
 };
 
-exports.deleteReportTimes = (req, res) => {
+// exports.deleteReportTimes = (req, res) => {
     
-  if (!req.body) {
-      return res.status(400).send({
-        message: "Data to update can not be empty!"
-      });
-  }
+//   if (!req.body) {
+//       return res.status(400).send({
+//         message: "Data to update can not be empty!"
+//       });
+//   }
 
-  let pre_query_str = "SELECT * FROM task_manager.time_entries WHERE id=" + req.body.id;
+//   let pre_query_str = "SELECT * FROM task_manager.time_entries WHERE id=" + req.body.id;
 
-  client.query(pre_query_str, function(err, result){
-    if (err) {
-      console.log(err);
-      res.status(400).send(err);
-    }
-    let old_data = result.rows[0];
+//   client.query(pre_query_str, function(err, result){
+//     if (err) {
+//       console.log(err);
+//       res.status(400).send(err);
+//     }
+//     let old_data = result.rows[0];
 
-    let query_str = "UPDATE task_manager.time_entries SET " + 
-                    "deleted=true WHERE id=" + req.body.id + "; ";
+//     let query_str = "UPDATE task_manager.time_entries SET " + 
+//                     "deleted=true WHERE id=" + req.body.id + "; ";
     
-    query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
-              old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" +
-              old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'deleted', 'FALSE', 'TRUE', '" + req.body.today + "'::timestamp); ";
+//     query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
+//               old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" +
+//               old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'deleted', 'FALSE', 'TRUE', '" + req.body.today + "'::timestamp); ";
   
 
-    client.query(query_str, function(err, result) {
-      if (err) {
-          console.log(err);
-          res.status(400).send(err);
-      }
-      res.send({ message: "It was updated successfully." });
-    });
-  });
+//     client.query(query_str, function(err, result) {
+//       if (err) {
+//           console.log(err);
+//           res.status(400).send(err);
+//       }
+//       res.send({ message: "It was updated successfully." });
+//     });
+//   });
   
-};
+// };

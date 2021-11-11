@@ -1,14 +1,14 @@
 const dbConfig = require("../config/db.config");
 const linkConfig = require("../config/links.config");
 const auth = require("../controller/auth.controller");
-const {Client} = require('pg');
+const { Client } = require("pg");
 
-const client = new Client ({
-    user: dbConfig.USER,
-    host: dbConfig.HOST,
-    database: dbConfig.DB_NAME,
-    password: dbConfig.PASSWORD,
-    port: dbConfig.DB_PORT,
+const client = new Client({
+  user: dbConfig.USER,
+  host: dbConfig.HOST,
+  database: dbConfig.DB_NAME,
+  password: dbConfig.PASSWORD,
+  port: dbConfig.DB_PORT,
 });
 
 // const client = new Client({
@@ -23,7 +23,6 @@ client.connect();
 const admin_emails = auth.adminEmails();
 
 exports.findAll = (req, res) => {
-
   if (!req.body.user_token) {
     console.log("Oops!");
     res.redirect(linkConfig.OTHER_LINK);
@@ -35,7 +34,6 @@ exports.findAll = (req, res) => {
       res.redirect(linkConfig.OTHER_LINK + "logout");
       return;
   }
-
   const my_email = token_data.username;
   let acl_level = admin_emails.includes(my_email) ? 1 : 0;
   let acl_query_str = "SELECT interface_name FROM interfaces.acl WHERE user_email='" + my_email + "';";
@@ -51,7 +49,6 @@ exports.findAll = (req, res) => {
     this_year = this_year.getFullYear();
     
     client.query('SELECT * FROM task_manager.time_elements ORDER BY element_id;', function (err, result) {
-      
       if (err) {
         console.log(err);
         res.status(400).send(err);
@@ -81,52 +78,51 @@ exports.findAll = (req, res) => {
 };
 
 exports.insert = (req, res) => {
-    
-    if (!req.body) {
-        return res.status(400).send({
-          message: "Data to update can not be empty!"
-        });
-    }
-    if (!req.body.element_name || !req.body.element_value || !req.body.element_note || !req.body.element_id) {
-        console.log("Oops!");
-        res.redirect("/");
-        return;
-    }
-    let query_str = "INSERT INTO task_manager.time_elements (element_id, element_name, element_value, note) VALUES ($1, $2, $3, $4)";
-    client.query(query_str, [req.body.element_id, req.body.element_name, req.body.element_value, req.body.element_note], function(err, result) {
-    if (err) {
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!",
+    });
+  }
+  if (!req.body.element_name || !req.body.element_value || !req.body.element_note || !req.body.element_id) {
+    console.log("Oops!");
+    res.redirect("/");
+    return;
+  }
+  let query_str =
+    "INSERT INTO task_manager.time_elements (element_id, element_name, element_value, note) VALUES ($1, $2, $3, $4)";
+  client.query(query_str, [req.body.element_id, req.body.element_name, req.body.element_value, req.body.element_note,],
+    function (err, result) {
+      if (err) {
         console.log(err);
         res.status(400).send(err);
+      }
+      res.send({ message: "It was updated successfully." });
     }
-    res.send({ message: "It was updated successfully." });
-    // res.redirect("/");
-    });
+  );
 };
 
 exports.update = (req, res) => {
-    
-    if (!req.body) {
-        return res.status(400).send({
-          message: "Data to update can not be empty!"
-        });
-    }
-
-    if (!req.body.new_ename || !req.body.new_evalue || !req.body.new_enote || !req.body.element_uid) {
-        console.log("Oops!");
-        res.redirect("/");
-        return;
-    }
-    let query_str = "UPDATE task_manager.time_elements SET element_name='" + req.body.new_ename +
-                                            "', element_value=" + req.body.new_evalue +
-                                            ", note='" + req.body.new_enote +
-                                            "' WHERE id=" + req.body.element_uid;
-    client.query(query_str, function(err, result) {
-      if (err) {
-          console.log(err);
-          res.status(400).send(err);
-      }
-      res.send({ message: "It was updated successfully." });
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!",
     });
+  }
+
+  if (!req.body.new_ename || !req.body.new_evalue || !req.body.new_enote || !req.body.element_uid) {
+    console.log("Oops!");
+    res.redirect("/");
+    return;
+  }
+  let query_str = "UPDATE task_manager.time_elements SET element_name='" + req.body.new_ename +
+    "', element_value=" + req.body.new_evalue + ", note='" +
+    req.body.new_enote + "' WHERE id=" + req.body.element_uid;
+  client.query(query_str, function (err, result) {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+    res.send({ message: "It was updated successfully." });
+  });
 };
 
 function incrementString(value) {
@@ -160,10 +156,11 @@ function incrementString(value) {
   return res;
 }
 
-change_arr = {
-  'A' : '65', 'B' : '66', 'C' : '67', 'D' : '68', 'E' : '69', 'F' : '70', 'G' : '71', 'H' : '72', 'I' : '73',
-  'J' : '74', 'K' : '75', 'L' : '76', 'M' : '77', 'N' : '78', 'O' : '79', 'P' : '80', 'Q' : '81', 'R' : '82', 
-  'S' : '83', 'T' : '84', 'U' : '85', 'V' : '86', 'W' : '87', 'X' : '88', 'Y' : '89', 'Z' : '90' };
+const change_arr = {
+  "A": "65", "B": "66", "C": "67", "D": "68", "E": "69", "F": "70", "G": "71", "H": "72", "I": "73", 
+  "J": "74", "K": "75", "L": "76", "M": "77", "N": "78", "O": "79", "P": "80", "Q": "81", "R": "82", 
+  "S": "83", "T": "84", "U": "85", "V": "86", "W": "87", "X": "88", "Y": "89", "Z": "90",
+};
 
   
 function sortMyArray(my_array) {
