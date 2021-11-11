@@ -94,7 +94,7 @@ function startRecognition() {
 
   $.ajax({
     type: "post",
-    url: base_url + "get_recog_result",
+    url: "get_recog_result",
     data: {
       image_path: image_path,
       date_str: date_str,
