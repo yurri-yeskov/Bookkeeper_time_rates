@@ -120,38 +120,22 @@ function startRecognition() {
           for (var k = 0; k < words.length; k++) {
             var word_text = words[k].WordText;
             if (data.amount_indexes.includes(words_index))
-              result_str =
-                result_str +
-                "<strong class='highlight_amount'>" +
-                word_text +
-                "</strong> ";
+              result_str = result_str + "<strong class='highlight_amount'>" + word_text + "</strong> ";
             else if (data.str_indexes.includes(words_index))
-              result_str =
-                result_str +
-                "<strong class='highlight_string'>" +
-                word_text +
-                "</strong> ";
+              result_str = result_str + "<strong class='highlight_string'>" + word_text + "</strong> ";
             else if (data.date_indexes.includes(words_index))
-              result_str =
-                result_str +
-                "<strong class='highlight_date'>" +
-                word_text +
-                "</strong> ";
+              result_str = result_str + "<strong class='highlight_date'>" + word_text + "</strong> ";
             else result_str = result_str + word_text + " ";
             words_index++;
           }
           result_str = result_str + "\n";
         }
         if (data.amount_indexes.length <= 0)
-          alert(
-            "Can't find the amount matching. Please enter the other value."
-          );
+          alert("Can't find the amount matching. Please enter the other value.");
         if (data.date_indexes.length <= 0)
           alert("Can't find the date matching. Please enter the other value.");
         if (data.str_indexes.length <= 0)
-          alert(
-            "Can't find the Wordstring matching. Please enter the other value."
-          );
+          alert("Can't find the Wordstring matching. Please enter the other value.");
       }
       if (result_str == "") result_str = "Not exist file or Error";
       $("#resultViewer").html(result_str);

@@ -70,7 +70,8 @@ function submitReportTime() {
         }
         $('#save-button').prop('disabled', true);
         setTimeout(function(){
-          alert("success! You need to redirect other link");
+          // alert("success! You need to redirect other link");
+          window.history.back();
         }, 1000); 
       }
     });
