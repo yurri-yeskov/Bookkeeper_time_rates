@@ -71,7 +71,8 @@ function submitReportTime() {
         $('#save-button').prop('disabled', true);
         setTimeout(function(){
           // alert("success! You need to redirect other link");
-          window.history.back();
+          // window.history.back();
+          window.close();
         }, 1000); 
       }
     });
