@@ -72,7 +72,7 @@ function submitReportTime() {
         setTimeout(function(){
           // alert("success! You need to redirect other link");
           // window.history.back();
-          window.close();
+          window.open('','_self').close();
         }, 1000); 
       }
     });
