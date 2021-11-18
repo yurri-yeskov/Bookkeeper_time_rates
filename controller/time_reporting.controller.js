@@ -172,8 +172,9 @@ exports.getDayCustomerInfo = (req, res) => {
     }
     let bookkeeper_full_name = "N/A";
     let price_per_hour = 0.0;
-    if (acl_level == 1) bookkeeper_full_name = "Admin";
-    else if (result.rows.length > 0) {
+    // if (acl_level == 1) bookkeeper_full_name = "Admin";
+    // else if (result.rows.length > 0) {
+    if (result.rows.length > 0) {
       bookkeeper_full_name = result.rows[0].bookkeeper_name;
       price_per_hour = result.rows[0].hourly;
     }
