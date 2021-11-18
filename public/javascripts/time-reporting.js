@@ -56,6 +56,7 @@ $(document).ready(function(){
       { data: 'email_address' },    // Email Address
       { data: 'company_name' },     // Company Name
       { data: 'bookkeeper_name' },  // Bookkeeper Name
+      { data: 'bookkeeper_name' },  // Reporter Name
       { data: 'task_type' },        // Primary Task Type
       { data: 'period' },           // Delivery Period
       { data: 'delivery_year' },    // Delivery Year
@@ -350,6 +351,7 @@ function appendTagEditContent (month_name, data) {
           '<tr id="etr_' + data.id + '">' +
             '<td>' + data.customer_id + '</td>' +
             '<td>' + data.bookkeeper_name + '</td>' +
+            '<td>' + data.bookkeeper_name + '</td>' +
             '<td>' + data.company_name + '</td>' +
             '<td>' + data.email_addr + '</td>' +
             '<td>' + data.delivery_year + '</td>' +
@@ -588,6 +590,7 @@ function appendTagAuditContent(month_name, data) {
   var content_str = 
           '<tr id="atr_' + data.id + '">' +
             '<td>' + data.customer_id + '</td>' +
+            '<td>' + data.bookkeeper_name + '</td>' +
             '<td>' + data.bookkeeper_name + '</td>' +
             '<td>' + data.company_name + '</td>' +
             '<td>' + data.email_addr + '</td>' +
