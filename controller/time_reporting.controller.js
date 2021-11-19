@@ -254,9 +254,9 @@ exports.findCustomerInfoWithYear = (req, res) => {
     }
     let bookkeeper_full_name = "N/A";
     let acl_level = admin_emails.includes(my_email) ? 1 : 0;
-    if (acl_level == 1) bookkeeper_full_name = "Admin";
-    else if (result.rows.length > 0)
-      bookkeeper_full_name = result.rows[0].bookkeeper_name;
+    // if (acl_level == 1) bookkeeper_full_name = "Admin";
+    // else if (result.rows.length > 0)
+    if (result.rows.length > 0) bookkeeper_full_name = result.rows[0].bookkeeper_name;
 
     let start_date = "";
     let end_date = "";
@@ -286,7 +286,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
       "FROM task_manager.time_entries JOIN temp_customer_time ON task_manager.time_entries.customer_id = " + 
       "temp_customer_time.customer_id WHERE deleted = false ";
 
-    if (bookkeeper_full_name != "Admin")
+    if (acl_level != 1) // is not admin
       query_from = query_from + "AND task_manager.time_entries.bookkeeper_name = '" +
         bookkeeper_full_name + "' ";
     if (start_date != "")
@@ -401,9 +401,9 @@ exports.insertReportTime = (req, res) => {
   client.query(pre_query_str, function (err, result) {
     let bookkeeper_full_name = "N/A";
     let acl_level = admin_emails.includes(my_email) ? 1 : 0;
-    if (acl_level == 1) bookkeeper_full_name = "Admin";
-    else if (result.rows.length > 0)
-      bookkeeper_full_name = result.rows[0].bookkeeper_name;
+    // if (acl_level == 1) bookkeeper_full_name = "Admin";
+    // else if (result.rows.length > 0)
+    if (result.rows.length > 0) bookkeeper_full_name = result.rows[0].bookkeeper_name;
 
     let task_list = {
       "1": "Almindelig kontering",
@@ -736,10 +736,11 @@ exports.findTotalTimes = (req, res) => {
     }
     let my_name = "N/A";
     let acl_level = admin_emails.includes(my_email) ? 1 : 0;
-    if (acl_level == 1) my_name = "Admin";
-    else {
-      if (result.rows.length > 0) my_name = result.rows[0].bookkeeper_name;
-    }
+    // if (acl_level == 1) my_name = "Admin";
+    // else {
+    //   if (result.rows.length > 0) my_name = result.rows[0].bookkeeper_name;
+    // }
+    if (result.rows.length > 0) my_name = result.rows[0].bookkeeper_name;
 
     let query_str =
       "SELECT COALESCE(SUM(january_spent), 0.00) as january_time, " +
@@ -757,7 +758,7 @@ exports.findTotalTimes = (req, res) => {
       "FROM task_manager.time_entries WHERE deleted=false AND " +
       "extract(year from reg_date) = '" + req.body.sel_year + "' ";
 
-    if (my_name != "N/A" && my_name != "Admin")
+    if (my_name != "N/A" && acl_level != 1)
       query_str = query_str + "AND bookkeeper_name='" + my_name + "'";
 
     client.query(query_str, function (err, result) {

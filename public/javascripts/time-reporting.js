@@ -14,7 +14,7 @@ $(document).ready(function(){
     "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
     "processing": true,
     "serverSide": true,
-    "order": [[ 9, 'asc' ]],
+    "order": [[ 10, 'asc' ]],
     
     drawCallback: function(){
       $('#custom-table-info').html($('#time-spent-table_info').html());
