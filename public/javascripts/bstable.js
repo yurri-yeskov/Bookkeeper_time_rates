@@ -30,17 +30,19 @@ class BSTable {
       onAdd: function() {},           // Called when added a new row
       advanced: {                     // Do not override advanced unless you know what youre doing
           columnLabel: 'Actions',
-          buttonHTML: `<div class="btn-group pull-right">
-                <button id="bEdit" type="button" class="btn btn-sm btn-default">
-                    <span class="fa fa-edit" > </span>
-                </button>
-                <button id="bAcep" class="btn btn-sm btn-default" style="display:none;">
-                    <span class="fa fa-check-circle" > </span>
-                </button>
-                <button id="bCanc" type="button" class="btn btn-sm btn-default" style="display:none;">
-                    <span class="fa fa-times-circle" > </span>
-                </button>
-            </div>`
+          buttonHTML: `
+            <div class="btn-group pull-right">
+              <button id="bEdit" type="button" class="btn btn-sm btn-default">
+                <span class="fa fa-edit" > </span>
+              </button>
+              <button id="bAcep" class="btn btn-sm btn-default" style="display:none;">
+                <span class="fa fa-check-circle" > </span>
+              </button>
+              <button id="bCanc" type="button" class="btn btn-sm btn-default" style="display:none;">
+                <span class="fa fa-times-circle" > </span>
+              </button>
+            </div>
+          `
       }
     };
 
@@ -445,6 +447,5 @@ class BSTable {
     });
     return tableValues;
   }
-
 }
 

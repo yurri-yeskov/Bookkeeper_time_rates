@@ -348,63 +348,63 @@ function showAuditModal(e) {
 function appendTagEditContent (month_name, data) {
 
   var content_str = 
-          '<tr id="etr_' + data.id + '">' +
-            '<td>' + data.customer_id + '</td>' +
-            '<td>' + data.bookkeeper_name + '</td>' +
-            '<td>' + data.bookkeeper_name + '</td>' +
-            '<td>' + data.company_name + '</td>' +
-            '<td>' + data.email_addr + '</td>' +
-            '<td>' + data.delivery_year + '</td>' +
-            '<td>' + 
-              '<div class="show_cell_' + data.id + '" id="s_task_' + data.id +'">' + data.task_type + '</div>' +
-              '<div class="edit_cell_' + data.id + '" style="display: none; width: 200px;">' +
-                '<select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="e_task_' + data.id + '">' +
-                  '<option value="1">Almindelig kontering</option>' + 
-                  '<option value="2">Årsafslutningspakke - Selskaber 1. År</option>' +
-                  '<option value="3">Årsafslutningspakke - Selskaber eksisterende kunde</option>' +
-                  '<option value="4">Årsafslutningspakke - Enkeltmands 1. År</option>' +
-                  '<option value="5">Årsafslutningspakke - Enkeltmands eksisterende kunde</option>' +
-                  '<option value="6">VSO - beregning ny kunde</option>' +
-                  '<option value="7">VSO - beregning eksisterende kunde</option>' +
-                  '<option value="8">Samtale/Rådgivning af kunde</option>' +
-                  '<option value="9">Intern kommunikation og møder</option>'+
-                  '<option value="10">Primo ny kunde</option>' +
-                  '<option value="11">Primo eksisterende</option>' +
-                  '<option value="12">kundeCatchup/kontering</option>' +
-                '</select>' +
-              '</div>' +
-            '</td>' +
-            '<td>' +
-              '<div class="show_cell_' + data.id + '" id="s_period_' + data.id +'">' + data.period + '</div>' +
-              '<div class="edit_cell_' + data.id + '" style="display: none; width:100px;">' +
-                '<select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="e_period_' + data.id +'">' +
-                  '<option value="Q1">Q1</option>' + 
-                  '<option value="Q2">Q2</option>' +
-                  '<option value="Q3">Q3</option>' +
-                  '<option value="Q4">Q4</option>' +
-                  '<option value="Year-end">Year-end</option>' +
-                '</select>' +
-              '</div>' +
-            '</td>' +
-            '<td>' +
-              '<div class="show_cell_' + data.id + '" id="s_time_' + data.id +'">' + data.time_spent + '</div>' +
-              '<div class="edit_cell_' + data.id + '" style="display: none">' +
-                '<input type="number" class="form-control" id="e_time_' + data.id + '" data-original-value="' + data.time_spent + '" value="' + data.time_spent + '">' +
-              '</div>' +
-            '</td>' +
-            '<td>' +
-              '<div class="show_cell_' + data.id + '" id="s_note_' + data.id +'">' + data.note + '</div>' +
-              '<div class="edit_cell_' + data.id + '" style="display: none; width: 200px;">' +
-                '<textarea type="text" style="resize: vertical;" class="form-control" id="e_note_' + data.id + '" data-original-value="' + data.note + '" value="' + data.note + '">' + data.note + '</textarea>' +
-              '</div>' +
-            '</td>' +
-            '<td><div class="btn-group pull-right" style="width:70px">' + 
-              '<button type="button" id="edit_btn_' + data.id + '" class="btn btn-sm btn-default" onclick="editRow(' + data.id + ')"><span class="fa fa-edit" ></span></button>' +
-              '<button type="button" id="dele_btn_' + data.id + '" class="btn btn-sm btn-default" onclick="deleRow(' + data.id + ', \'' + month_name +'\')"><span class="fa fa fa-trash-alt" ></span></button>' +
-              '<button type="button" id="acep_btn_' + data.id + '" class="btn btn-sm btn-default" onclick="acepRow(' + data.id + ', \'' + month_name +'\')" style="display: none;"><span class="fa fa-check-circle" ></span></button>' +
-              '<button type="button" id="canc_btn_' + data.id + '" class="btn btn-sm btn-default" onclick="cancRow(' + data.id + ')" style="display: none;"><span class="fa fa-times-circle" > </span></button>' +  
-            '</div></td>' +
-          '</tr>';
+    '<tr id="etr_' + data.id + '">' +
+      '<td>' + data.customer_id + '</td>' +
+      '<td>' + data.bookkeeper_name + '</td>' +
+      '<td>' + data.bookkeeper_name + '</td>' +
+      '<td>' + data.company_name + '</td>' +
+      '<td>' + data.email_addr + '</td>' +
+      '<td>' + data.delivery_year + '</td>' +
+      '<td>' + 
+        '<div class="show_cell_' + data.id + '" id="s_task_' + data.id +'">' + data.task_type + '</div>' +
+        '<div class="edit_cell_' + data.id + '" style="display: none; width: 200px;">' +
+          '<select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="e_task_' + data.id + '">' +
+            '<option value="1">Almindelig kontering</option>' + 
+            '<option value="2">Årsafslutningspakke - Selskaber 1. År</option>' +
+            '<option value="3">Årsafslutningspakke - Selskaber eksisterende kunde</option>' +
+            '<option value="4">Årsafslutningspakke - Enkeltmands 1. År</option>' +
+            '<option value="5">Årsafslutningspakke - Enkeltmands eksisterende kunde</option>' +
+            '<option value="6">VSO - beregning ny kunde</option>' +
+            '<option value="7">VSO - beregning eksisterende kunde</option>' +
+            '<option value="8">Samtale/Rådgivning af kunde</option>' +
+            '<option value="9">Intern kommunikation og møder</option>'+
+            '<option value="10">Primo ny kunde</option>' +
+            '<option value="11">Primo eksisterende</option>' +
+            '<option value="12">kundeCatchup/kontering</option>' +
+          '</select>' +
+        '</div>' +
+      '</td>' +
+      '<td>' +
+        '<div class="show_cell_' + data.id + '" id="s_period_' + data.id +'">' + data.period + '</div>' +
+        '<div class="edit_cell_' + data.id + '" style="display: none; width:100px;">' +
+          '<select class="selectpicker form-control" data-dropup-auto="false" data-size="5" data-live-search="true" id="e_period_' + data.id +'">' +
+            '<option value="Q1">Q1</option>' + 
+            '<option value="Q2">Q2</option>' +
+            '<option value="Q3">Q3</option>' +
+            '<option value="Q4">Q4</option>' +
+            '<option value="Year-end">Year-end</option>' +
+          '</select>' +
+        '</div>' +
+      '</td>' +
+      '<td>' +
+        '<div class="show_cell_' + data.id + '" id="s_time_' + data.id +'">' + data.time_spent + '</div>' +
+        '<div class="edit_cell_' + data.id + '" style="display: none">' +
+          '<input type="number" class="form-control" id="e_time_' + data.id + '" data-original-value="' + data.time_spent + '" value="' + data.time_spent + '">' +
+        '</div>' +
+      '</td>' +
+      '<td>' +
+        '<div class="show_cell_' + data.id + '" id="s_note_' + data.id +'">' + data.note + '</div>' +
+        '<div class="edit_cell_' + data.id + '" style="display: none; width: 200px;">' +
+          '<textarea type="text" style="resize: vertical;" class="form-control" id="e_note_' + data.id + '" data-original-value="' + data.note + '" value="' + data.note + '">' + data.note + '</textarea>' +
+        '</div>' +
+      '</td>' +
+      '<td><div class="btn-group pull-right" style="width:70px">' + 
+        '<button type="button" id="edit_btn_' + data.id + '" class="btn btn-sm btn-default" onclick="editRow(' + data.id + ')"><span class="fa fa-edit" ></span></button>' +
+        '<button type="button" id="dele_btn_' + data.id + '" class="btn btn-sm btn-default" onclick="deleRow(' + data.id + ', \'' + month_name +'\')"><span class="fa fa fa-trash-alt" ></span></button>' +
+        '<button type="button" id="acep_btn_' + data.id + '" class="btn btn-sm btn-default" onclick="acepRow(' + data.id + ', \'' + month_name +'\')" style="display: none;"><span class="fa fa-check-circle" ></span></button>' +
+        '<button type="button" id="canc_btn_' + data.id + '" class="btn btn-sm btn-default" onclick="cancRow(' + data.id + ')" style="display: none;"><span class="fa fa-times-circle" > </span></button>' +  
+      '</div></td>' +
+    '</tr>';
 
   $('#e_' + month_name).append(content_str);
 

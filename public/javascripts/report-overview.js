@@ -228,8 +228,7 @@ function getExtraSearch() {
   return JSON.stringify(extra_arr);
 }
 
-function isValidDate(dateString)
-{
+function isValidDate(dateString) {
   if (!dateString) return true;
 
   // First check for the pattern
