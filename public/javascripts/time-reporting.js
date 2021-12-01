@@ -129,6 +129,8 @@ function getTotalTimes(sel_year) {
         window.location.replace(data.other_link);
         return;
       }
+
+      console.log(data.data[0]);
     
       var total_time = parseFloat(data.data[0].january_time) + parseFloat(data.data[0].february_time) + 
                         parseFloat(data.data[0].march_time) + parseFloat(data.data[0].april_time) + 
