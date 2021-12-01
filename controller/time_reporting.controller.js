@@ -758,7 +758,8 @@ exports.findTotalTimes = (req, res) => {
       "FROM task_manager.time_entries WHERE deleted=false AND " +
       "extract(year from reg_date) = '" + req.body.sel_year + "' ";
 
-    if (my_name != "N/A" && acl_level != 1)
+    // if (my_name != "N/A" && acl_level != 1)
+    if (acl_level != 1)
       query_str = query_str + "AND bookkeeper_name='" + my_name + "'";
 
     client.query(query_str, function (err, result) {
@@ -766,7 +767,7 @@ exports.findTotalTimes = (req, res) => {
         console.log(err);
         res.status(400).send(err);
       }
-      if (my_name == "N/A") result.rows = [];
+      // if (my_name == "N/A") result.rows = [];
       for (let i = 0; i < result.rows.length; i++) {
         result.rows[i].january_time = parseFloat(result.rows[i].january_time) / 60.0;
         result.rows[i].january_time = result.rows[i].january_time.toFixed(2);
