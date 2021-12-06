@@ -91,8 +91,8 @@ exports.timeReportingWithCustomerId = (req, res) => {
     "(SELECT TRIM(CONCAT(first_name, ' ', last_name)) AS bookkeeper_name FROM freelancers " + 
     "WHERE worker_initials = year_end_accountant) " +
     "FROM customers JOIN customer_payments ON customers.id = customer_payments.customer_id " +
-    "WHERE customers.id=" + req.params.customer_id +
-    " GROUP BY customer_payments.customer_id, customers.primary_email, customers.name, customers.year_end_accountant;";
+    "WHERE customers.id=" + req.params.customer_id + " AND public.customers.potential_customer = TRUE " +
+    "GROUP BY customer_payments.customer_id, customers.primary_email, customers.name, customers.year_end_accountant;";
 
   client.query(acl_query_str, function (err, result) {
     if (result.rows.length > 0) {
@@ -816,8 +816,8 @@ exports.findExCustomerInfo = (req, res) => {
     "(SELECT TRIM(CONCAT(first_name, ' ', last_name)) AS bookkeeper_name FROM freelancers " + 
     "WHERE worker_initials = year_end_accountant) " +
     "FROM customers JOIN customer_payments ON customers.id = customer_payments.customer_id " +
-    "WHERE customers.id=" + req.body.sel_id +
-    " GROUP BY customer_payments.customer_id, customers.primary_email, customers.name, customers.year_end_accountant;";
+    "WHERE customers.id=" + req.body.sel_id + " AND public.customers.potential_customer = TRUE " +
+    "GROUP BY customer_payments.customer_id, customers.primary_email, customers.name, customers.year_end_accountant;";
 
   client.query(query_str, function (err, result) {
     if (err) {

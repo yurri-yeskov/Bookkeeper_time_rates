@@ -96,7 +96,7 @@ exports.findCustomer = (req, res) => { // Select a specified customer_id info
     "SELECT service_from, service_until, receipts_paid_for, vat_period, reporting_period, package, public.customers.id, " +
     "public.customers.company_type, public.customers.name FROM public.customers " +
     "JOIN public.customer_payments ON public.customers.id = public.customer_payments.customer_id " +
-    "WHERE public.customers.id = " + req.body.customer_id + " " +
+    "WHERE public.customers.id = " + req.body.customer_id + " AND public.customers.potential_customer = TRUE " +
     "ORDER BY public.customer_payments.service_from ";
 
   client.query(query_str, function (err, result) {
