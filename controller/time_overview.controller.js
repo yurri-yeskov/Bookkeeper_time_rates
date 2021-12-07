@@ -145,7 +145,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
     'reporting_period': 7, 'no_longer_customer_from': 8, 'year_end_accountant': 9, 'service_from': 10, 
     'service_until': 11, 'first_end_year': 12, 'new_customer': 13, 'q1_used': 15, 'q2_used': 16, 'q3_used': 17, 
     'q4_used': 18, 'y_used': 19, 'receipts_used': 20, 'q13': 21, 'q24': 22, 'y_est': 23, 't_est': 24, 'tc_est': 25, 
-    't_inv': 26, 'effic': 27, 't_used': 28, 'tc_used': 29
+    't_inv': 26, 'effic': 27, 't_used': 28, 'tc_used': 29, 'dlv_effic': 30
   }
 
   let o_index = 'customer_id';
@@ -248,7 +248,6 @@ exports.findCustomerInfoWithYear = (req, res) => {
   
   if (req.body.length != -1)
     query_str = query_str + " LIMIT " + req.body.length + " OFFSET " + req.body.start + ";";
-  console.log(query_str);
 
   client.query(init_query, function() {
     client.query(query_count, function(err, result) {

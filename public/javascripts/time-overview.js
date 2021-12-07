@@ -96,7 +96,7 @@ $(document).ready(function(){
             { data: 'tc_used' },                  // Total Cost Used      
             { data: 't_inv' },                    // Total Invoiced Price
             { data: 'effic' },                    // Expected Efficiency
-            { data: 'effic' },                    // Delivery Efficiency  // to change 
+            { data: 'dlv_effic' },                // Delivery Efficiency 
         ],
         "columnDefs":[
           {
