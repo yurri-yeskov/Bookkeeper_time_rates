@@ -246,6 +246,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
   
   if (req.body.length != -1)
     query_str = query_str + " LIMIT " + req.body.length + " OFFSET " + req.body.start + ";";
+  console.log(query_str);
 
   client.query(init_query, function() {
     client.query(query_count, function(err, result) {

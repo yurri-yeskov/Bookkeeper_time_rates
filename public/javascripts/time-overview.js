@@ -93,7 +93,7 @@ $(document).ready(function(){
             { data: 't_est' },                    // Total Time Estimated
             { data: 't_used' },                   // Total Time Used    
             { data: 'tc_est' },                   // Total Cost Estimated
-            { data: 'tc_used' },                   // Total Cost Used      // to change
+            { data: 'tc_used' },                  // Total Cost Used      
             { data: 't_inv' },                    // Total Invoiced Price
             { data: 'effic' },                    // Expected Efficiency
             { data: 'effic' },                    // Delivery Efficiency  // to change 
