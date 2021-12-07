@@ -219,7 +219,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
     "(COALESCE(q1_used, 0) + COALESCE(q2_used, 0) + COALESCE(q3_used, 0) + COALESCE(q4_used, 0) + COALESCE(y_used, 0)), 0.00), " + 
     "vv.year_end_accountant) as tc_used, " + "(CASE WHEN COALESCE(est[7], 0.00) = 0.00 THEN 0.00 ELSE " +
     "ROUND(calc_total_cost_used(COALESCE((COALESCE(q1_used, 0) + COALESCE(q2_used, 0) + COALESCE(q3_used, 0) + " + 
-    "COALESCE(q4_used, 0) + COALESCE(y_used, 0)), 0.00), vv.year_end_accountant)/est[7], 2) END) as dlv_effic"
+    "COALESCE(q4_used, 0) + COALESCE(y_used, 0)), 0.00), vv.year_end_accountant)/est[7], 2) END) as dlv_effic " + 
     "FROM (SELECT bb.*, calc_estvals(bb.customer_id, bb.max_receipts, bb.vat_period, bb.reporting_period, bb.new_customer::BOOLEAN, bb.service_from, " +
     "bb.company_type, bb.package_list, bb.year_end_accountant) as est, " + 
     "calc_timespent(bb.customer_id, '" + service_from + "'::date, '" + service_until + "'::date, 'Q1') as q1_used, " +
