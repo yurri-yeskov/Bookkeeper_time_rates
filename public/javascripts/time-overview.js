@@ -26,7 +26,7 @@ $(document).ready(function(){
           $('#leverance-oversigt tr td:nth-child(25)').css('background-color', '#e975a0'); // delete
           // $('#leverance-oversigt tr td:nth-child(27)').css('background-color', '#e975a0'); // delete
           // $('#leverance-oversigt tr td:nth-child(29)').css('background-color', '#e975a0'); // delete
-          $('#leverance-oversigt tr td:nth-child(32)').css('background-color', '#e975a0'); // delete
+          // $('#leverance-oversigt tr td:nth-child(32)').css('background-color', '#e975a0'); // delete
 
           if ($('#input-bookkeeper').val().length > 0) 
             $('#leverance-oversigt tr td:nth-child(3)').css("background-color", "#d1d0d0");
