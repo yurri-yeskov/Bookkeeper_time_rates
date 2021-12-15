@@ -117,13 +117,11 @@ exports.findAllTimeEntry = (req, res) => {
     }
     extra_search_str = extra_search_str + "])";
   }
-
   if (extra_search["s_deleted_val"]) {
     if (extra_search["s_deleted_val"] != 'show_all') {
       extra_search_str = extra_search_str + " AND deleted = " + extra_search["s_deleted_val"];
     }
   }
-
   if (extra_search["s_task_arr"]) {
     let task_list = {
       "1": "Almindelig kontering",
@@ -145,16 +143,13 @@ exports.findAllTimeEntry = (req, res) => {
     }
     extra_search_str = extra_search_str + "])";
   }
-
   if (extra_search["s_period_arr"]) {
-
     extra_search_str = extra_search_str + " AND period = ANY(ARRAY['" + extra_search["s_period_arr"][0] + "'";
     for (let i = 1; i < extra_search["s_period_arr"].length; i++) {
       extra_search_str = extra_search_str + ", '" + extra_search["s_period_arr"][i] + "'";
     }
     extra_search_str = extra_search_str + "])";
   }
-
   if (extra_search["s_note_val"]) {
     if (extra_search["s_note_val"] != 'show_all') {
       extra_search_str = extra_search_str + " AND note IS " + extra_search["s_note_val"];
@@ -164,12 +159,10 @@ exports.findAllTimeEntry = (req, res) => {
     let format_start_date = moment(extra_search["s_start_date_val"], 'DD-MM-YYYY').format("YYYY-MM-DD");
     extra_search_str = extra_search_str + " AND '" + format_start_date + "'::DATE " + "<= reg_date::DATE";
   }
-
   if (extra_search["s_end_date_val"]) {
     let format_end_date = moment(extra_search["s_end_date_val"], 'DD-MM-YYYY').format("YYYY-MM-DD");
     extra_search_str = extra_search_str + " AND '" + format_end_date + "'::DATE " + ">= reg_date::DATE";
   }
-
   if (extra_search_str != "") {
     extra_search_str = extra_search_str.substring(4, extra_search_str.length);
     extra_search_str = "WHERE (" + extra_search_str + ") ";
@@ -177,7 +170,6 @@ exports.findAllTimeEntry = (req, res) => {
 
   // change based on Search//
   let query_search_count = "SELECT COUNT(*) FROM task_manager.time_entries " + extra_search_str + searchStr;
-  
   // add offset and limit//
   let query_str = "SELECT customer_id, email_address, company_name, bookkeeper_name, task_type, period, delivery_year, deleted, note, " + 
                   "COALESCE(COALESCE(january_spent,0.00) + COALESCE(february_spent,0.00) + COALESCE(march_spent,0.00) + " + 
@@ -382,7 +374,6 @@ exports.updateReportTimes = (req, res) => {
                 old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'Period', '" + old_data.period + "', '" +
                 req.body.period + "', '" + req.body.today + "'::timestamp); ";
     }
-    
     if (req.body.time_spent) {
       query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
                 old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" +
@@ -404,7 +395,6 @@ exports.updateReportTimes = (req, res) => {
       res.send({ message: "It was updated successfully." });
     });
   });
-  
 };
 
 // exports.deleteReportTimes = (req, res) => {

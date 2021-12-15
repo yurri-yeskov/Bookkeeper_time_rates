@@ -148,6 +148,7 @@
             <% if (acl_array.includes('bank-access-overview') || 
                    acl_array.includes('bank-import') || 
                    acl_array.includes('bank-import-bulk') || 
+                   acl_array.includes('bank-balance-check') || 
                    acl_array.includes('bank-administration') || 
                    acl_array.includes('hooks') || 
                    acl_level == 1) { %>
@@ -161,6 +162,9 @@
                   <% } %>
                   <% if (acl_array.includes('bank-import-bulk') || acl_level == 1) { %>
                     <li><a href="<%= other_link %>bank/import-bulk">Bank Bulk Import</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bank-balance-check') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bank/balance-check">Bank Balance Check</a></li>
                   <% } %>
                   <% if (acl_array.includes('bank-administration') || acl_level == 1) { %>
                     <li><a href="<%= other_link %>bank/administration">Bank Administration</a></li>
@@ -253,6 +257,7 @@
                    acl_array.includes('admin-product-view') || 
                    acl_array.includes('admin-monitoring') || 
                    acl_array.includes('admin-notificator') || 
+                   acl_array.includes('admin-password-fix') ||
                    acl_level == 1) { %>
               <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -270,6 +275,9 @@
                   <% } %>
                   <% if (acl_array.includes('admin-notificator') || acl_level == 1) { %>
                     <li><a href="<%= other_link %>admin/notificator">Notificator settings</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('admin-password-fix') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>admin/password-fix">Password fix</a></li>
                   <% } %>
                 </ul>
               </li>

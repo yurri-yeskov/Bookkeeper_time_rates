@@ -87,4 +87,3 @@ createTable(query_str).then(result => {
 });
 
 module.exports = client;
-
