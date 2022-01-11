@@ -11,6 +11,10 @@
     <div class="row">
       <div class="container-fluid">
         <div class="container-customer bg-3" style="margin-bottom: 30px;">
+          <div class="col-sm-3" style="margin-bottom: 10px;">
+            <label>Year: &emsp;</label>
+            <input class="form-control-custom" type="number" id="input-year" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="<%=this_year%>">
+          </div>
           <table class="table table-striped table-bordered" id="over-spent-table" style="font-size: 11px;">
             <thead class="thead-dark">
               <tr>
@@ -47,12 +51,7 @@
             </thead>
           </table>
         </div>
-
         <div class="container-customer bg-3" style="margin-bottom: 75px;">
-          <div class="col-sm-3">
-            <label>Year: &emsp;</label>
-            <input class="form-control-custom" type="number" id="input-year" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="<%=this_year%>">
-          </div>
           <div class="col-sm-4">
             <div class="col-xs-5" style="text-align: right; padding-top: 7px;">
               <label>Date Interval:</label>
@@ -66,10 +65,10 @@
               <button type="button" class="btn btn-default sbm-button" style="padding: 4px 7px; width: 30px; height: 30px;"><span class="fa fa-paper-plane" ></span></button>
             </div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-4">
             <button class="btn btn-default" id="ex-add-time" onclick="showAddModalForExternal()">Add time for external customer</button>
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-4">
             <button class="btn btn-default" id="download-pdf" onclick="showDownloadPDFModal()">Download PDF</button>
           </div>
         </div>

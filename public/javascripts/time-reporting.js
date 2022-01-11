@@ -48,10 +48,7 @@ $(document).ready(function(){
         d.sel_start_date = getSelStartDate();
         d.sel_end_date = getSelEndDate();
       },
-      dataType: "json",
-      success: function(data) {
-        console.log("data", data);
-      }
+      dataType: "json"
     },
     "columns": [
       {data:'customer_id', render: renderSelect},
@@ -134,11 +131,11 @@ function getTotalTimes(sel_year) {
       }
     
       var total_time = parseFloat(data.data[0].january_time) + parseFloat(data.data[0].february_time) + 
-                        parseFloat(data.data[0].march_time) + parseFloat(data.data[0].april_time) + 
-                        parseFloat(data.data[0].may_time) + parseFloat(data.data[0].june_time) + 
-                        parseFloat(data.data[0].july_time) + parseFloat(data.data[0].august_time) + 
-                        parseFloat(data.data[0].september_time) + parseFloat(data.data[0].october_time) + 
-                        parseFloat(data.data[0].november_time) + parseFloat(data.data[0].december_time); 
+                       parseFloat(data.data[0].march_time) + parseFloat(data.data[0].april_time) + 
+                       parseFloat(data.data[0].may_time) + parseFloat(data.data[0].june_time) + 
+                       parseFloat(data.data[0].july_time) + parseFloat(data.data[0].august_time) + 
+                       parseFloat(data.data[0].september_time) + parseFloat(data.data[0].october_time) + 
+                       parseFloat(data.data[0].november_time) + parseFloat(data.data[0].december_time); 
       total_time = total_time.toFixed(2);
 
       var content_str = "<td>" + data.data[0].january_time +"</td>" + "<td>" + data.data[0].february_time +"</td>" +
@@ -622,7 +619,9 @@ function selectRows() {
 }
 
 function getSelYear() {
-  return $('#input-year').val();
+  // return $('#input-year').val();
+  var today = new Date();
+  return today.getFullYear();
 }
 
 function getSelToken() {
@@ -639,7 +638,7 @@ function getSelEndDate() {
 
 function submitsWithYear(e) {
   if (e.key === 'Enter' || e.keyCode === 13) {
-    time_spent_table.ajax.reload();
+    // time_spent_table.ajax.reload();
     getTotalTimes($('#input-year').val());
     $('.delivery-year').html($('#input-year').val());
   }
