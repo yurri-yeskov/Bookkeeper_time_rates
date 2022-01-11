@@ -529,18 +529,6 @@ function updateAReportTime() {
 }
 
 function deleteAReportTime() {
-
-  
-  var change_data = {
-    task_type: null,
-    period: null,
-    time_spent: null,
-    note: null,
-    delivery_year: null,
-    id: $('.current_id').val(),
-    month: $('.current_month').val(),
-    today: today
-  }
   
   if(confirm('Are you sure you want to')){
     
