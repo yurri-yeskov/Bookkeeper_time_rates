@@ -140,7 +140,7 @@ a.paginate_button {
 }
 
 .dropdown-menu.open {
-  max-height: 250px !important;
+  max-height: 300px !important;
 }
 
 .link-btn:after {

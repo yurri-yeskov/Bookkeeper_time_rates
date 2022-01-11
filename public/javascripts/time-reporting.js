@@ -48,7 +48,10 @@ $(document).ready(function(){
         d.sel_start_date = getSelStartDate();
         d.sel_end_date = getSelEndDate();
       },
-      dataType: "json"
+      dataType: "json",
+      success: function(data) {
+        console.log("data", data);
+      }
     },
     "columns": [
       {data:'customer_id', render: renderSelect},
