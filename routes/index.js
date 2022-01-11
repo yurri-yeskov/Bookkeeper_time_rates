@@ -69,6 +69,7 @@ router.post('/update_report_time', timeReptCtrl.updateReportTimes);
 router.post('/delete_report_time', timeReptCtrl.deleteReportTimes);
 router.post('/get_total_times', timeReptCtrl.findTotalTimes);
 router.post('/get_ex_customer_info', timeReptCtrl.findExCustomerInfo);
+router.post('/get_date_interval', timeReptCtrl.findDateInverval);
 
 /* GET REPORT OVERVIEW page */
 router.post('/report-overview', reptOvvwCtrl.getCurrentYear);

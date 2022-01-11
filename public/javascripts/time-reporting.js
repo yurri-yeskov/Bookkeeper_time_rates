@@ -94,6 +94,22 @@ $(document).ready(function(){
   });
 });
 
+function getDateInterval(sel_year) {
+  $.ajax({
+    type: "post",
+    url: base_url + "/get_date_interval",
+    data: {
+      this_year: sel_year,
+      user_token: getSelToken()
+    },
+    dataType: "json",
+    success: function(data) {
+    
+      console.log(data);
+    }
+  }); 
+}
+
 function extraShearchSubmit() {
   $('.sbm-button').on( 'click', function () {
     var start_date = $('#main-start-date').val();
