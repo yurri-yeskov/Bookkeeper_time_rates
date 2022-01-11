@@ -85,6 +85,7 @@ $(document).ready(function(){
   searchWithCustomerId();
   searchWithTimePeriod();
   extraShearchSubmit();
+  getDateInterval(getSelYear());
 
   $('.input-daterange').datepicker({
     format: "dd-mm-yyyy",
