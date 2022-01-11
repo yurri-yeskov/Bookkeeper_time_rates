@@ -901,15 +901,8 @@ exports.findDateInverval = (req, res) => {
           console.log(err);
           res.status(400).send(err);
         }
-        console.log(result.rows);
-        // var data = JSON.stringify({
-        //   draw: req.body.draw,
-        //   recordsFiltered: recordsFiltered,
-        //   recordsTotal: recordsTotal,
-        //   data: result.rows,
-        //   this_year: req.body.this_year,
-        // });
-        // res.send(data);
+        var data = JSON.stringify({ data: result.rows[0] });
+        res.send(data);
       });
     });
   });
