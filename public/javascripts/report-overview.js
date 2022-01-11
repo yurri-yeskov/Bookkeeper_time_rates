@@ -535,7 +535,9 @@ function deleteAReportTime() {
     $.ajax({
       type: "post",
       url: base_url + "/delete_areport_time",
-      id: $('.current_id').val(),
+      data: {
+        id : $('.current_id').val()
+      },
       dataType: "json",
       success: function(data) {
         setTimeout(function() {
