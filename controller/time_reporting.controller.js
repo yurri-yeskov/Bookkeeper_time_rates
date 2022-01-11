@@ -697,7 +697,7 @@ exports.deleteReportTimes = (req, res) => {
         console.log(err);
         res.status(400).send(err);
       }
-      res.send({ message: "It was updated successfully." });
+      res.send({ message: "It was deleted successfully." });
     });
   });
 };

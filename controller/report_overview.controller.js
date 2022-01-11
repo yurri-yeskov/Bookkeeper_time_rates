@@ -397,38 +397,38 @@ exports.updateReportTimes = (req, res) => {
   });
 };
 
-// exports.deleteReportTimes = (req, res) => {
-    
-//   if (!req.body) {
-//       return res.status(400).send({
-//         message: "Data to update can not be empty!"
-//       });
-//   }
+exports.deleteReportTimes = (req, res) => {
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!",
+    });
+  }
 
-//   let pre_query_str = "SELECT * FROM task_manager.time_entries WHERE id=" + req.body.id;
+  let pre_query_str = "SELECT * FROM task_manager.time_entries WHERE id=" + req.body.id;
 
-//   client.query(pre_query_str, function(err, result){
-//     if (err) {
-//       console.log(err);
-//       res.status(400).send(err);
-//     }
-//     let old_data = result.rows[0];
+  client.query(pre_query_str, function (err, result) {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+    let old_data = result.rows[0];
 
-//     let query_str = "UPDATE task_manager.time_entries SET " + 
-//                     "deleted=true WHERE id=" + req.body.id + "; ";
-    
-//     query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
-//               old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" +
-//               old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'deleted', 'FALSE', 'TRUE', '" + req.body.today + "'::timestamp); ";
-  
+    let query_str = "UPDATE task_manager.time_entries SET " +
+      "deleted=true WHERE id=" + req.body.id + "; ";
 
-//     client.query(query_str, function(err, result) {
-//       if (err) {
-//           console.log(err);
-//           res.status(400).send(err);
-//       }
-//       res.send({ message: "It was updated successfully." });
-//     });
-//   });
-  
-// };
+    query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, " + 
+      "bookkeeper_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, " + 
+      "change_date) VALUES (" + old_data.customer_id + ", '" + old_data.company_name + "', '" +
+      old_data.bookkeeper_name + "', '" + old_data.email_address + "', " + old_data.delivery_year +
+      ", '" + req.body.month + "', " + "'deleted', 'FALSE', 'TRUE', '" +
+      req.body.today + "'::timestamp); ";
+
+    client.query(query_str, function (err, result) {
+      if (err) {
+        console.log(err);
+        res.status(400).send(err);
+      }
+      res.send({ message: "It was deleted successfully." });
+    });
+  });
+};

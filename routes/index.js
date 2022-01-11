@@ -76,6 +76,7 @@ router.get('/report-overview', function(req, res) { res.redirect(linkConfig.OTHE
 router.post('/get_all_time_entry', reptOvvwCtrl.findAllTimeEntry);
 router.get('/get_bookkeeper_name_list', reptOvvwCtrl.findBookkeeperNames);
 router.post('/update_areport_time', reptOvvwCtrl.updateReportTimes);
+router.post('/delete_areport_time', reptOvvwCtrl.deleteReportTimes);
 
 /* GET RECEIPT RECOG page */
 router.get('/receipt-recog', rcptRecoCtrl.index);

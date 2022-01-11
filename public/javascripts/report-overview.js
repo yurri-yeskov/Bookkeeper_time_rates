@@ -242,7 +242,7 @@ function isValidDate(dateString) {
   var year = parseInt(parts[2], 10);
 
   // Check the ranges of month and year
-  if(year < 1000 || year > 3000 || month == 0 || month > 12)
+  if(year < 1900 || year > 2100 || month == 0 || month > 12)
     return false;
 
   var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
@@ -514,6 +514,37 @@ function updateAReportTime() {
       type: "post",
       url: base_url + "/update_areport_time",
       data: change_data,
+      dataType: "json",
+      success: function(data) {
+        setTimeout(function() {
+          location.reload();
+          getTotalTimes($('#input-year').val());
+        }, 1000);
+      }
+    });
+  }
+}
+
+function deleteAReportTime() {
+
+  
+  var change_data = {
+    task_type: null,
+    period: null,
+    time_spent: null,
+    note: null,
+    delivery_year: null,
+    id: $('.current_id').val(),
+    month: $('.current_month').val(),
+    today: today
+  }
+  
+  if(confirm('Are you sure you want to')){
+    
+    $.ajax({
+      type: "post",
+      url: base_url + "/delete_areport_time",
+      id: $('.current_id').val(),
       dataType: "json",
       success: function(data) {
         setTimeout(function() {

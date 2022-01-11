@@ -31,7 +31,7 @@ function isValidDate(dateString) {
   var year = parseInt(parts[2], 10);
 
   // Check the ranges of month and year
-  if (year < 1000 || year > 3000 || month == 0 || month > 12) return false;
+  if (year < 1900 || year > 2100 || month == 0 || month > 12) return false;
 
   var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
