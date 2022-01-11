@@ -876,14 +876,6 @@ exports.findDateInverval = (req, res) => {
     let init_query = "CALL set_customer_time_into_temp('" + service_from + "', '" + service_until + "');";
 
     let query_str = "SELECT MIN(reg_date) AS min_date, MAX(reg_date) AS max_date ";
-      // "SELECT (COALESCE(january_spent, 0.00) + COALESCE(february_spent, 0.00) + COALESCE(march_spent, 0.00) + " +
-      // "COALESCE(april_spent, 0.00) + COALESCE(may_spent, 0.00) + COALESCE(june_spent, 0.00) + " +
-      // "COALESCE(july_spent, 0.00) + COALESCE(august_spent, 0.00) + COALESCE(september_spent, 0.00) + " +
-      // "COALESCE(october_spent, 0.00) + COALESCE(november_spent, 0.00) + COALESCE(december_spent, 0.00)) " + 
-      // "AS time_spent, reg_date, " +
-      // "task_manager.time_entries.customer_id, email_address, task_manager.time_entries.company_name, " + 
-      // "task_manager.time_entries.bookkeeper_name, task_type, period, delivery_year, note ";
-
     let query_from =
       "FROM task_manager.time_entries JOIN temp_customer_time ON task_manager.time_entries.customer_id = " + 
       "temp_customer_time.customer_id WHERE deleted = false ";
@@ -891,9 +883,7 @@ exports.findDateInverval = (req, res) => {
     if (acl_level != 1) // is not admin
       query_from = query_from + "AND task_manager.time_entries.bookkeeper_name = '" +
         bookkeeper_full_name + "' ";
-
     query_str = query_str + query_from;
-    console.log("<><><><>", query_str);
 
     client.query(init_query, function(){
       client.query(query_str, function(err, result) {
@@ -901,7 +891,9 @@ exports.findDateInverval = (req, res) => {
           console.log(err);
           res.status(400).send(err);
         }
-        var data = JSON.stringify({ data: result.rows[0] });
+        let min_date = moment(result.rows[0].min_date).format("YYYY-MM-DD");
+        let max_date = moment(result.rows[0].max_date).format("YYYY-MM-DD");
+        var data = JSON.stringify({ min_date: min_date, max_date: max_date });
         res.send(data);
       });
     });

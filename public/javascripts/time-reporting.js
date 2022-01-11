@@ -86,13 +86,6 @@ $(document).ready(function(){
   searchWithTimePeriod();
   extraShearchSubmit();
   getDateInterval(getSelYear());
-
-  $('.input-daterange').datepicker({
-    format: "dd-mm-yyyy",
-    todayBtn: true,
-    todayHighlight: true,
-    clearBtn: true
-  });
 });
 
 function getDateInterval(sel_year) {
@@ -107,6 +100,14 @@ function getDateInterval(sel_year) {
     success: function(data) {
     
       console.log(data);
+      $('.input-daterange').datepicker({
+        format: "dd-mm-yyyy",
+        minDate: new Date(data.min_date),
+        maxDate: new Date(data.max_date),
+        todayBtn: true,
+        todayHighlight: true,
+        clearBtn: true
+      });
     }
   }); 
 }
