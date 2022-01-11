@@ -530,13 +530,22 @@ function updateAReportTime() {
 
 function deleteAReportTime() {
   
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = yyyy + "-" + mm + "-" + dd + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
   if(confirm('Are you sure you want to')){
     
     $.ajax({
       type: "post",
       url: base_url + "/delete_areport_time",
       data: {
-        id : $('.current_id').val()
+        id : $('.current_id').val(),
+        month: $('.current_month').val(),
+        today: today
       },
       dataType: "json",
       success: function(data) {
