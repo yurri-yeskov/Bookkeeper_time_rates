@@ -285,6 +285,9 @@ function showEditAModal(e) {
   $('.company-name').html(cur_row_data.company_name);
   $('.email-addr').html(cur_row_data.email_address);
   $('.current_month').val(cur_row_data.sel_month);
+  if (cur_row_data.deleted) $('#del-btn').prop('disabled', true);
+  else $('#del-btn').prop('disabled', false);
+
   var task_list = {
     "Almindelig kontering": "1",
     "Årsafslutningspakke - Selskaber 1. År": "2",
