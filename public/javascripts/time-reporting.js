@@ -101,6 +101,7 @@ function getDateInterval(sel_year) {
     
       $('.input-daterange').datepicker({
         format: "dd-mm-yyyy",
+        orientation: "bottom auto",
         startDate: new Date(parseInt(data.max_date.year), parseInt(data.max_date.month) - 1, parseInt(data.max_date.day)),
         endDate: new Date(parseInt(data.min_date.year), parseInt(data.min_date.month) - 1, parseInt(data.min_date.day)),
         clearBtn: true
