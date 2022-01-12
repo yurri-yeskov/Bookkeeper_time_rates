@@ -104,8 +104,8 @@ function getDateInterval(sel_year) {
       console.log("min", parseInt(data.min_date.year), parseInt("01"), parseInt("05"));
       $('.input-daterange').datepicker({
         format: "dd-mm-yyyy",
-        minDate: moment("12/01/2015"),
-        maxDate: moment("12/30/2015"),
+        minDate: moment("2015-12-01"),
+        maxDate: moment("2015-12-30"),
         clearBtn: true
       });
     }
