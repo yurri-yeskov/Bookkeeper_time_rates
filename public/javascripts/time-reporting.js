@@ -106,8 +106,8 @@ function getDateInterval(sel_year) {
         format: "dd-mm-yyyy",
         minDate: moment("2015-12-01"),
         maxDate: moment("2015-12-30"),
-        startDate: moment("2015-12-01"),
-        endDate: moment("2015-12-30"),
+        startDate: new Date(2015, 12, 1),
+        endDate: new Date(2015, 12, 30),
         clearBtn: true
       });
     }
