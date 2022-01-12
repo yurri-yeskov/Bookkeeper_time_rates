@@ -901,7 +901,7 @@ exports.findDateInverval = (req, res) => {
           month: moment(result.rows[0].max_date).format("MM"),
           day: moment(result.rows[0].max_date).format("DD"),
         };
-        console.log(min_date, max_date);
+        
         var data = JSON.stringify({ min_date: min_date, max_date: max_date });
         res.send(data);
       });

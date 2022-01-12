@@ -99,13 +99,10 @@ function getDateInterval(sel_year) {
     dataType: "json",
     success: function(data) {
     
-      console.log(data);
-      console.log("min", parseInt(data.min_date.year), parseInt(data.min_date.month), parseInt(data.min_date.day));
-      console.log("min", parseInt(data.min_date.year), parseInt("01"), parseInt("05"));
       $('.input-daterange').datepicker({
         format: "dd-mm-yyyy",
-        startDate: new Date(parseInt(data.max_date.year) - 1, parseInt(data.max_date.month) - 1, parseInt(data.max_date.day)),
-        endDate: new Date(parseInt(data.min_date.year) - 1, parseInt(data.min_date.month) - 1, parseInt(data.min_date.day)),
+        startDate: new Date(parseInt(data.max_date.year), parseInt(data.max_date.month) - 1, parseInt(data.max_date.day)),
+        endDate: new Date(parseInt(data.min_date.year), parseInt(data.min_date.month) - 1, parseInt(data.min_date.day)),
         clearBtn: true
       });
     }
