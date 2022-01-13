@@ -262,10 +262,15 @@ exports.findCustomerInfoWithYear = (req, res) => {
     let end_date = "";
     if (req.body.sel_start_date)
       start_date = moment(req.body.sel_start_date, "DD-MM-YYYY").format("YYYY-MM-DD");
+    else 
+      start_date = "2500-01-01";
     if (req.body.sel_end_date)
       end_date = moment(req.body.sel_end_date, "DD-MM-YYYY").format("YYYY-MM-DD");
+    else 
+      end_date = "2500-01-01";
 
-    let service_from = req.body.this_year + "-01-01";
+    // let service_from = req.body.this_year + "-01-01";
+    let service_from = "1900-01-01"
     let service_until = req.body.this_year + "-12-31";
 
     let recordsTotal = 0;
@@ -338,7 +343,6 @@ exports.findCustomerInfoWithYear = (req, res) => {
 
     if (req.body.length != -1)
       query_str = query_str + "LIMIT " + req.body.length + " OFFSET " + req.body.start;
-    console.log(query_str);
 
     client.query(init_query, function () {
       client.query(query_count, function (err, result) {
@@ -871,7 +875,8 @@ exports.findDateInverval = (req, res) => {
     // else if (result.rows.length > 0)
     if (result.rows.length > 0) bookkeeper_full_name = result.rows[0].bookkeeper_name;
 
-    let service_from = req.body.this_year + "-01-01";
+    // let service_from = req.body.this_year + "-01-01";
+    let service_from = "1900-01-01";
     let service_until = req.body.this_year + "-12-31";
 
     let init_query = "CALL set_customer_time_into_temp('" + service_from + "', '" + service_until + "');";
