@@ -70,6 +70,7 @@ $(document).ready(function(){
       { data: 'period' },           // Delivery Period
       { data: 'delivery_year' },    // Delivery Year
       { data: 'time_spent' },       // Time Spent
+      { data: 'reg_date' },       // Timespamp
       { data: 'deleted', render: renderCheck },
       { data: 'note' },             // Note
       { data: 'sel_month'}

@@ -82,7 +82,7 @@ exports.findAllTimeEntry = (req, res) => {
 
   let order_list = {
     'customer_id': 1, 'email_address': 2, 'company_name': 3, 'bookkeeper_name': 4, 'task_type': 5, 
-    'period': 6, 'delivery_year': 7, 'deleted': 8, 'note': 9, 'time_spent': 10
+    'period': 6, 'delivery_year': 7, 'deleted': 8, 'note': 9, 'time_spent': 10, 'reg_date': 11
   };
 
   let o_index = 'customer_id';
@@ -175,7 +175,7 @@ exports.findAllTimeEntry = (req, res) => {
                   "COALESCE(COALESCE(january_spent,0.00) + COALESCE(february_spent,0.00) + COALESCE(march_spent,0.00) + " + 
                   "COALESCE(april_spent,0.00) + COALESCE(may_spent,0.00) + COALESCE(june_spent,0.00) + COALESCE(july_spent,0.00) + COALESCE(august_spent,0.00) + " +
                   "COALESCE(september_spent,0.00) + COALESCE(october_spent,0.00) + COALESCE(november_spent,0.00) + COALESCE(december_spent,0.00)" +
-                  ", 0.00) as time_spent, id, january_spent, february_spent, march_spent, april_spent, may_spent, june_spent, " + 
+                  ", 0.00) as time_spent, reg_date, id, january_spent, february_spent, march_spent, april_spent, may_spent, june_spent, " + 
                   "july_spent, august_spent, september_spent, october_spent, november_spent, december_spent " +
                   "FROM task_manager.time_entries " + searchStr + extra_search_str + order_by;
 
@@ -204,6 +204,7 @@ exports.findAllTimeEntry = (req, res) => {
           else if (result.rows[i].october_spent != null) result.rows[i].sel_month = 'October';
           else if (result.rows[i].november_spent != null) result.rows[i].sel_month = 'November';
           else if (result.rows[i].december_spent != null) result.rows[i].sel_month = 'December';
+          result.rows[i].reg_date = moment(result.rows[i].reg_date, "YYYY-MM-DD").format("DD-MM-YYYY");
         }
         var data = JSON.stringify({
           "draw": req.body.draw,

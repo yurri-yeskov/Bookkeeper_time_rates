@@ -269,8 +269,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
     else 
       end_date = "2500-01-01";
 
-    // let service_from = req.body.this_year + "-01-01";
-    let service_from = "1900-01-01"
+    let service_from = req.body.this_year + "-01-01";
     let service_until = req.body.this_year + "-12-31";
 
     let recordsTotal = 0;
@@ -833,84 +832,83 @@ exports.findExCustomerInfo = (req, res) => {
   });
 };
 
-exports.findDateInverval = (req, res) => {
-  if (!req.body.this_year) {
-    console.log("Oops!");
-    res.redirect("/");
-    return;
-  }
+// exports.findDateInverval = (req, res) => {
+//   if (!req.body.this_year) {
+//     console.log("Oops!");
+//     res.redirect("/");
+//     return;
+//   }
 
-  if (!req.body.user_token) {
-    console.log("Oops! You need to log in again");
-    res.redirect(linkConfig.OTHER_LINK);
-    return;
-  }
-  const token_data = auth.tokenVeryfy(req.body.user_token);
-  if (!token_data) {
-    console.log("Token expired");
-    // res.redirect(linkConfig.OTHER_LINK); ////////////////////Ajax
-    var data = JSON.stringify({
-      draw: 0,
-      recordsFiltered: 0,
-      recordsTotal: 0,
-      data: [],
-      this_year: req.body.this_year,
-    });
-    res.send(data);
-    return;
-  }
+//   if (!req.body.user_token) {
+//     console.log("Oops! You need to log in again");
+//     res.redirect(linkConfig.OTHER_LINK);
+//     return;
+//   }
+//   const token_data = auth.tokenVeryfy(req.body.user_token);
+//   if (!token_data) {
+//     console.log("Token expired");
+//     // res.redirect(linkConfig.OTHER_LINK); ////////////////////Ajax
+//     var data = JSON.stringify({
+//       draw: 0,
+//       recordsFiltered: 0,
+//       recordsTotal: 0,
+//       data: [],
+//       this_year: req.body.this_year,
+//     });
+//     res.send(data);
+//     return;
+//   }
 
-  const my_email = token_data.username;
-  let pre_query_str =
-    "SELECT TRIM(CONCAT(first_name, ' ', last_name)) AS bookkeeper_name, COALESCE(price_per_hour, 0.00) as hourly " + 
-    "FROM task_manager.freelancers WHERE email='" + my_email + "'";
-  client.query(pre_query_str, function (err, result) {
-    if (err) {
-      console.log(err);
-      res.status(400).send(err);
-    }
-    let bookkeeper_full_name = "N/A";
-    let acl_level = admin_emails.includes(my_email) ? 1 : 0;
-    // if (acl_level == 1) bookkeeper_full_name = "Admin";
-    // else if (result.rows.length > 0)
-    if (result.rows.length > 0) bookkeeper_full_name = result.rows[0].bookkeeper_name;
+//   const my_email = token_data.username;
+//   let pre_query_str =
+//     "SELECT TRIM(CONCAT(first_name, ' ', last_name)) AS bookkeeper_name, COALESCE(price_per_hour, 0.00) as hourly " + 
+//     "FROM task_manager.freelancers WHERE email='" + my_email + "'";
+//   client.query(pre_query_str, function (err, result) {
+//     if (err) {
+//       console.log(err);
+//       res.status(400).send(err);
+//     }
+//     let bookkeeper_full_name = "N/A";
+//     let acl_level = admin_emails.includes(my_email) ? 1 : 0;
+//     // if (acl_level == 1) bookkeeper_full_name = "Admin";
+//     // else if (result.rows.length > 0)
+//     if (result.rows.length > 0) bookkeeper_full_name = result.rows[0].bookkeeper_name;
 
-    // let service_from = req.body.this_year + "-01-01";
-    let service_from = "1900-01-01";
-    let service_until = req.body.this_year + "-12-31";
+//     let service_from = req.body.this_year + "-01-01";
+//     let service_until = req.body.this_year + "-12-31";
 
-    let init_query = "CALL set_customer_time_into_temp('" + service_from + "', '" + service_until + "');";
+//     let init_query = "CALL set_customer_time_into_temp('" + service_from + "', '" + service_until + "');";
 
-    let query_str = "SELECT MIN(reg_date) AS min_date, MAX(reg_date) AS max_date ";
-    let query_from =
-      "FROM task_manager.time_entries JOIN temp_customer_time ON task_manager.time_entries.customer_id = " + 
-      "temp_customer_time.customer_id WHERE deleted = false ";
+//     let query_str = "SELECT MIN(reg_date) AS min_date, MAX(reg_date) AS max_date ";
+//     let query_from =
+//       "FROM task_manager.time_entries JOIN temp_customer_time ON task_manager.time_entries.customer_id = " + 
+//       "temp_customer_time.customer_id WHERE deleted = false ";
 
-    if (acl_level != 1) // is not admin
-      query_from = query_from + "AND task_manager.time_entries.bookkeeper_name = '" +
-        bookkeeper_full_name + "' ";
-    query_str = query_str + query_from;
+//     if (acl_level != 1) // is not admin
+//       query_from = query_from + "AND task_manager.time_entries.bookkeeper_name = '" +
+//         bookkeeper_full_name + "' ";
+//     query_str = query_str + query_from;
 
-    client.query(init_query, function(){
-      client.query(query_str, function(err, result) {
-        if (err) {
-          console.log(err);
-          res.status(400).send(err);
-        }
-        let min_date = {
-          year: moment(result.rows[0].min_date).format("YYYY"),
-          month: moment(result.rows[0].min_date).format("MM"),
-          day: moment(result.rows[0].min_date).format("DD"),
-        };
-        let max_date = {
-          year: moment(result.rows[0].max_date).format("YYYY"),
-          month: moment(result.rows[0].max_date).format("MM"),
-          day: moment(result.rows[0].max_date).format("DD"),
-        };
+//     client.query(init_query, function(){
+//       client.query(query_str, function(err, result) {
+//         if (err) {
+//           console.log(err);
+//           res.status(400).send(err);
+//         }
+//         let min_date = {
+//           year: moment(result.rows[0].min_date).format("YYYY"),
+//           month: moment(result.rows[0].min_date).format("MM"),
+//           day: moment(result.rows[0].min_date).format("DD"),
+//         };
+//         let max_date = {
+//           year: moment(result.rows[0].max_date).format("YYYY"),
+//           month: moment(result.rows[0].max_date).format("MM"),
+//           day: moment(result.rows[0].max_date).format("DD"),
+//         };
         
-        var data = JSON.stringify({ min_date: min_date, max_date: max_date });
-        res.send(data);
-      });
-    });
-  });
-};
+//         var data = JSON.stringify({ min_date: min_date, max_date: max_date });
+//         res.send(data);
+//       });
+//     });
+//   });
+// };
