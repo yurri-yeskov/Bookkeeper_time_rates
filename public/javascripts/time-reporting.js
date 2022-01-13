@@ -196,7 +196,11 @@ function showAddModal(e) {
 }
 
 function showAddModalForExternal() {
+  var pre_start_date = $('#main-start-date').val();
+  var pre_end_date = $('#main-end-date').val();
   $('.form-control').val('');
+  $('#main-start-date').val(pre_start_date);
+  $('#main-end-date').val(pre_end_date);
   $('.customer-id').css('display', 'none');
   $('#input-customer_id').css('display', 'inline');
   $('#del_button').css('display', 'inline'); // delete this button after integratoin
@@ -652,12 +656,10 @@ function getSelToken() {
 }
 
 function getSelStartDate() {
-  console.log($('#main-start-date').val(), "start-date")
   return $('#main-start-date').val();
 }
 
 function getSelEndDate() {
-  console.log($('#main-end-date').val(), "start-date")
   return $('#main-end-date').val();
 }
 
@@ -972,10 +974,8 @@ function submitReportTime() {
           window.location.replace(data.other_link);
           return;
         }
-        setTimeout(function(){
-          location.reload();
-          getTotalTimes($('#input-year').val());
-        }, 1000); 
+        $('.btn-cancel').trigger('click');
+        time_spent_table.ajax.reload();
       }
     });
   }
