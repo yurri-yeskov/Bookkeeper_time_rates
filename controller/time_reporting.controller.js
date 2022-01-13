@@ -264,6 +264,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
       start_date = moment(req.body.sel_start_date, "DD-MM-YYYY").format("YYYY-MM-DD");
     if (req.body.sel_end_date)
       end_date = moment(req.body.sel_end_date, "DD-MM-YYYY").format("YYYY-MM-DD");
+    console.log("asdfasdf", start_date, end_date);
 
     let service_from = req.body.this_year + "-01-01";
     let service_until = req.body.this_year + "-12-31";

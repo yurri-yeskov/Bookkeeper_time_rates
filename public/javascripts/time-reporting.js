@@ -645,10 +645,12 @@ function getSelToken() {
 }
 
 function getSelStartDate() {
+  console.log($('#main-start-date').val(), "start-date")
   return $('#main-start-date').val();
 }
 
 function getSelEndDate() {
+  console.log($('#main-end-date').val(), "start-date")
   return $('#main-end-date').val();
 }
 
