@@ -264,7 +264,6 @@ exports.findCustomerInfoWithYear = (req, res) => {
       start_date = moment(req.body.sel_start_date, "DD-MM-YYYY").format("YYYY-MM-DD");
     if (req.body.sel_end_date)
       end_date = moment(req.body.sel_end_date, "DD-MM-YYYY").format("YYYY-MM-DD");
-    console.log("asdfasdf", start_date, end_date);
 
     let service_from = req.body.this_year + "-01-01";
     let service_until = req.body.this_year + "-12-31";
@@ -291,9 +290,9 @@ exports.findCustomerInfoWithYear = (req, res) => {
       query_from = query_from + "AND task_manager.time_entries.bookkeeper_name = '" +
         bookkeeper_full_name + "' ";
     if (start_date != "")
-      query_from = query_from + "AND reg_date >= '" + start_date + "'::date ";
+      query_from = query_from + "AND reg_date::date >= '" + start_date + "'::date ";
     if (end_date != "")
-      query_from = query_from + "AND reg_date <= '" + end_date + "'::date ";
+      query_from = query_from + "AND reg_date::date <= '" + end_date + "'::date ";
 
     query_str = query_str + query_from;
 /////////////////////////////////////////////////////////////
