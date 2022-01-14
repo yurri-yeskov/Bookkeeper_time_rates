@@ -72,13 +72,13 @@ $(document).ready(function(){
       { data: 'time_spent' },       // Time Spent
       { data: 'reg_date' },       // Timespamp
       { data: 'deleted', render: renderCheck },
-      { data: 'note' },             // Note
+      { data: 'note' },             // Note -- visible false
       { data: 'sel_month'}
     ],
     "columnDefs":[
 
       {
-        "targets": [ 11 ],
+        "targets": [ 12 ],
         "visible": false
       },
 
