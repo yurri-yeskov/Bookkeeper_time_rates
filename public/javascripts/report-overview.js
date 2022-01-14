@@ -118,8 +118,7 @@ $(document).ready(function(){
 
   $('.input-daterange').datepicker({
     format: "dd-mm-yyyy",
-    todayBtn: true,
-    todayHighlight: true,
+    orientation: "bottom auto",
     clearBtn: true
   });
 
@@ -276,7 +275,11 @@ function extraShearchSubmit() {
 }
 
 function showEditAModal(e) {
+  var pre_start_date = $('#start-date').val();
+  var pre_end_date = $('#end-date').val();
   $('.form-control').val('');
+  $('#start-date').val(pre_start_date);
+  $('#end-date').val(pre_end_date);
   $(".selectpicker").selectpicker("refresh");
   $('.current_id').val(e.name);
   var cur_row = $('#time-entry').find('#' + e.name).parents('tr');
@@ -520,10 +523,8 @@ function updateAReportTime() {
       data: change_data,
       dataType: "json",
       success: function(data) {
-        setTimeout(function() {
-          location.reload();
-          getTotalTimes($('#input-year').val());
-        }, 1000);
+        $('.btn-cancel').trigger('click');
+        time_entry_table.ajax.reload();
       }
     });
   }
@@ -550,10 +551,8 @@ function deleteAReportTime() {
       },
       dataType: "json",
       success: function(data) {
-        setTimeout(function() {
-          location.reload();
-          getTotalTimes($('#input-year').val());
-        }, 1000);
+        $('.btn-cancel').trigger('click');
+        time_entry_table.ajax.reload();
       }
     });
   }

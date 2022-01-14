@@ -176,7 +176,11 @@ function getTotalTimes(sel_year) {
 }
 
 function showAddModal(e) {
+  var pre_start_date = $('#main-start-date').val();
+  var pre_end_date = $('#main-end-date').val();
   $('.form-control').val('');
+  $('#main-start-date').val(pre_start_date);
+  $('#main-end-date').val(pre_end_date);
   $('.customer-id').css('display', 'inline-block');
   $('#input-customer_id').css('display', 'none');
   $('#del_button').css('display', 'none'); // delete this button after integratoin
@@ -540,10 +544,10 @@ function acepRow(id, month_name) {
   }
   
   var sel_note = $('#e_note_' + id).val().replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g,"\n");
-  if (sel_note == '') {
-    alert('Please fill all fields.');
-    return;
-  }
+  // if (sel_note == '') {
+  //   alert('Please fill all fields.');
+  //   return;
+  // }
   if (sel_note != $('#s_note_' + id).html()) {
     change_data.note = sel_note;
     $('#s_note_' + id).html(sel_note);
