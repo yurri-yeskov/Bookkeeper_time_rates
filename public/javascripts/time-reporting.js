@@ -56,7 +56,7 @@ $(document).ready(function(){
       { data: 'email_address' },    // Email Address
       { data: 'company_name' },     // Company Name
       { data: 'bookkeeper_name' },  // Bookkeeper Name
-      { data: 'bookkeeper_name' },  // Reporter Name
+      { data: 'Reporter_name' },  // Reporter Name
       { data: 'task_type' },        // Primary Task Type
       { data: 'period' },           // Delivery Period
       { data: 'delivery_year' },    // Delivery Year
@@ -382,7 +382,7 @@ function appendTagEditContent (month_name, data) {
     '<tr id="etr_' + data.id + '">' +
       '<td>' + data.customer_id + '</td>' +
       '<td>' + data.bookkeeper_name + '</td>' +
-      '<td>' + data.bookkeeper_name + '</td>' +
+      '<td>' + data.reporter_name + '</td>' +
       '<td>' + data.company_name + '</td>' +
       '<td>' + data.email_addr + '</td>' +
       '<td>' + data.delivery_year + '</td>' +
@@ -496,7 +496,8 @@ function acepRow(id, month_name) {
     note: null,
     id: id,
     month: month_name,
-    today: today
+    today: today,
+    user_token: getSelToken()
   }
   var sel_task = $('#e_task_' + id).val();
   if (sel_task == null) {
@@ -570,7 +571,7 @@ function acepRow(id, month_name) {
     $('.btn').prop('disabled', true);
     $.ajax({
       type: "post",
-      url: base_url + "/update_report_time",
+      url: base_url + "/update_report_time", ///////////////////////////
       data: change_data,
       dataType: "json",
       success: function(data) {
@@ -622,7 +623,7 @@ function appendTagAuditContent(month_name, data) {
           '<tr id="atr_' + data.id + '">' +
             '<td>' + data.customer_id + '</td>' +
             '<td>' + data.bookkeeper_name + '</td>' +
-            '<td>' + data.bookkeeper_name + '</td>' +
+            '<td>' + data.reporter_name + '</td>' +
             '<td>' + data.company_name + '</td>' +
             '<td>' + data.email_addr + '</td>' +
             '<td>' + data.delivery_year + '</td>' +
@@ -959,7 +960,7 @@ function submitReportTime() {
       url: base_url + "/set_report_time",
       data: {
         customer_id: $('.customer-id').html(),
-        // bookkeeper_name: $('.bookkeeper-name').html(),
+        bookkeeper_name: $('.bookkeeper-name').html(),
         user_token: getSelToken(),
         company_name: $('.company-name').html(),
         primary_email: $('.email-addr').html(),

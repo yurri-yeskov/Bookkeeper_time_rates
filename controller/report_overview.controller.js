@@ -298,6 +298,27 @@ exports.updateReportTimes = (req, res) => {
     });
   }
 
+  
+  if (!req.body.user_token) {
+    console.log("Oops! You need to log in again");
+    res.redirect(linkConfig.OTHER_LINK);
+    return;
+  }
+  const token_data = auth.tokenVeryfy(req.body.user_token);
+  if (!token_data) {
+    console.log("Token expired");
+    // res.redirect(linkConfig.OTHER_LINK); ///////////////Ajax
+    res.send({
+      other_link: linkConfig.OTHER_LINK + "logout",
+      data: "token_expired",
+    });
+    return;
+  }
+  const my_email = token_data.username;
+  let bpre_query_str = 
+    "SELECT TRIM(CONCAT(first_name, ' ', last_name)) AS bookkeeper_name, COALESCE(price_per_hour, 0.00) " +
+    "AS hourly FROM task_manager.freelancers WHERE email='" + my_email + "'";
+
   if ( !req.body.task_type && !req.body.period &&
        !req.body.time_spent && !req.body.note ) {
     console.log("Oops!");
@@ -306,94 +327,111 @@ exports.updateReportTimes = (req, res) => {
   }
   let pre_query_str = "SELECT * FROM task_manager.time_entries WHERE id=" + req.body.id;
 
-  client.query(pre_query_str, function(err, result){
-    if (err) {
-      console.log(err);
-      res.status(400).send(err);
-    }
-    let old_data = result.rows[0];
-    let month_list = {
-      "January":    "january_spent", 
-      "February":   "february_spent", 
-      "March":      "march_spent",
-      "April":      "april_spent", 
-      "May":        "may_spent",
-      "June":       "june_spent", 
-      "July":       "july_spent", 
-      "August":     "august_spent", 
-      "September":  "september_spent", 
-      "October":    "october_spent",
-      "November":   "november_spent", 
-      "December":   "december_spent" 
-    }
-  
-    // let task_list = {
-    //   "1": "Almindelig kontering",
-    //   "2": "Årsafslutningspakke - Selskaber 1. År",
-    //   "3": "Årsafslutningspakke - Selskaber eksisterende kunde",
-    //   "4": "Årsafslutningspakke - Enkeltmands 1. År",
-    //   "5": "Årsafslutningspakke - Enkeltmands eksisterende kunde",
-    //   "6": "VSO - beregning ny kunde",
-    //   "7": "VSO - beregning eksisterende kunde",
-    //   "8": "Samtale/Rådgivning af kunde",
-    //   "9": "Intern kommunikation og møder",
-    //   "10": "Primo ny kunde",
-    //   "11": "Primo eksisterende",
-    //   "12": "kundeCatchup/kontering"
-    // }
+  client.query(bpre_query_str, function(err, result) {
+    let reporter_full_name = "N/A";
+    let acl_level = admin_emails.includes(my_email) ? 1 : 0;
+    // if (acl_level == 1) bookkeeper_full_name = "Admin";
+    // else if (result.rows.length > 0)
+    if (result.rows.length > 0) reporter_full_name = result.rows[0].bookkeeper_name;
+    else reporter_full_name = my_email;
 
-    let query_str = "UPDATE task_manager.time_entries SET ";
-    if (req.body.task_type)
-      query_str = query_str + "task_type='" + req.body.task_type + "', ";
-    if (req.body.period)
-      query_str = query_str + "period='" + req.body.period + "', ";
-    if (req.body.delivery_year)
-      query_str = query_str + "delivery_year=" + req.body.delivery_year + ", ";
-    if (req.body.time_spent)
-      query_str = query_str + month_list[req.body.month] + "=" + req.body.time_spent + ", ";
-    if (req.body.note)
-      query_str = query_str + "note='" + req.body.note + "', ";
-  
-    query_str = query_str.substring(0, query_str.length - 2);
-    query_str = query_str + " WHERE id=" + req.body.id + "; ";
-
-    if (req.body.task_type) {
-      query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
-                old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" +
-                old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'Primary Task Type', '" + old_data.task_type + "', '" +
-                req.body.task_type + "', '" + req.body.today + "'::timestamp); ";
-    }
-    if (req.body.delivery_year) {
-      query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
-                old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" +
-                old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'Delivery Year', '" + old_data.delivery_year + "', '" +
-                req.body.delivery_year + "', '" + req.body.today + "'::timestamp); ";
-    }
-    if (req.body.period) {
-      query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
-                old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" +
-                old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'Period', '" + old_data.period + "', '" +
-                req.body.period + "', '" + req.body.today + "'::timestamp); ";
-    }
-    if (req.body.time_spent) {
-      query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
-                old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" +
-                old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'Time Spent', '" + old_data[month_list[req.body.month]] + "', '" +
-                req.body.time_spent + "', '" + req.body.today + "'::timestamp); ";
-    }
-    if (req.body.note) {
-      query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
-                old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" +
-                old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'Note', '" + old_data.note + "', '" +
-                req.body.note + "', '" + req.body.today + "'::timestamp); ";
-    }
-
-    client.query(query_str, function(err, result) {
+    client.query(pre_query_str, function(err, result){
       if (err) {
-          console.log(err);
-          res.status(400).send(err);
+        console.log(err);
+        res.status(400).send(err);
       }
-      res.send({ message: "It was updated successfully." });
+      let old_data = result.rows[0];
+      let month_list = {
+        "January":    "january_spent", 
+        "February":   "february_spent", 
+        "March":      "march_spent",
+        "April":      "april_spent", 
+        "May":        "may_spent",
+        "June":       "june_spent", 
+        "July":       "july_spent", 
+        "August":     "august_spent", 
+        "September":  "september_spent", 
+        "October":    "october_spent",
+        "November":   "november_spent", 
+        "December":   "december_spent" 
+      }
+    
+      // let task_list = {
+      //   "1": "Almindelig kontering",
+      //   "2": "Årsafslutningspakke - Selskaber 1. År",
+      //   "3": "Årsafslutningspakke - Selskaber eksisterende kunde",
+      //   "4": "Årsafslutningspakke - Enkeltmands 1. År",
+      //   "5": "Årsafslutningspakke - Enkeltmands eksisterende kunde",
+      //   "6": "VSO - beregning ny kunde",
+      //   "7": "VSO - beregning eksisterende kunde",
+      //   "8": "Samtale/Rådgivning af kunde",
+      //   "9": "Intern kommunikation og møder",
+      //   "10": "Primo ny kunde",
+      //   "11": "Primo eksisterende",
+      //   "12": "kundeCatchup/kontering"
+      // }
+  
+      let query_str = "UPDATE task_manager.time_entries SET ";
+      if (req.body.task_type)
+        query_str = query_str + "task_type='" + req.body.task_type + "', ";
+      if (reporter_full_name)
+        query_str = query_str + "reporter_name='" + reporter_full_name + "', ";
+      if (req.body.period)
+        query_str = query_str + "period='" + req.body.period + "', ";
+      if (req.body.delivery_year)
+        query_str = query_str + "delivery_year=" + req.body.delivery_year + ", ";
+      if (req.body.time_spent)
+        query_str = query_str + month_list[req.body.month] + "=" + req.body.time_spent + ", ";
+      if (req.body.note)
+        query_str = query_str + "note='" + req.body.note + "', ";
+    
+      query_str = query_str.substring(0, query_str.length - 2);
+      query_str = query_str + " WHERE id=" + req.body.id + "; ";
+  
+      if (req.body.task_type) {
+        query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
+                  old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" + old_data.reporter_name + "', '" +
+                  old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'Primary Task Type', '" + old_data.task_type + "', '" +
+                  req.body.task_type + "', '" + req.body.today + "'::timestamp); ";
+      }
+      if (old_data.reporter_name != reporter_full_name) {
+        query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
+                  old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" + old_data.reporter_name + "', '" +
+                  old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'Reporter Name', '" + old_data.reporter_name + "', '" +
+                  reporter_full_name + "', '" + req.body.today + "'::timestamp); ";
+      }
+      if (req.body.delivery_year) {
+        query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
+                  old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" + old_data.reporter_name + "', '" +
+                  old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'Delivery Year', '" + old_data.delivery_year + "', '" +
+                  req.body.delivery_year + "', '" + req.body.today + "'::timestamp); ";
+      }
+      if (req.body.period) {
+        query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
+                  old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" + old_data.reporter_name + "', '" +
+                  old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'Period', '" + old_data.period + "', '" +
+                  req.body.period + "', '" + req.body.today + "'::timestamp); ";
+      }
+      if (req.body.time_spent) {
+        query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
+                  old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" + old_data.reporter_name + "', '" +
+                  old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'Time Spent', '" + old_data[month_list[req.body.month]] + "', '" +
+                  req.body.time_spent + "', '" + req.body.today + "'::timestamp); ";
+      }
+      if (req.body.note) {
+        query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, change_date) VALUES (" + 
+                  old_data.customer_id + ", '" + old_data.company_name + "', '" + old_data.bookkeeper_name + "', '" + old_data.reporter_name + "', '" +
+                  old_data.email_address + "', " + old_data.delivery_year + ", '" + req.body.month + "', " + "'Note', '" + old_data.note + "', '" +
+                  req.body.note + "', '" + req.body.today + "'::timestamp); ";
+      }
+  
+      client.query(query_str, function(err, result) {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err);
+        }
+        res.send({ message: "It was updated successfully." });
+      });
     });
   });
 };
@@ -418,9 +456,9 @@ exports.deleteReportTimes = (req, res) => {
       "deleted=true WHERE id=" + req.body.id + "; ";
 
     query_str = query_str + "INSERT INTO task_manager.time_audit_log (customer_id, company_name, " + 
-      "bookkeeper_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, " + 
+      "bookkeeper_name, reporter_name, email_address, delivery_year, sel_month, chg_column, old_value, new_value, " + 
       "change_date) VALUES (" + old_data.customer_id + ", '" + old_data.company_name + "', '" +
-      old_data.bookkeeper_name + "', '" + old_data.email_address + "', " + old_data.delivery_year +
+      old_data.bookkeeper_name + "', '" + old_data.reporter_name + "', '" + old_data.email_address + "', " + old_data.delivery_year +
       ", '" + req.body.month + "', " + "'deleted', 'FALSE', 'TRUE', '" +
       req.body.today + "'::timestamp); ";
 

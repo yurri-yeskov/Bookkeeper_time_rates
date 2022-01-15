@@ -70,7 +70,7 @@ $(document).ready(function(){
       { data: 'period' },           // Delivery Period
       { data: 'delivery_year' },    // Delivery Year
       { data: 'time_spent' },       // Time Spent
-      { data: 'reg_date' },       // Timespamp
+      { data: 'reg_date' },         // Timespamp
       { data: 'deleted', render: renderCheck },
       { data: 'note' },             // Note -- visible false
       { data: 'sel_month'}
@@ -375,7 +375,7 @@ function appendTagAuditContent(month_name, data) {
           '<tr id="atr_' + data.id + '">' +
             '<td>' + data.customer_id + '</td>' +
             '<td>' + data.bookkeeper_name + '</td>' +
-            '<td>' + data.bookkeeper_name + '</td>' +
+            '<td>' + data.repoter_name + '</td>' +
             '<td>' + data.company_name + '</td>' +
             '<td>' + data.email_addr + '</td>' +
             '<td>' + data.delivery_year + '</td>' +
@@ -444,6 +444,7 @@ function updateAReportTime() {
     delivery_year: null,
     id: $('.current_id').val(),
     month: $('.current_month').val(),
+    user_token: getSelToken(),
     today: today
   }
 
