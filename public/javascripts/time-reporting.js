@@ -273,6 +273,7 @@ function showEditModal(e) {
           period: data.data[i].period,
           customer_id: customer_id,
           bookkeeper_name: bookkeeper_name,
+          reporter_name: data.data[i].reporter_name,
           company_name: company_name,
           email_addr: email_addr,
           delivery_year: data.data[i].delivery_year
