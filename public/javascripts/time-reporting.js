@@ -362,6 +362,7 @@ function showAuditModal(e) {
           id: data.data[i].id,
           customer_id: data.data[i].customer_id,
           bookkeeper_name: data.data[i].bookkeeper_name,
+          bookkeeper_name: data.data[i].reporter_name,
           company_name: data.data[i].company_name,
           email_addr: data.data[i].email_address,
           delivery_year: data.data[i].delivery_year,
