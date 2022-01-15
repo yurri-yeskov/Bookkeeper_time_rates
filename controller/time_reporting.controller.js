@@ -360,7 +360,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
 
             for (let i = 0; i < result.rows.length; i++) {
               result.rows[i].reg_date = moment(result.rows[i].reg_date, "YYYY-MM-DD").format("DD-MM-YYYY");
-              if (!result.rows[i].reporter_name) result.rows[i].reporter_name = "N/A";
+              if (!result.rows[i].reporter_name) result.rows[i].reporter_name = result.rows[i].bookkeeper_name;
             }
 
             var data = JSON.stringify({
@@ -485,23 +485,23 @@ exports.insertReportTime = (req, res) => {
         let ext_query_str =
           "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, " + 
           "email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" +
-          req.body.customer_id + ", '" + req.body.company_name + "', '" + bookkeeper_full_name + "', '" + reporter_full_name + "', '" + 
+          req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" + reporter_full_name + "', '" + 
           req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " +
           "'Primary Task Type', '" + task_list[req.body.task_type] + "', '" +
           req.body.cur_time + "'::timestamp); " +
           "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, "
           "email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" +
-          req.body.customer_id + ", '" + req.body.company_name + "', '" + bookkeeper_full_name + "', '" +  + reporter_full_name + "', '" + 
+          req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" +  + reporter_full_name + "', '" + 
           req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " +
           "'Period', '" + req.body.period + "', '" + req.body.cur_time + "'::timestamp); " +
           "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, "
           "email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" +
-          req.body.customer_id + ", '" + req.body.company_name + "', '" + bookkeeper_full_name + "', '" +  + reporter_full_name + "', '" + 
+          req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" +  + reporter_full_name + "', '" + 
           req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " +
           "'Time Spent', '" + req.body.time_spent + "', '" + req.body.cur_time + "'::timestamp); " +
           "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, "
           "email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" +
-          req.body.customer_id + ", '" + req.body.company_name + "', '" + bookkeeper_full_name + "', '" +  + reporter_full_name + "', '" + 
+          req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" +  + reporter_full_name + "', '" + 
           req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " +
           "'Note', '" + req.body.time_note + "', '" + req.body.cur_time + "'::timestamp); ";
 
