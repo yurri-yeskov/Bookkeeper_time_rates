@@ -56,7 +56,7 @@ $(document).ready(function(){
       { data: 'email_address' },    // Email Address
       { data: 'company_name' },     // Company Name
       { data: 'bookkeeper_name' },  // Bookkeeper Name
-      { data: 'Reporter_name' },  // Reporter Name
+      { data: 'reporter_name' },  // Reporter Name
       { data: 'task_type' },        // Primary Task Type
       { data: 'period' },           // Delivery Period
       { data: 'delivery_year' },    // Delivery Year

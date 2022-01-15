@@ -360,6 +360,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
 
             for (let i = 0; i < result.rows.length; i++) {
               result.rows[i].reg_date = moment(result.rows[i].reg_date, "YYYY-MM-DD").format("DD-MM-YYYY");
+              if (!result.rows[i].reporter_name) result.rows[i].reporter_name = "N/A";
             }
 
             var data = JSON.stringify({
