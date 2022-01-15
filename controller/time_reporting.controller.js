@@ -504,6 +504,7 @@ exports.insertReportTime = (req, res) => {
           req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" +  + reporter_full_name + "', '" + 
           req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " +
           "'Note', '" + req.body.time_note + "', '" + req.body.cur_time + "'::timestamp); ";
+        console.log(ext_query_str);
 
         client.query(ext_query_str, function (err, result) {
           if (err) {
