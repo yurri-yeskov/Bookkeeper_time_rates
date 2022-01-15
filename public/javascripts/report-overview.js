@@ -354,6 +354,7 @@ function showAuditModal(e) {
           id: data.data[i].id,
           customer_id: data.data[i].customer_id,
           bookkeeper_name: data.data[i].bookkeeper_name,
+          reporter_name: data.data[i].reporter_name,
           company_name: data.data[i].company_name,
           email_addr: data.data[i].email_address,
           delivery_year: data.data[i].delivery_year,
@@ -375,7 +376,7 @@ function appendTagAuditContent(month_name, data) {
           '<tr id="atr_' + data.id + '">' +
             '<td>' + data.customer_id + '</td>' +
             '<td>' + data.bookkeeper_name + '</td>' +
-            '<td>' + data.repoter_name + '</td>' +
+            '<td>' + data.reporter_name + '</td>' +
             '<td>' + data.company_name + '</td>' +
             '<td>' + data.email_addr + '</td>' +
             '<td>' + data.delivery_year + '</td>' +
