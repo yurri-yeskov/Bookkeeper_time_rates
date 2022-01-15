@@ -200,7 +200,7 @@ exports.getDayCustomerInfo = (req, res) => {
       for (let i = 0; i < result.rows.length; i++) {
         time_spent += parseFloat(result.rows[i].time_spent);
         result.rows[i].reg_date = moment(result.rows[i].reg_date).format( "DD-MM-YYYY HH:mm:ss");
-        if (!result.rows[i].reporter_name) result.rows[i].reporter_name = result.rows[i].bookkeeper_name;
+        if (!result.rows[i].reporter_name) result.rows[i].reporter_name = 'N/A';
       }
       // time_spent = (time_spent / 60).toFixed(2);
       // time_spent = time_spent / 60.00;
@@ -361,7 +361,7 @@ exports.findCustomerInfoWithYear = (req, res) => {
 
             for (let i = 0; i < result.rows.length; i++) {
               result.rows[i].reg_date = moment(result.rows[i].reg_date, "YYYY-MM-DD").format("DD-MM-YYYY");
-              if (!result.rows[i].reporter_name) result.rows[i].reporter_name = result.rows[i].bookkeeper_name;
+              if (!result.rows[i].reporter_name) result.rows[i].reporter_name = 'N/A';
             }
 
             var data = JSON.stringify({
@@ -483,7 +483,6 @@ exports.insertReportTime = (req, res) => {
           res.status(400).send(err);
         }
 
-        console.log(reporter_full_name, "before");
         let ext_query_str =
           "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, " + 
           "email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" +
@@ -493,21 +492,19 @@ exports.insertReportTime = (req, res) => {
           req.body.cur_time + "'::timestamp); " +
           "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, " +
           "email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" +
-          req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" +  + reporter_full_name + "', '" + 
+          req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" + reporter_full_name + "', '" + 
           req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " +
           "'Period', '" + req.body.period + "', '" + req.body.cur_time + "'::timestamp); " +
           "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, " +
           "email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" +
-          req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" +  + reporter_full_name + "', '" + 
+          req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" + reporter_full_name + "', '" + 
           req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " +
           "'Time Spent', '" + req.body.time_spent + "', '" + req.body.cur_time + "'::timestamp); " +
           "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, " +
           "email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" +
-          req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" +  + reporter_full_name + "', '" + 
+          req.body.customer_id + ", '" + req.body.company_name + "', '" + req.body.bookkeeper_name + "', '" + reporter_full_name + "', '" + 
           req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " +
           "'Note', '" + req.body.time_note + "', '" + req.body.cur_time + "'::timestamp); ";
-        console.log(ext_query_str);
-        console.log(reporter_full_name, "after");
 
         client.query(ext_query_str, function (err, result) {
           if (err) {
@@ -544,7 +541,7 @@ exports.findReportTimes = (req, res) => {
       res.status(400).send(err);
     }
     for (let i = 0; i < result.rows.length; i++) 
-      if (!result.rows[i].reporter_name) result.rows[i].reporter_name = result.rows[i].bookkeeper_name;
+      if (!result.rows[i].reporter_name) result.rows[i].reporter_name = 'N/A';
     
     res.send({ data: result.rows });
   });
@@ -574,7 +571,7 @@ exports.findAuditLog = (req, res) => {
       res.status(400).send(err);
     }
     for (var i = 0; i < result.rows.length; i++)
-      if (!result.rows[i].reporter_name) result.rows[i].reporter_name = result.rows[i].bookkeeper_name;
+      if (!result.rows[i].reporter_name) result.rows[i].reporter_name = 'N/A';
 
     res.send({ data: result.rows });
   });

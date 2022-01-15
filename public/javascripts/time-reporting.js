@@ -578,6 +578,10 @@ function acepRow(id, month_name) {
       dataType: "json",
       success: function(data) {
         setTimeout(function(){
+          if (data.data == 'token_expired') {
+            window.location.replace(data.other_link);
+            return;
+          }
           $('.btn').prop('disabled', false);
           time_spent_table.ajax.reload();
           getTotalTimes($('#input-year').val());

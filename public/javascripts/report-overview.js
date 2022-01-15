@@ -504,10 +504,10 @@ function updateAReportTime() {
   }
   
   var sel_note = $('#input-mnote').val().replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g,"\n");
-  if (sel_note == '') {
-    alert('Please fill all fields.');
-    return;
-  }
+  // if (sel_note == '') {
+  //   alert('Please fill all fields.');
+  //   return;
+  // }
   if (sel_note != $('#hidden-mnote').val()) {
     change_data.note = sel_note;
   }
