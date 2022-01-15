@@ -295,9 +295,8 @@ exports.findCustomerInfoWithYear = (req, res) => {
       "temp_customer_time.customer_id WHERE deleted = false ";
 
     if (acl_level != 1) // is not admin
-      query_from = query_from + "AND (task_manager.time_entries.bookkeeper_name = '" +
-        bookkeeper_full_name + "' OR task_manager.time_entries.reporter_name = '" + 
-        bookkeeper_full_name + "') ";
+      query_from = query_from + "AND task_manager.time_entries.reporter_name = '" +
+        bookkeeper_full_name + "' ";
     if (start_date != "")
       query_from = query_from + "AND reg_date::date >= '" + start_date + "'::date ";
     if (end_date != "")
@@ -484,6 +483,7 @@ exports.insertReportTime = (req, res) => {
           res.status(400).send(err);
         }
 
+        console.log(reporter_full_name, "before");
         let ext_query_str =
           "INSERT INTO task_manager.time_audit_log (customer_id, company_name, bookkeeper_name, reporter_name, " + 
           "email_address, delivery_year, sel_month, chg_column, new_value, change_date) VALUES (" +
@@ -507,6 +507,7 @@ exports.insertReportTime = (req, res) => {
           req.body.primary_email + "', " + req.body.year + ", '" + month_nlist[req.body.month] + "', " +
           "'Note', '" + req.body.time_note + "', '" + req.body.cur_time + "'::timestamp); ";
         console.log(ext_query_str);
+        console.log(reporter_full_name, "after");
 
         client.query(ext_query_str, function (err, result) {
           if (err) {
