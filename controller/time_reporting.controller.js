@@ -295,8 +295,9 @@ exports.findCustomerInfoWithYear = (req, res) => {
       "temp_customer_time.customer_id WHERE deleted = false ";
 
     if (acl_level != 1) // is not admin
-      query_from = query_from + "AND task_manager.time_entries.bookkeeper_name = '" +
-        bookkeeper_full_name + "' ";
+      query_from = query_from + "AND (task_manager.time_entries.bookkeeper_name = '" +
+        bookkeeper_full_name + "' OR task_manager.time_entries.reporter_name = '" + 
+        bookkeeper_full_name + "') ";
     if (start_date != "")
       query_from = query_from + "AND reg_date::date >= '" + start_date + "'::date ";
     if (end_date != "")

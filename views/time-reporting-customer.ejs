@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <% include partials/head %> 
-  <!-- <link rel="stylesheet" type="text/css" href="<%=baseURL%>/stylesheets/tipped.css"/> -->
 </head>
 <body>
   <% include partials/menu %>
@@ -133,7 +132,7 @@
                 <label>Delivery Year:</label>
               </div>
               <div class="col-xs-7" style="text-align: left; padding-left: 0; ">
-                <input class="form-control-custom" style="width: 235px;" type="number" id="delivery-year" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="2021">
+                <input class="form-control-custom" style="width: 235px;" type="number" id="delivery-year" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="<%= this_year %>">
               </div>
             </div>
             <div class="col-sm-6">
