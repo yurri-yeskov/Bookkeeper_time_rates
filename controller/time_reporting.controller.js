@@ -570,6 +570,8 @@ exports.findAuditLog = (req, res) => {
       console.log(err);
       res.status(400).send(err);
     }
+    for (var i = 0; i < result.rows.length; i++)
+      if (!result.rows[i].reporter_name) result.rows[i].reporter_name = result.rows[i].bookkeeper_name;
 
     res.send({ data: result.rows });
   });
