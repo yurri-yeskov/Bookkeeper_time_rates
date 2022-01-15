@@ -200,6 +200,7 @@ exports.getDayCustomerInfo = (req, res) => {
       for (let i = 0; i < result.rows.length; i++) {
         time_spent += parseFloat(result.rows[i].time_spent);
         result.rows[i].reg_date = moment(result.rows[i].reg_date).format( "DD-MM-YYYY HH:mm:ss");
+        if (!result.rows[i].reporter_name) result.rows[i].reporter_name = result.rows[i].bookkeeper_name;
       }
       // time_spent = (time_spent / 60).toFixed(2);
       // time_spent = time_spent / 60.00;
