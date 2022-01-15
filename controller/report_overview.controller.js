@@ -81,8 +81,8 @@ exports.findAllTimeEntry = (req, res) => {
   let query_count = "SELECT COUNT(*) FROM task_manager.time_entries";
 
   let order_list = {
-    'customer_id': 1, 'email_address': 2, 'company_name': 3, 'bookkeeper_name': 4, 'task_type': 5, 
-    'period': 6, 'delivery_year': 7, 'deleted': 8, 'note': 9, 'time_spent': 10, 'reg_date': 11
+    'customer_id': 1, 'email_address': 2, 'company_name': 3, 'bookkeeper_name': 4, 'reporter_name': 5, 'task_type': 6, 
+    'period': 7, 'delivery_year': 8, 'deleted': 9, 'note': 10, 'time_spent': 11, 'reg_date': 12
   };
 
   let o_index = 'customer_id';
@@ -98,7 +98,7 @@ exports.findAllTimeEntry = (req, res) => {
   if(req.body["search[value]"]) {
     searchStr = "WHERE " +
                 "customer_id::TEXT ILIKE '%" + searchStr + "%' OR email_address::TEXT ILIKE '%" + searchStr + 
-                "%' OR company_name::TEXT ILIKE '%" + searchStr + "%' OR bookkeeper_name::TEXT ILIKE '%" + searchStr + 
+                "%' OR company_name::TEXT ILIKE '%" + searchStr + "%' OR bookkeeper_name::TEXT ILIKE '%" + searchStr + "%' OR reporter_name::TEXT ILIKE '%" + searchStr +
                 "%' OR task_type::TEXT ILIKE '%" + searchStr + "%' OR period::TEXT ILIKE '%" + searchStr + 
                 "%' OR delivery_year::TEXT ILIKE '%" + searchStr + "%' OR deleted::TEXT ILIKE '%" + searchStr + 
                 "%' OR note::TEXT ILIKE '%" + searchStr + "%' OR (COALESCE(february_spent,0.00) + COALESCE(march_spent,0.00) + " + 
@@ -171,7 +171,7 @@ exports.findAllTimeEntry = (req, res) => {
   // change based on Search//
   let query_search_count = "SELECT COUNT(*) FROM task_manager.time_entries " + extra_search_str + searchStr;
   // add offset and limit//
-  let query_str = "SELECT customer_id, email_address, company_name, bookkeeper_name, task_type, period, delivery_year, deleted, note, " + 
+  let query_str = "SELECT customer_id, email_address, company_name, bookkeeper_name, reporter_name, task_type, period, delivery_year, deleted, note, " + 
                   "COALESCE(COALESCE(january_spent,0.00) + COALESCE(february_spent,0.00) + COALESCE(march_spent,0.00) + " + 
                   "COALESCE(april_spent,0.00) + COALESCE(may_spent,0.00) + COALESCE(june_spent,0.00) + COALESCE(july_spent,0.00) + COALESCE(august_spent,0.00) + " +
                   "COALESCE(september_spent,0.00) + COALESCE(october_spent,0.00) + COALESCE(november_spent,0.00) + COALESCE(december_spent,0.00)" +
