@@ -108,6 +108,7 @@
                    acl_array.includes('bookkeeper-special-delivery') || 
                    acl_array.includes('bookkeeper-special-delivery-overview') || 
                    acl_array.includes('bookkeeper-bankview') || 
+                   acl_array.includes('bookkeeper-kontokort-saldobalance') || 
                    acl_level == 1) { %>
               <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Bookkeeper <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -140,6 +141,9 @@
                   <% } %>
                   <% if (acl_array.includes('bookkeeper-bankview') || acl_level == 1) { %>
                     <li><a href="<%= other_link %>bookkeeper/bankview">Bankview</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('bookkeeper-kontokort-saldobalance') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>bookkeeper/kontokort-saldobalance">Kontokort - Saldobalance</a></li>
                   <% } %>
                 </ul>
               </li>

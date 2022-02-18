@@ -40,17 +40,6 @@ const createTable = async (query) => {
   }
 };
 
-// CREATE TABLE "users" (
-// 	"id" SERIAL,
-// 	"name" VARCHAR(50) NOT NULL,
-// 	"surname" VARCHAR(50) NOT NULL,
-// 	"department_id" INTEGER,
-// 	PRIMARY KEY ("id"),
-// 	FOREIGN KEY ("department_id") REFERENCES "departments" ("id")
-// );
-
-// "DROP TABLE IF EXISTS task_manager.product_profiles, task_manager.product_profile_package, task_manager.product_profile_company_type, task_manager.product_profile_time_element, task_manager.time_elements;" + 
-
 const query_str = "CREATE TABLE IF NOT EXISTS task_manager.time_elements (id SERIAL, element_id VARCHAR(4) NOT NULL, element_name VARCHAR(100) NOT NULL, element_value FLOAT(4), note TEXT, PRIMARY KEY (id)); " +
                     "INSERT INTO task_manager.time_elements (element_id, element_name, note) " + 
                     "SELECT 'A', 'new_customer', 'Is this the first year, then new_customer is true' " +
