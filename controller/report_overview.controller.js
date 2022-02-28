@@ -184,7 +184,6 @@ exports.findAllTimeEntry = (req, res) => {
 
   client.query(query_count, function(err, result) {
     recordsTotal = result.rows[0].count;
-    console.log("alllllll", recordsTotal);
     client.query(query_search_count, function(err, result) {
       recordsFiltered = result.rows[0].count;
       client.query(query_str, function(err, result) {
