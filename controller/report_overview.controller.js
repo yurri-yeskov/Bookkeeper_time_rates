@@ -192,6 +192,7 @@ exports.findAllTimeEntry = (req, res) => {
           res.status(400).send(err);
         }
         for (let i = 0; i < result.rows.length; i++) {
+          console.log(result.rows[i].bookkeeper_name);
           if (result.rows[i].january_spent != null) result.rows[i].sel_month = 'January';
           else if (result.rows[i].february_spent != null) result.rows[i].sel_month = 'February';
           else if (result.rows[i].march_spent != null) result.rows[i].sel_month = 'March';
