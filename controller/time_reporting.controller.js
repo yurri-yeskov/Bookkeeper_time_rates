@@ -353,7 +353,6 @@ exports.findCustomerInfoWithYear = (req, res) => {
         recordsTotal = result.rows[0].count;
         client.query(query_search_count, function (err, result) {
           recordsFiltered = result.rows[0].count;
-          console.log("test", recordsTotal);
           client.query(query_str, function (err, result) {
             if (err) {
               console.log(err);
