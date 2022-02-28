@@ -66,11 +66,11 @@ const query_str = "CREATE TABLE IF NOT EXISTS task_manager.time_elements (id SER
                     "july_spent NUMERIC(20, 2), " + "august_spent NUMERIC(20, 2), " + "september_spent NUMERIC(20, 2), " + "october_spent NUMERIC(20, 2), " + "november_spent NUMERIC(20, 2), " + "december_spent NUMERIC(20, 2), " +
                     "delivery_year INTEGER, reg_date timestamp without time zone, note TEXT, deleted BOOLEAN NOT NULL DEFAULT FALSE, PRIMARY KEY (id)); " +
                   "CREATE TABLE IF NOT EXISTS task_manager.time_audit_log (id SERIAL, customer_id INTEGER REFERENCES public.customers (id) NOT NULL, company_name VARCHAR(255), bookkeeper_name VARCHAR(255), reporter_name VARCHAR(255), email_address VARCHAR(255), " +
-                    "delivery_year INTEGER, sel_month VARCHAR(50), chg_column VARCHAR(255), old_value VARCHAR(255), new_value VARCHAR(255), change_date timestamp without time zone, PRIMARY KEY (id)); " + 
-                  "ALTER TABLE task_manager.time_entries " +  
-                  "ADD COLUMN reporter_name VARCHAR(255);" + 
-                  "ALTER TABLE task_manager.time_audit_log " +  
-                  "ADD COLUMN reporter_name VARCHAR(255);";
+                    "delivery_year INTEGER, sel_month VARCHAR(50), chg_column VARCHAR(255), old_value VARCHAR(255), new_value VARCHAR(255), change_date timestamp without time zone, PRIMARY KEY (id)); ";
+                  // "ALTER TABLE task_manager.time_entries " +  
+                  // "ADD COLUMN reporter_name VARCHAR(255);" + 
+                  // "ALTER TABLE task_manager.time_audit_log " +  
+                  // "ADD COLUMN reporter_name VARCHAR(255);";
                   // "CREATE TABLE IF NOT EXISTS interfaces.user_tokens (id SERIAL, user_email VARCHAR(255) NOT NULL, user_token VARCHAR(255) NOT NULL, PRIMARY KEY (id)); "
 
 createTable(query_str).then(result => {
