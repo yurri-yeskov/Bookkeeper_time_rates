@@ -171,7 +171,7 @@ exports.findAllTimeEntry = (req, res) => {
   // change based on Search//
   let query_search_count = "SELECT COUNT(*) FROM task_manager.time_entries " + extra_search_str + searchStr;
   // add offset and limit//
-  let query_str = "SELECT customer_id, email_address, company_name, bookkeeper_name, reporter_name, task_type, period, delivery_year, deleted, note, " + 
+  let query_str = "SELECT id, customer_id, email_address, company_name, bookkeeper_name, reporter_name, task_type, period, delivery_year, deleted, note, " + 
                   "COALESCE(COALESCE(january_spent,0.00) + COALESCE(february_spent,0.00) + COALESCE(march_spent,0.00) + " + 
                   "COALESCE(april_spent,0.00) + COALESCE(may_spent,0.00) + COALESCE(june_spent,0.00) + COALESCE(july_spent,0.00) + COALESCE(august_spent,0.00) + " +
                   "COALESCE(september_spent,0.00) + COALESCE(october_spent,0.00) + COALESCE(november_spent,0.00) + COALESCE(december_spent,0.00)" +
@@ -192,7 +192,7 @@ exports.findAllTimeEntry = (req, res) => {
           res.status(400).send(err);
         }
         for (let i = 0; i < result.rows.length; i++) {
-          console.log(result.rows[i].bookkeeper_name);
+          console.log(result.rows[i].id, result.rows[i].bookkeeper_name);
           if (result.rows[i].january_spent != null) result.rows[i].sel_month = 'January';
           else if (result.rows[i].february_spent != null) result.rows[i].sel_month = 'February';
           else if (result.rows[i].march_spent != null) result.rows[i].sel_month = 'March';
