@@ -74,7 +74,7 @@ exports.findAllTimeEntry = (req, res) => {
     res.redirect("/");
     return;
   }
-let test_acc = [];
+/*let test_acc = [];
 test_acc[1] = "Flemming Hansen";
 test_acc[2] = "Flemming Hansen";
 test_acc[3] = "Tamir Kuhr";
@@ -693,7 +693,7 @@ client.query(query_strss, function(err, result) {
   }
   console.log("okokokok");
 });
-return;
+return;*/
 
   let recordsTotal = 0;
   let recordsFiltered = 0;
