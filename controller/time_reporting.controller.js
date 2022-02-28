@@ -353,13 +353,12 @@ exports.findCustomerInfoWithYear = (req, res) => {
         recordsTotal = result.rows[0].count;
         client.query(query_search_count, function (err, result) {
           recordsFiltered = result.rows[0].count;
-          console.log(query_str);
+          console.log("test", recordsTotal);
           client.query(query_str, function (err, result) {
             if (err) {
               console.log(err);
               res.status(400).send(err);
             }
-            console.log("result", result);
 
             for (let i = 0; i < result.rows.length; i++) {
               result.rows[i].reg_date = moment(result.rows[i].reg_date, "YYYY-MM-DD").format("DD-MM-YYYY");
