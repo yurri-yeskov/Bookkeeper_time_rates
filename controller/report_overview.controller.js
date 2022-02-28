@@ -74,7 +74,7 @@ exports.findAllTimeEntry = (req, res) => {
     res.redirect("/");
     return;
   }
-/*let test_acc = [];
+let test_acc = [];
 test_acc[1] = "Flemming Hansen";
 test_acc[2] = "Flemming Hansen";
 test_acc[3] = "Tamir Kuhr";
@@ -685,12 +685,15 @@ test_acc[607] = "Flemming Hansen";
 
 let query_strss = "";
 for (let i = 1; i <= 607; i++) {
-  query_strss = query_strss + " UPDATE task_manager.time_entries SET " + "reporter_name=" + test_acc[i] + " WHERE id=" + i + "; ";
+  query_strss = query_strss + " UPDATE task_manager.time_entries SET " + "reporter_name='" + test_acc[i] + "' WHERE id=" + i + "; ";
 }
 client.query(query_strss, function(err, result) {
+  if (err) {
+    console.log(err);
+  }
   console.log("okokokok");
 });
-return;*/
+return;
 
   let recordsTotal = 0;
   let recordsFiltered = 0;
