@@ -27,7 +27,7 @@
               <li><a href="<%= other_link %>customer-notes">Kundebemærkninger</a></li>      
             <% } %>
             
-            <% if (acl_array.includes('onboarding') || acl_array.includes('onboarding-stat') || acl_array.includes('onboarding-leads-overview') || acl_level == 1) { %>
+            <% if (acl_array.includes('onboarding') || acl_array.includes('onboarding-stat') || acl_array.includes('onboarding-leads-overview') || acl_array.includes('onboarding-leads-follow-up') || acl_level == 1) { %>
               <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Onboarding <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <% if (acl_array.includes('onboarding') || acl_level == 1) { %>
@@ -38,6 +38,9 @@
                   <% } %>
                   <% if (acl_array.includes('onboarding-leads-overview') || acl_level == 1) { %>
                     <li><a href="<%= other_link %>onboarding-stat/leads-overview">Leads overview</a></li>
+                  <% } %>
+                  <% if (acl_array.includes('onboarding-leads-follow-up') || acl_level == 1) { %>
+                    <li><a href="<%= other_link %>onboarding-stat/leads-follow-up">Leads Follow-up</a></li>
                   <% } %>
                 </ul>
               </li>
